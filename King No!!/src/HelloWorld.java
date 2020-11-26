@@ -5,6 +5,8 @@ public class HelloWorld {
 	public static void main(String[] args) {
 		//‚½‚¾‚ÌƒeƒXƒg
 		System.out.println(hw());
+		//‚Ù‚°‚Ù‚°
+	
 		System.out.println("‚Ù‚°‚Ù‚°");
 	}
 	
