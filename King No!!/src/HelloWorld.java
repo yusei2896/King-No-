@@ -1,9 +1,11 @@
 
+
 public class HelloWorld {
 
 	public static void main(String[] args) {
 		//‚½‚¾‚ÌƒeƒXƒg
 		System.out.println(hw());
+		System.out.println("‚Ù‚°‚Ù‚°");
 	}
 	
 	public static String hw() {
