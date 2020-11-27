@@ -5,7 +5,7 @@ public class HelloWorld {
 	public static void main(String[] args) {
 		//‚½‚¾‚ÌƒeƒXƒg
 		System.out.println(hw());
-		System.out.println("‚Ù‚°‚Ù‚°");
+		System.out.println("‚Ù‚°‚Ù‚°‚ÌŽÀ");
 	}
 	
 	public static String hw() {
