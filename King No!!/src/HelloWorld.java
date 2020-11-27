@@ -8,12 +8,9 @@ public class HelloWorld {
 
 		//ただのテスト
 		System.out.println(hw());
-<<<<<<< HEAD
 		System.out.println("ほげほげの実");
-=======
 		//ほげほげ（太田祐生）
 		System.out.println("ほげほげ");
->>>>>>> branch 'master' of https://github.com/yusei2896/King-No-.git
 	}
 	
 	public static String hw() {
