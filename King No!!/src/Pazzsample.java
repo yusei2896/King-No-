@@ -26,8 +26,8 @@ public class Pazzsample extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	private ImageIcon Img = new ImageIcon("C:\\KIC\\2020\\java\\“y.png"); // –â‘è‚Ì‰æ‘œ
-	private ImageIcon Hide = new ImageIcon("C:\\KIC\\2020\\java\\84089164_480x480.png"); // –â‘è‚ð‰B‚µ‚Ä‚é‰æ‘œ
+	private ImageIcon Img = new ImageIcon("C:\\KIC\\2020\\Image\\QImage\\“y.png"); // –â‘è‚Ì‰æ‘œ
+	private ImageIcon Hide = new ImageIcon("C:\\KIC\\2020\\Image\\84089164_480x480.png"); // –â‘è‚ð‰B‚µ‚Ä‚é‰æ‘œ
 	private JTextField textField;
 	private JLabel HideLabel;
 
