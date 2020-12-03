@@ -8,6 +8,8 @@ public class HelloWorld {
 
 		//ただのテスト
 		System.out.println(hw());
+		System.out.println("ほげほげの実");
+		
 		//ほげほげ（太田祐生）
 		System.out.println("ほげほげ");
 	}
