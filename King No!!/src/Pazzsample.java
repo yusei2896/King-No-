@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 
 /**
@@ -25,9 +26,10 @@ public class Pazzsample extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	private ImageIcon Img = new ImageIcon("C:\\KIC\\2020\\java\\“y.png"); // –â‘è‚Ì‰æ‘œ
-	private ImageIcon Hide = new ImageIcon("C:\\KIC\\2020\\java\\84089164_480x480.png"); // –â‘è‚ð‰B‚µ‚Ä‚é‰æ‘œ
+	URL HideimageURL = this.getClass().getResource("resources/84089164_480x480.png");
+	private ImageIcon Hide = new ImageIcon(HideimageURL); // –â‘è‚ð‰B‚µ‚Ä‚é‰æ‘œ
+	URL QimageURL = this.getClass().getResource("resources/Q.png");
+	private ImageIcon Img = new ImageIcon(QimageURL); // –â‘è‚Ì‰æ‘œ
 	private JTextField textField;
 	private JLabel HideLabel;
 
