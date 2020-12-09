@@ -79,7 +79,7 @@ public class Pazzsample extends JFrame {
 					JOptionPane.showMessageDialog(null, "不正解です", "判定結果", JOptionPane.WARNING_MESSAGE);
 
 				}
-				HideLabel.setVisible(true); // これで画像が見えなくなる（答えが見えなくなる）
+				HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 			}
 		});
 		btnNewButton.setBounds(317, 202, 89, 21);
