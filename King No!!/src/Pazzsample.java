@@ -15,10 +15,6 @@ import java.awt.event.ActionEvent;
  * 
  */
 
-/**
- * @author 0H02019 •y“c—Á‰î
- *
- */
 public class Pazzsample extends JFrame {
 
 	/**
@@ -30,9 +26,9 @@ public class Pazzsample extends JFrame {
 
 	
 	URL HideimageURL = this.getClass().getResource("resources/84089164_480x480.png");
-	private ImageIcon Hide = new ImageIcon(HideimageURL); // –â‘è‚ğ‰B‚µ‚Ä‚é‰æ‘œ
+	private ImageIcon Hide = new ImageIcon(HideimageURL); // å•é¡Œã‚’éš ã—ã¦ã„ã‚‹ç”»åƒ
 	URL QimageURL = this.getClass().getResource("resources/Q.png");
-	private ImageIcon Img = new ImageIcon(QimageURL); // –â‘è‚Ì‰æ‘œ
+	private ImageIcon Img = new ImageIcon(QimageURL); // å•é¡Œã®ç”»åƒ
 
 	private JTextField textField;
 	private JLabel HideLabel;
@@ -64,11 +60,11 @@ public class Pazzsample extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		/* •‚¢‰æ‘œ */
+		/* é»’ã„ç”»åƒ */
 		HideLabel = new JLabel(Hide);
 		HideLabel.setBounds(115, 98, 70, 60);
 		contentPane.add(HideLabel);
-		HideLabel.setVisible(true); // ‚±‚ê‚Å‰æ‘œ‚ªŒ©‚¦‚éi“š‚¦‚ªŒ©‚¦‚È‚­‚È‚éj
+		HideLabel.setVisible(true); // ã“ã‚Œã§ç”»åƒãŒè¦‹ãˆã‚‹ï¼ˆç­”ãˆãŒè¦‹ãˆãªããªã‚‹ï¼‰
 		JLabel QLabel = new JLabel(Img);
 		QLabel.setBounds(10, 10, 281, 248);
 		contentPane.add(QLabel);
@@ -76,18 +72,18 @@ public class Pazzsample extends JFrame {
 		JButton btnNewButton = new JButton("\u89E3\u7B54");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/* ‰ğ“š‚Ì”»’è */
+				/* è§£ç­”ã®åˆ¤å®š */
 				String ans = textField.getText();
-				if (ans.equals("“y")) {
-					HideLabel.setVisible(false); // ‚±‚ê‚Å‰æ‘œ‚ªŒ©‚¦‚È‚­‚È‚éi“š‚¦‚ªŒ©‚¦‚éj
-					JOptionPane.showMessageDialog(null, "³‰ğ‚Å‚·", "”»’èŒ‹‰Ê", JOptionPane.OK_OPTION);
+				if (ans.equals("åœŸ")) {
+					HideLabel.setVisible(false); // ã“ã‚Œã§ç”»åƒãŒè¦‹ãˆãªããªã‚‹ï¼ˆç­”ãˆãŒè¦‹ãˆã‚‹ï¼‰
+					JOptionPane.showMessageDialog(null, "æ­£è§£ã§ã™", "åˆ¤å®šçµæœ", JOptionPane.OK_OPTION);
 
 				} else {
-					HideLabel.setVisible(false); // ‚±‚ê‚Å‰æ‘œ‚ªŒ©‚¦‚È‚­‚È‚éi“š‚¦‚ªŒ©‚¦‚éj
-					JOptionPane.showMessageDialog(null, "•s³‰ğ‚Å‚·", "”»’èŒ‹‰Ê", JOptionPane.WARNING_MESSAGE);
+					HideLabel.setVisible(false); // ã“ã‚Œã§ç”»åƒãŒè¦‹ãˆãªããªã‚‹ï¼ˆç­”ãˆãŒè¦‹ãˆã‚‹ï¼‰
+					JOptionPane.showMessageDialog(null, "ä¸æ­£è§£ã§ã™", "åˆ¤å®šçµæœ", JOptionPane.WARNING_MESSAGE);
 
 				}
-				HideLabel.setVisible(true); // ‚±‚ê‚Å‰æ‘œ‚ªŒ©‚¦‚éi“š‚¦‚ªŒ©‚¦‚È‚­‚È‚éj
+				HideLabel.setVisible(true); // ã“ã‚Œã§ç”»åƒãŒè¦‹ãˆã‚‹ï¼ˆç­”ãˆãŒè¦‹ãˆãªããªã‚‹ï¼‰
 			}
 		});
 		btnNewButton.setBounds(317, 202, 89, 21);
