@@ -65,8 +65,8 @@ public class Pazzsample extends JFrame {
 		QLabel.setBounds(10, 10, 281, 248);
 		contentPane.add(QLabel);
 
-		JButton btnNewButton = new JButton("\u89E3\u7B54");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton AnsButton = new JButton("\u89E3\u7B54");
+		AnsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/* 解答の判定 */
 				String ans = textField.getText();
@@ -82,24 +82,34 @@ public class Pazzsample extends JFrame {
 				HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 			}
 		});
-		btnNewButton.setBounds(317, 202, 89, 21);
-		contentPane.add(btnNewButton);
+		AnsButton.setBounds(317, 202, 89, 21);
+		contentPane.add(AnsButton);
 
-		JButton btnNewButton_1 = new JButton("\u30D2\u30F3\u30C81");
-		btnNewButton_1.setBounds(317, 20, 89, 21);
-		contentPane.add(btnNewButton_1);
+		JButton Hint1Button = new JButton("\u30D2\u30F3\u30C81");
+		Hint1Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		Hint1Button.setBounds(317, 20, 89, 21);
+		contentPane.add(Hint1Button);
 
 		textField = new JTextField();
 		textField.setBounds(317, 173, 96, 19);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
-		JButton btnNewButton_2 = new JButton("\u30D2\u30F3\u30C82");
-		btnNewButton_2.setBounds(317, 51, 89, 21);
-		contentPane.add(btnNewButton_2);
+		JButton Hint2Button = new JButton("\u30D2\u30F3\u30C82");
+		Hint2Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		Hint2Button.setBounds(317, 51, 89, 21);
+		contentPane.add(Hint2Button);
 
-		JLabel lblNewLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
-		lblNewLabel.setBounds(317, 82, 89, 70);
-		contentPane.add(lblNewLabel);
+		JLabel DispLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
+		DispLabel.setBounds(317, 82, 89, 70);
+		contentPane.add(DispLabel);
 	}
 }
