@@ -24,7 +24,7 @@ import java.awt.Color;
 
 
 /**
- * @author 0H02019 �y�c����
+ * @author King no !!
  *
  */
 public class TextPazzsample extends JFrame {
