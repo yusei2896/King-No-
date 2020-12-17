@@ -31,6 +31,9 @@ public class Pazzsample extends JFrame {
 	private ImageIcon Img = new ImageIcon(QimageURL); // 問題の画像
 	private JTextField textField;
 	private JLabel HideLabel;
+	private JButton Hint1Button;
+	private JButton Hint2Button;
+	private JLabel DispLabel;
 
 	/**
 	 * Launch the application.
@@ -91,10 +94,10 @@ public class Pazzsample extends JFrame {
 		AnsButton.setBounds(317, 202, 89, 21);
 		contentPane.add(AnsButton);
 
-		JButton Hint1Button = new JButton("\u30D2\u30F3\u30C81");
+		Hint1Button = new JButton("\u30D2\u30F3\u30C81");
 		Hint1Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				DispLabel.setText("身近なもの");
 			}
 		});
 		Hint1Button.setBounds(317, 20, 89, 21);
@@ -105,16 +108,16 @@ public class Pazzsample extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 
-		JButton Hint2Button = new JButton("\u30D2\u30F3\u30C82");
+		Hint2Button = new JButton("\u30D2\u30F3\u30C82");
 		Hint2Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				DispLabel.setText("茶色");
 			}
 		});
 		Hint2Button.setBounds(317, 51, 89, 21);
 		contentPane.add(Hint2Button);
 
-		JLabel DispLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
+		DispLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
 		DispLabel.setBounds(317, 82, 89, 70);
 		contentPane.add(DispLabel);
 	}
