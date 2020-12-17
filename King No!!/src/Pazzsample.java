@@ -24,12 +24,11 @@ public class Pazzsample extends JFrame {
 	private JPanel contentPane;
 
 
-	
+
 	URL HideimageURL = this.getClass().getResource("resources/84089164_480x480.png");
 	private ImageIcon Hide = new ImageIcon(HideimageURL); // 問題を隠している画像
 	URL QimageURL = this.getClass().getResource("resources/Q.png");
 	private ImageIcon Img = new ImageIcon(QimageURL); // 問題の画像
-
 	private JTextField textField;
 	private JLabel HideLabel;
 
@@ -84,6 +83,9 @@ public class Pazzsample extends JFrame {
 
 				}
 				HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
+				JLabel Qlabel = new JLabel(Img);
+				QLabel.setBounds(10, 10, 281, 248);
+				contentPane.add(QLabel);
 			}
 		});
 		AnsButton.setBounds(317, 202, 89, 21);
