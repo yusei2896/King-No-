@@ -78,12 +78,29 @@ public class Pazzsample extends JFrame {
 				String ans = textField.getText();
 				if (ans.equals("土")) {
 					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
-					JOptionPane.showMessageDialog(null, "正解です", "判定結果", JOptionPane.OK_OPTION);
-
+					String[] buttons = {"閉じる","次の問題へ","メニューへ戻る"};
+					int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果",
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,null,buttons,buttons[0]);
+					if(button == 0) {
+						
+					}
+					else if(button == 1) {
+						
+					}
+					else if(button == 2) {
+						
+					}
 				} else {
 					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
-					JOptionPane.showMessageDialog(null, "不正解です", "判定結果", JOptionPane.WARNING_MESSAGE);
-
+					String[] buttons = {"閉じる","メニューへ戻る"};
+					int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果",
+							JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE,null,buttons,buttons[0]);
+					if(button == 0) {
+						
+					}
+					else if(button == 1) {
+						
+					}
 				}
 				HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 				JLabel Qlabel = new JLabel(Img);
