@@ -35,10 +35,15 @@ public class TextPazzsample extends JFrame {
 	private JLabel RightLabel;
 	private JLabel HideLabel;
 	
-	URL allansTxturl = this.getClass().getResource("resources/allansmoji.txt");
-	URL easyTxturl = this.getClass().getResource("resources/one.txt");
-	URL normalTxturl = this.getClass().getResource("resources/one.txt");
-	URL hardTxturl = this.getClass().getResource("resources/alljukugo.txt");
+	// 解のテキストURL
+	URL easyansurl = this.getClass().getResource("resources/easy.txt");
+	URL normalansurl = this.getClass().getResource("resources/normal.txt");
+	URL hardansurl = this.getClass().getResource("resources/hard.txt");
+	URL[] ansurllist = {easyansurl, normalansurl, hardansurl};
+	// 熟語のテキストURL
+	URL easyTxturl = this.getClass().getResource("resources/J-easy.txt");
+	URL normalTxturl = this.getClass().getResource("resources/J-normal.txt");
+	URL hardTxturl = this.getClass().getResource("resources/J-hard.txt");
 	URL[] difflist = { easyTxturl, normalTxturl, hardTxturl };
 
 	int diffculty = 2; // 難易度選択0:easy 1:normal 2:hard
@@ -70,8 +75,15 @@ public class TextPazzsample extends JFrame {
 	 * Create the frame.
 	 */
 	public TextPazzsample() {
-		setTitle("Textvirsion");
 		Questions();
+		// タイトルの後ろに難易度を表示
+		if(diffculty == 0) {
+			setTitle("Textvirsion:easy");
+		}else if(diffculty == 1) {
+			setTitle("Textvirsion:normal");
+		}else if(diffculty == 2) {
+			setTitle("Textvirsion:hard");
+		}	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -173,7 +185,7 @@ public class TextPazzsample extends JFrame {
 		try {
 
 			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
-			File ansfile = new File(allansTxturl.toURI()); // 出題用解答文字ファイル
+			File ansfile = new File(ansurllist[diffculty].toURI()); // 出題用解答文字ファイル
 			FileReader jfilereader = new FileReader(jfile);
 			FileReader ansfilereader = new FileReader(ansfile);
 			BufferedReader jbr = new BufferedReader(jfilereader);
