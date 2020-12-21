@@ -46,7 +46,7 @@ public class TextPazzsample extends JFrame {
 	URL hardTxturl = this.getClass().getResource("resources/J-hard.txt");
 	URL[] difflist = { easyTxturl, normalTxturl, hardTxturl };
 
-	int diffculty = 2; // 難易度選択0:easy 1:normal 2:hard
+	int diffculty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
 	String C, L = "左", U = "上", D = "下", R = "右";
 	String Left, Up, Down, Right;
@@ -85,7 +85,7 @@ public class TextPazzsample extends JFrame {
 			setTitle("Textvirsion:hard");
 		}	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 498, 342);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -140,10 +140,60 @@ public class TextPazzsample extends JFrame {
 							JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 					if (button == 0) {
 
-					} else if (button == 1) {
-
+					} else if (button == 1) /*次の問題ボタン*/ {
+						
+						/* パネルにあった元のテキストを削除 */
+						contentPane.remove(LeftLabel);
+						contentPane.remove(UpLabel);
+						contentPane.remove(CenterLabel);
+						contentPane.remove(DownLabel);
+						contentPane.remove(RightLabel);
+						
+						/* ここから問題を再描画 */
+						Questions();	//問題の再設定
+						
+						
+						
+						/*再設定＆描画（ここが長ったらしい。多分コンパクト化行けそう。）*/
+						LeftLabel = new JLabel(L);
+						LeftLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						LeftLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+						LeftLabel.setBounds(10, 100, 80, 80);
+						contentPane.add(LeftLabel);
+						
+						UpLabel = new JLabel(U);
+						UpLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+						UpLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						UpLabel.setBounds(100, 10, 80, 80);
+						contentPane.add(UpLabel);
+						
+						CenterLabel = new JLabel(C);
+						CenterLabel.setForeground(Color.BLACK);
+						CenterLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+						CenterLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						CenterLabel.setBounds(100, 100, 80, 80);
+						contentPane.add(CenterLabel);
+						
+						DownLabel = new JLabel(D);
+						DownLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+						DownLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						DownLabel.setBounds(100, 190, 80, 80);
+						contentPane.add(DownLabel);
+						
+						RightLabel = new JLabel(R);
+						RightLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+						RightLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						RightLabel.setBounds(190, 100, 80, 80);
+						contentPane.add(RightLabel);
+						
+						contentPane.revalidate();	/* レイアウトを再計算するように指示 
+													(これはコンポーネントを追加するときに必要) */
+						
+						contentPane.repaint();		/*ウィンドウの領域が汚れていることを通知
+													(remove()によって削除された元テキストを消去するために必要*/
+						
 					} else if (button == 2) {
-
+						System.exit(0);
 					}
 				} else {
 					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
@@ -153,7 +203,7 @@ public class TextPazzsample extends JFrame {
 					if (button == 0) {
 
 					} else if (button == 1) {
-
+						System.exit(0);
 					}
 				}
 				HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
@@ -178,6 +228,7 @@ public class TextPazzsample extends JFrame {
 		JLabel lblNewLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
 		lblNewLabel.setBounds(317, 82, 89, 70);
 		contentPane.add(lblNewLabel);
+	
 	}
 	public void Questions() {
 
