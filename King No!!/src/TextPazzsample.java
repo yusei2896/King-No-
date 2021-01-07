@@ -18,6 +18,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 
 /**
@@ -25,8 +27,11 @@ import java.awt.Color;
  *
  */
 public class TextPazzsample extends JFrame {
+	JPanel cardPanel;
+	CardLayout layout;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JPanel card1;
 	private JTextField textField;
 	private JLabel LeftLabel;
 	private JLabel UpLabel;
@@ -55,6 +60,13 @@ public class TextPazzsample extends JFrame {
 
 	URL HideimageURL = this.getClass().getResource("resources/84089164_480x480.png");
 	private ImageIcon Hide = new ImageIcon(HideimageURL); // 問題を隠している画像
+	private JPanel ButtonPanel;
+	private JButton MenuButton;
+	private JButton NextdifficultyButton;
+	private JButton ExitButton;
+	private JLabel lblNewLabel_1;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -64,6 +76,8 @@ public class TextPazzsample extends JFrame {
 			public void run() {
 				try {
 					TextPazzsample frame = new TextPazzsample();
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame.setBounds(640, 360, 480, 360);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -87,11 +101,10 @@ public class TextPazzsample extends JFrame {
 		} else if (diffculty == 2) {
 			setTitle("Textvirsion:hard");
 		}
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(640, 360, 491, 348);
+		
+		/*問題カード*/
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		LeftLabel = new JLabel(L);
@@ -130,7 +143,7 @@ public class TextPazzsample extends JFrame {
 		HideLabel.setBounds(100, 100, 80, 80);
 		contentPane.add(HideLabel);
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
-
+		
 		JButton btnNewButton = new JButton("\u89E3\u7B54");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -152,6 +165,11 @@ public class TextPazzsample extends JFrame {
 						UpLabel.setText(U);
 						RightLabel.setText(R);
 						DownLabel.setText(D);
+						
+						if(anscnt == 5) {
+							layout.show(cardPanel, "result");
+							setTitle("Result");
+						}
 
 					} else if (button == 2) {
 						System.exit(0);
@@ -189,8 +207,48 @@ public class TextPazzsample extends JFrame {
 		JLabel lblNewLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
 		lblNewLabel.setBounds(317, 82, 89, 70);
 		contentPane.add(lblNewLabel);
+		
+		/*結果カード*/
+		card1 = new JPanel();
+		
+	    card1.setLayout(new BorderLayout(0, 0));
+	    
+	    ButtonPanel = new JPanel();
+	    card1.add(ButtonPanel, BorderLayout.SOUTH);
+	    
+	    MenuButton = new JButton("メニューに戻る");
+	    ButtonPanel.add(MenuButton);
+	    
+	    NextdifficultyButton = new JButton("次の難易度へ");
+	    ButtonPanel.add(NextdifficultyButton);
+	    
+	    ExitButton = new JButton("終了");
+	    ExitButton.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		System.exit(0);
+	    	}
+	    });
+	    ButtonPanel.add(ExitButton);
+	    
+	    lblNewLabel_1 = new JLabel("〇問中〇問正解");
+	    lblNewLabel_1.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
+	    lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+	    card1.add(lblNewLabel_1, BorderLayout.CENTER);
+	    
+	    
+	    /*親（cardPanel自身）の定義*/
+	    cardPanel = new JPanel();
+	    layout = new CardLayout();
+	    cardPanel.setLayout(layout);
+
+	    cardPanel.add(contentPane, "TextPazzle");
+	    cardPanel.add(card1, "result");
+	    
+	    getContentPane().add(cardPanel, BorderLayout.CENTER); //最初に表示させるカードの指定（今回なら問題カード）
 
 	}
+	
+	
 
 	public void Fiveanswer() {
 		try {
@@ -222,6 +280,8 @@ public class TextPazzsample extends JFrame {
 			System.out.println(e);
 		}
 	}
+	
+	
 
 	public void Questions(String answer) {
 		C = answer;

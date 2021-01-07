@@ -20,6 +20,7 @@ public class Result extends JFrame {
 	private JButton ExitButton;
 	private JButton NextdifficultyButton;
 	private JLabel ResultLabel;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -49,7 +50,7 @@ public class Result extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 		
 		BacktoMenuButton = new JButton("メニューに戻る");
