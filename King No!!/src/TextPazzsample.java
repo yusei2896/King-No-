@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,7 +28,7 @@ import java.awt.Color;
  * @author King no !!
  *
  */
-public class TextPazzsample extends JFrame {
+public class TextPazzsample extends JFrame  {
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
@@ -66,6 +68,8 @@ public class TextPazzsample extends JFrame {
 	private JButton ExitButton;
 	private JLabel lblNewLabel_1;
 	
+
+	
 	
 
 	/**
@@ -85,6 +89,7 @@ public class TextPazzsample extends JFrame {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the frame.
@@ -144,6 +149,7 @@ public class TextPazzsample extends JFrame {
 		contentPane.add(HideLabel);
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 		
+		
 		JButton btnNewButton = new JButton("\u89E3\u7B54");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,6 +180,8 @@ public class TextPazzsample extends JFrame {
 					} else if (button == 2) {
 						System.exit(0);
 					}
+				
+					
 				} else {
 					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
 					String[] buttons = { "閉じる", "メニューへ戻る" };
@@ -230,7 +238,7 @@ public class TextPazzsample extends JFrame {
 	    });
 	    ButtonPanel.add(ExitButton);
 	    
-	    lblNewLabel_1 = new JLabel("〇問中〇問正解");
+	    lblNewLabel_1 = new JLabel(+anscnt+"問中〇問正解");
 	    lblNewLabel_1.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 	    lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 	    card1.add(lblNewLabel_1, BorderLayout.CENTER);
@@ -248,7 +256,7 @@ public class TextPazzsample extends JFrame {
 
 	}
 	
-	
+
 
 	public void Fiveanswer() {
 		try {
@@ -342,5 +350,5 @@ public class TextPazzsample extends JFrame {
 			System.out.println(e);
 		}
 	}
-
+	
 }
