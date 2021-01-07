@@ -92,6 +92,7 @@ public class TextPazzsample extends JFrame {
 	public TextPazzsample() {
 		anscnt = 0;
 		Fiveanswer();
+		//for(String a:fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		Questions(fiveans[anscnt]);
 		// タイトルの後ろに難易度を表示
 		if (diffculty == 0) {
@@ -150,10 +151,16 @@ public class TextPazzsample extends JFrame {
 				/* 解答の判定 */
 				String ans = textField.getText();
 				if (ans.equals(C)) {
+					anscnt++;
 					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
-					String[] buttons = { "閉じる", "次の問題へ", "メニューへ戻る" };
+					String[] buttons = { "閉じる", "次の問題へ", "メニューへ戻る", };
 					int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 							JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
+					if(anscnt == 5) {
+						anscnt = 0;
+						layout.show(cardPanel, "result");
+						setTitle("Result");
+					}
 					if (button == 0) {
 
 					} else if (button == 1) /* 次の問題ボタン */ {
@@ -165,12 +172,6 @@ public class TextPazzsample extends JFrame {
 						UpLabel.setText(U);
 						RightLabel.setText(R);
 						DownLabel.setText(D);
-						
-						if(anscnt == 5) {
-							layout.show(cardPanel, "result");
-							setTitle("Result");
-						}
-
 					} else if (button == 2) {
 						System.exit(0);
 					}
@@ -248,8 +249,6 @@ public class TextPazzsample extends JFrame {
 
 	}
 	
-	
-
 	public void Fiveanswer() {
 		try {
 			Random rnd = new Random();
@@ -271,8 +270,11 @@ public class TextPazzsample extends JFrame {
 			fiveans[0] = answork;
 			for (int i = 0; i < 4; i++) {
 				answork = anslist.get(rnd.nextInt(anslist.size()));
-				if (fiveans[i].equals(answork)) { // 被ったらやり直し
-					continue;
+				for(int j = 0; j < i; j++) {
+					if (fiveans[j].equals(answork)) { // 被ったらやり直し
+						answork = anslist.get(rnd.nextInt(anslist.size()));
+						continue;
+					}
 				}
 				fiveans[i + 1] = answork;
 			}
@@ -285,7 +287,6 @@ public class TextPazzsample extends JFrame {
 
 	public void Questions(String answer) {
 		C = answer;
-		anscnt++;
 		// ファイル操作
 		try {
 			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
@@ -320,6 +321,7 @@ public class TextPazzsample extends JFrame {
 			while (true) {
 				Up = secondlist.get(rnd.nextInt(secondlist.size()));// 配列の要素からランダムに取ってくる
 				if (Left.equals(Up)) { // 被ったらやり直し
+					Up = secondlist.get(rnd.nextInt(secondlist.size()));
 					continue;
 				}
 				break; // 被ってないからループを抜ける
@@ -328,6 +330,7 @@ public class TextPazzsample extends JFrame {
 			while (true) {
 				Right = firstlist.get(rnd.nextInt(firstlist.size())); // 配列の要素からランダムに取ってくる
 				if (Down.equals(Right)) { // 被ったらやり直し
+					Right = firstlist.get(rnd.nextInt(firstlist.size()));
 					continue;
 				}
 				break; // 被ってないからループを抜ける
