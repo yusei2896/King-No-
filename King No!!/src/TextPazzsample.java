@@ -85,7 +85,7 @@ public class TextPazzsample extends JFrame {
 			setTitle("Textvirsion:hard");
 		}	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 498, 342);
+		setBounds(640, 360, 491, 348);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
