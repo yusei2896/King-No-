@@ -34,12 +34,12 @@ public class TextPazzsample extends JFrame {
 	private JLabel DownLabel;
 	private JLabel RightLabel;
 	private JLabel HideLabel;
-	
+
 	// 解のテキストURL
 	URL easyansurl = this.getClass().getResource("resources/easy.txt");
 	URL normalansurl = this.getClass().getResource("resources/normal.txt");
 	URL hardansurl = this.getClass().getResource("resources/hard.txt");
-	URL[] ansurllist = {easyansurl, normalansurl, hardansurl};
+	URL[] ansurllist = { easyansurl, normalansurl, hardansurl };
 	// 熟語のテキストURL
 	URL easyTxturl = this.getClass().getResource("resources/J-easy.txt");
 	URL normalTxturl = this.getClass().getResource("resources/J-normal.txt");
@@ -48,6 +48,8 @@ public class TextPazzsample extends JFrame {
 
 	int diffculty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
+	String[] fiveans = new String[5]; // 5つの解を入れる配列
+	int anscnt=0;
 	String C, L = "左", U = "上", D = "下", R = "右";
 	String Left, Up, Down, Right;
 
@@ -70,20 +72,21 @@ public class TextPazzsample extends JFrame {
 		});
 	}
 
-
 	/**
 	 * Create the frame.
 	 */
 	public TextPazzsample() {
-		Questions();
+		anscnt = 0;
+		Fiveanswer();
+		Questions(fiveans[anscnt]);
 		// タイトルの後ろに難易度を表示
-		if(diffculty == 0) {
+		if (diffculty == 0) {
 			setTitle("Textvirsion:easy");
-		}else if(diffculty == 1) {
+		} else if (diffculty == 1) {
 			setTitle("Textvirsion:normal");
-		}else if(diffculty == 2) {
+		} else if (diffculty == 2) {
 			setTitle("Textvirsion:hard");
-		}	
+		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(640, 360, 491, 348);
 		contentPane = new JPanel();
@@ -140,58 +143,16 @@ public class TextPazzsample extends JFrame {
 							JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 					if (button == 0) {
 
-					} else if (button == 1) /*次の問題ボタン*/ {
-						
-						/* パネルにあった元のテキストを削除 */
-						contentPane.remove(LeftLabel);
-						contentPane.remove(UpLabel);
-						contentPane.remove(CenterLabel);
-						contentPane.remove(DownLabel);
-						contentPane.remove(RightLabel);
-						
+					} else if (button == 1) /* 次の問題ボタン */ {
+
 						/* ここから問題を再描画 */
-						Questions();	//問題の再設定
-						
-						
-						
-						/*再設定＆描画（ここが長ったらしい。多分コンパクト化行けそう。）*/
-						LeftLabel = new JLabel(L);
-						LeftLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						LeftLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
-						LeftLabel.setBounds(10, 100, 80, 80);
-						contentPane.add(LeftLabel);
-						
-						UpLabel = new JLabel(U);
-						UpLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
-						UpLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						UpLabel.setBounds(100, 10, 80, 80);
-						contentPane.add(UpLabel);
-						
-						CenterLabel = new JLabel(C);
-						CenterLabel.setForeground(Color.BLACK);
-						CenterLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
-						CenterLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						CenterLabel.setBounds(100, 100, 80, 80);
-						contentPane.add(CenterLabel);
-						
-						DownLabel = new JLabel(D);
-						DownLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
-						DownLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						DownLabel.setBounds(100, 190, 80, 80);
-						contentPane.add(DownLabel);
-						
-						RightLabel = new JLabel(R);
-						RightLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
-						RightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-						RightLabel.setBounds(190, 100, 80, 80);
-						contentPane.add(RightLabel);
-						
-						contentPane.revalidate();	/* レイアウトを再計算するように指示 
-													(これはコンポーネントを追加するときに必要) */
-						
-						contentPane.repaint();		/*ウィンドウの領域が汚れていることを通知
-													(remove()によって削除された元テキストを消去するために必要*/
-						
+						Questions(fiveans[anscnt]); // 問題の再設定
+						CenterLabel.setText(C);
+						LeftLabel.setText(L);
+						UpLabel.setText(U);
+						RightLabel.setText(R);
+						DownLabel.setText(D);
+
 					} else if (button == 2) {
 						System.exit(0);
 					}
@@ -228,23 +189,18 @@ public class TextPazzsample extends JFrame {
 		JLabel lblNewLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
 		lblNewLabel.setBounds(317, 82, 89, 70);
 		contentPane.add(lblNewLabel);
-	
+
 	}
-	public void Questions() {
 
-		// ファイル操作
+	public void Fiveanswer() {
 		try {
-
-			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
-			File ansfile = new File(ansurllist[diffculty].toURI()); // 出題用解答文字ファイル
-			FileReader jfilereader = new FileReader(jfile);
-			FileReader ansfilereader = new FileReader(ansfile);
-			BufferedReader jbr = new BufferedReader(jfilereader);
-			BufferedReader ansbr = new BufferedReader(ansfilereader);
 			Random rnd = new Random();
-			ArrayList<String> wordlist = new ArrayList<String>();// 可変配列
+			String answork;
+			File ansfile = new File(ansurllist[diffculty].toURI()); // 出題用解答文字ファイル
+			FileReader ansfilereader = new FileReader(ansfile);
+			BufferedReader ansbr = new BufferedReader(ansfilereader);
 			ArrayList<String> anslist = new ArrayList<String>();// 可変配列
-			String work1, work2;
+
 			// 答えが入ってるの中身を全部配列に入れる
 			String s = ansbr.readLine();
 			while (s != null) {
@@ -252,6 +208,33 @@ public class TextPazzsample extends JFrame {
 				s = ansbr.readLine();
 			}
 			ansbr.close();
+			// 5つ解を選択
+			answork = anslist.get(rnd.nextInt(anslist.size())); // 解をランダム抽選
+			fiveans[0] = answork;
+			for (int i = 0; i < 4; i++) {
+				answork = anslist.get(rnd.nextInt(anslist.size()));
+				if (fiveans[i].equals(answork)) { // 被ったらやり直し
+					continue;
+				}
+				fiveans[i + 1] = answork;
+			}
+		} catch (IOException | URISyntaxException e) {
+			System.out.println(e);
+		}
+	}
+
+	public void Questions(String answer) {
+		C = answer;
+		anscnt++;
+		// ファイル操作
+		try {
+			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
+			FileReader jfilereader = new FileReader(jfile);
+			BufferedReader jbr = new BufferedReader(jfilereader);
+			Random rnd = new Random();
+			ArrayList<String> wordlist = new ArrayList<String>();// 可変配列
+			String work1, work2;
+
 			// テキストファイルの中身を全部配列に入れる
 			String str = jbr.readLine();
 			while (str != null) {
@@ -259,8 +242,6 @@ public class TextPazzsample extends JFrame {
 				str = jbr.readLine();
 			}
 			jbr.close(); // ファイルを閉じる
-
-			C = anslist.get(rnd.nextInt(anslist.size())); // 解をランダム抽選
 
 			ArrayList<String> firstlist = new ArrayList<String>(); // 1文字目が解と同じ単語の配列
 			ArrayList<String> secondlist = new ArrayList<String>(); // 2文字目が解と同じ単語の配列
