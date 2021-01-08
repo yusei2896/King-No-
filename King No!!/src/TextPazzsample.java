@@ -55,6 +55,8 @@ public class TextPazzsample extends JFrame {
 	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
 	String[] fiveans = new String[5]; // 5つの解を入れる配列
 	int anscnt=0;
+	int correct = 0;
+	int miss = 0;
 	String C, L = "左", U = "上", D = "下", R = "右";
 	String Left, Up, Down, Right;
 
@@ -91,6 +93,8 @@ public class TextPazzsample extends JFrame {
 	 */
 	public TextPazzsample() {
 		anscnt = 0;
+		correct = 0;
+		miss = 0;
 		Fiveanswer();
 		//for(String a:fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		Questions(fiveans[anscnt]);
@@ -152,12 +156,15 @@ public class TextPazzsample extends JFrame {
 				String ans = textField.getText();
 				if (ans.equals(C)) {
 					anscnt++;
+					correct++;
+					miss = 0;
 					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
 					String[] buttons = { "閉じる", "次の問題へ", "メニューへ戻る", };
 					int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 							JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 					if(anscnt == 5) {
 						anscnt = 0;
+						lblNewLabel_1.setText("5問中"+correct+"問正解");
 						layout.show(cardPanel, "result");
 						setTitle("Result");
 					}
@@ -176,11 +183,32 @@ public class TextPazzsample extends JFrame {
 						System.exit(0);
 					}
 				} else {
-					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
+					miss++;
+					if(miss == 3) {
+						HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
+					}
 					String[] buttons = { "閉じる", "メニューへ戻る" };
 					int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, buttons, buttons[0]);
 					if (button == 0) {
+						if(miss == 3 && anscnt == 4) {	
+							anscnt = 0;
+							miss = 0;
+							lblNewLabel_1.setText("5問中"+correct+"問正解");
+							layout.show(cardPanel, "result");
+							setTitle("Result");
+						}
+						if(miss == 3 &&  anscnt < 4) {
+							anscnt++;
+							miss = 0;
+							System.out.println("miss3回");
+							Questions(fiveans[anscnt]); // 問題の再設定
+							CenterLabel.setText(C);
+							LeftLabel.setText(L);
+							UpLabel.setText(U);
+							RightLabel.setText(R);
+							DownLabel.setText(D);
+						}
 
 					} else if (button == 1) {
 						System.exit(0);
@@ -231,7 +259,7 @@ public class TextPazzsample extends JFrame {
 	    });
 	    ButtonPanel.add(ExitButton);
 	    
-	    lblNewLabel_1 = new JLabel("〇問中〇問正解");
+	    lblNewLabel_1 = new JLabel("5問中〇問正解");
 	    lblNewLabel_1.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 	    lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 	    card1.add(lblNewLabel_1, BorderLayout.CENTER);
@@ -287,6 +315,7 @@ public class TextPazzsample extends JFrame {
 
 	public void Questions(String answer) {
 		C = answer;
+		System.out.println(anscnt+1+"問目");
 		// ファイル操作
 		try {
 			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
