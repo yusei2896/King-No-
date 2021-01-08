@@ -201,7 +201,7 @@ public class TextPazzsample extends JFrame {
 						if(miss == 3 &&  anscnt < 4) {
 							anscnt++;
 							miss = 0;
-							System.out.println("miss3回");
+							//System.out.println("miss3回");
 							Questions(fiveans[anscnt]); // 問題の再設定
 							CenterLabel.setText(C);
 							LeftLabel.setText(L);
@@ -296,15 +296,16 @@ public class TextPazzsample extends JFrame {
 			// 5つ解を選択
 			answork = anslist.get(rnd.nextInt(anslist.size())); // 解をランダム抽選
 			fiveans[0] = answork;
-			for (int i = 0; i < 4; i++) {
+			for (int i = 1; i < 5; i++) {
 				answork = anslist.get(rnd.nextInt(anslist.size()));
 				for(int j = 0; j < i; j++) {
-					if (fiveans[j].equals(answork)) { // 被ったらやり直し
+					if (!(fiveans[j].equals(answork))) { // 被ってなかったらループを抜ける
+					}else {
 						answork = anslist.get(rnd.nextInt(anslist.size()));
 						continue;
 					}
 				}
-				fiveans[i + 1] = answork;
+				fiveans[i] = answork;
 			}
 		} catch (IOException | URISyntaxException e) {
 			System.out.println(e);
@@ -315,7 +316,7 @@ public class TextPazzsample extends JFrame {
 
 	public void Questions(String answer) {
 		C = answer;
-		System.out.println(anscnt+1+"問目");
+		//System.out.print(anscnt+1+"問目");
 		// ファイル操作
 		try {
 			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
@@ -349,20 +350,21 @@ public class TextPazzsample extends JFrame {
 			Left = secondlist.get(rnd.nextInt(secondlist.size())); // 配列の要素からランダムに取ってくる
 			while (true) {
 				Up = secondlist.get(rnd.nextInt(secondlist.size()));// 配列の要素からランダムに取ってくる
-				if (Left.equals(Up)) { // 被ったらやり直し
-					Up = secondlist.get(rnd.nextInt(secondlist.size()));
-					continue;
+				if (!(Left.substring(0, 1).equals(Up.substring(0, 1)))) { // 被ってなかったらループを抜ける
+					break;
 				}
-				break; // 被ってないからループを抜ける
 			}
-			Down = firstlist.get(rnd.nextInt(firstlist.size())); // 配列の要素からランダムに取ってくる
+			while(true) {
+				Down = firstlist.get(rnd.nextInt(firstlist.size())); // 配列の要素からランダムに取ってくる
+				if(!(Left.substring(0, 1).equals(Down.substring(1, 2))) && !(Up.substring(0, 1).equals(Down.substring(1, 2)))) {
+					break;
+				}
+			}
 			while (true) {
 				Right = firstlist.get(rnd.nextInt(firstlist.size())); // 配列の要素からランダムに取ってくる
-				if (Down.equals(Right)) { // 被ったらやり直し
-					Right = firstlist.get(rnd.nextInt(firstlist.size()));
-					continue;
+				if (!(Down.substring(1, 2).equals(Right.substring(1, 2))) && !(Left.substring(0, 1).equals(Right.substring(1, 2)))&& !(Up.substring(0, 1).equals(Right.substring(1, 2)))) { // 被ってなかったらループを抜ける
+					break; 
 				}
-				break; // 被ってないからループを抜ける
 			}
 			// ラベルに表示する変数に文字を入れる
 			L = Left.substring(0, 1);
