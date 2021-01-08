@@ -2,6 +2,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.omg.PortableServer.ServantRetentionPolicyValue;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -26,7 +29,7 @@ import java.awt.Color;
  * @author King no !!
  *
  */
-public class TextPazzsample extends JFrame {
+public class TextPazzsample extends JFrame  {
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
@@ -54,9 +57,11 @@ public class TextPazzsample extends JFrame {
 	int diffculty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
 	String[] fiveans = new String[5]; // 5つの解を入れる配列
+
 	int anscnt=0;
 	int correct = 0;
 	int miss = 0;
+
 	String C, L = "左", U = "上", D = "下", R = "右";
 	String Left, Up, Down, Right;
 
@@ -67,6 +72,8 @@ public class TextPazzsample extends JFrame {
 	private JButton NextdifficultyButton;
 	private JButton ExitButton;
 	private JLabel lblNewLabel_1;
+	
+
 	
 	
 
@@ -87,6 +94,7 @@ public class TextPazzsample extends JFrame {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the frame.
@@ -96,7 +104,10 @@ public class TextPazzsample extends JFrame {
 		correct = 0;
 		miss = 0;
 		Fiveanswer();
-		//for(String a:fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		
+		for(String a:fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		System.out.println("");
+		
 		Questions(fiveans[anscnt]);
 		// タイトルの後ろに難易度を表示
 		if (diffculty == 0) {
@@ -149,6 +160,7 @@ public class TextPazzsample extends JFrame {
 		contentPane.add(HideLabel);
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 		
+		
 		JButton btnNewButton = new JButton("\u89E3\u7B54");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,10 +175,10 @@ public class TextPazzsample extends JFrame {
 					int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 							JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 					if(anscnt == 5) {
-						anscnt = 0;
-						lblNewLabel_1.setText("5問中"+correct+"問正解");
+						lblNewLabel_1.setText(anscnt+"問中"+correct+"問正解");
 						layout.show(cardPanel, "result");
 						setTitle("Result");
+						anscnt = 0;
 					}
 					if (button == 0) {
 
@@ -182,6 +194,9 @@ public class TextPazzsample extends JFrame {
 					} else if (button == 2) {
 						System.exit(0);
 					}
+
+				
+
 				} else {
 					miss++;
 					if(miss == 3) {
@@ -190,13 +205,18 @@ public class TextPazzsample extends JFrame {
 					String[] buttons = { "閉じる", "メニューへ戻る" };
 					int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, buttons, buttons[0]);
+
+					
 					if (button == 0) {
+
+
 						if(miss == 3 && anscnt == 4) {	
-							anscnt = 0;
-							miss = 0;
-							lblNewLabel_1.setText("5問中"+correct+"問正解");
+							anscnt++;
+							lblNewLabel_1.setText(anscnt+"問中"+correct+"問正解");
 							layout.show(cardPanel, "result");
 							setTitle("Result");
+							anscnt = 0;
+							miss = 0;
 						}
 						if(miss == 3 &&  anscnt < 4) {
 							anscnt++;
@@ -209,6 +229,7 @@ public class TextPazzsample extends JFrame {
 							RightLabel.setText(R);
 							DownLabel.setText(D);
 						}
+
 
 					} else if (button == 1) {
 						System.exit(0);
@@ -258,7 +279,6 @@ public class TextPazzsample extends JFrame {
 	    	}
 	    });
 	    ButtonPanel.add(ExitButton);
-	    
 	    lblNewLabel_1 = new JLabel("5問中〇問正解");
 	    lblNewLabel_1.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 	    lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -271,12 +291,14 @@ public class TextPazzsample extends JFrame {
 	    cardPanel.setLayout(layout);
 
 	    cardPanel.add(contentPane, "TextPazzle");
-	    cardPanel.add(card1, "result");
+		cardPanel.add(card1, "result");
+		revalidate();
 	    
 	    getContentPane().add(cardPanel, BorderLayout.CENTER); //最初に表示させるカードの指定（今回なら問題カード）
 
 	}
 	
+
 	public void Fiveanswer() {
 		try {
 			Random rnd = new Random();
@@ -376,5 +398,5 @@ public class TextPazzsample extends JFrame {
 			System.out.println(e);
 		}
 	}
-
+	
 }
