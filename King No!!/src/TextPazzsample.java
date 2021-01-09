@@ -2,9 +2,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.omg.PortableServer.ServantRetentionPolicyValue;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -15,6 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,12 +24,13 @@ import java.util.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 
 /**
  * @author King no !!
  *
  */
-public class TextPazzsample extends JFrame {
+public class TextPazzsample extends JFrame implements KeyListener {
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
@@ -68,11 +69,12 @@ public class TextPazzsample extends JFrame {
 	URL HideimageURL = this.getClass().getResource("resources/84089164_480x480.png");
 	private ImageIcon Hide = new ImageIcon(HideimageURL); // 問題を隠している画像
 	private JPanel ButtonPanel;
-	private JButton MenuButton;
-	private JButton NextdifficultyButton;
-	private JButton ExitButton;
+	public JButton MenuButton;
+	public JButton NextdifficultyButton;
+	public JButton ExitButton;
 	private JLabel ResultLabel;
 	private JLabel ScoreLabel;
+	public JButton answerButton;
 
 	/**
 	 * Launch the application.
@@ -101,9 +103,7 @@ public class TextPazzsample extends JFrame {
 		miss = 0;
 		Fiveanswer();
 
-		for (String a : fiveans) {
-			System.out.print(a);
-		} // スラッシュを消すとコンソールに解を表示
+		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");
 
 		Questions(fiveans[anscnt]);
@@ -158,97 +158,25 @@ public class TextPazzsample extends JFrame {
 		contentPane.add(HideLabel);
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 
-		JButton btnNewButton = new JButton("\u89E3\u7B54");
-		btnNewButton.addActionListener(new ActionListener() {
+		answerButton = new JButton("\u89E3\u7B54");
+		answerButton.addKeyListener(this);
+		answerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/* 解答の判定 */
-				String ans = textField.getText();
-				if (ans.equals(C)) {
-					anscnt++;
-					correct++;
-					miss = 0;
-					HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
-					String[] buttons = { "閉じる", "次の問題へ", "メニューへ戻る", };
-					int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
-							JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
-					if (anscnt == 5) {
-						ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-						layout.show(cardPanel, "result");
-						setTitle("Result");
-						anscnt = 0;
-					}
-					if (button == 0) {
-
-					} else if (button == 1) /* 次の問題ボタン */ {
-
-						/* ここから問題を再描画 */
-						Questions(fiveans[anscnt]); // 問題の再設定
-						CenterLabel.setText(C);
-						LeftLabel.setText(L);
-						UpLabel.setText(U);
-						RightLabel.setText(R);
-						DownLabel.setText(D);
-					} else if (button == 2) {
-						System.exit(0);
-					}
-
-				} else {
-					miss++;
-					if (miss == 3) {
-						HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
-					}
-					String[] buttons = { "閉じる", "メニューへ戻る" };
-					int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果", JOptionPane.YES_NO_OPTION,
-							JOptionPane.ERROR_MESSAGE, null, buttons, buttons[0]);
-
-					if (button == 0) {
-
-						if (miss == 3 && anscnt == 4) {
-							anscnt++;
-							ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-							layout.show(cardPanel, "result");
-							setTitle("Result");
-							anscnt = 0;
-							miss = 0;
-						}
-						if (miss == 3 && anscnt < 4) {
-							anscnt++;
-							miss = 0;
-							// System.out.println("miss3回");
-							Questions(fiveans[anscnt]); // 問題の再設定
-							CenterLabel.setText(C);
-							LeftLabel.setText(L);
-							UpLabel.setText(U);
-							RightLabel.setText(R);
-							DownLabel.setText(D);
-						}
-
-					} else if (button == 1) {
-						System.exit(0);
-					}
-				}
-				HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
+				answer();
 			}
 		});
-		btnNewButton.setBounds(317, 202, 89, 21);
-		contentPane.add(btnNewButton);
-
-		JButton btnNewButton_1 = new JButton("\u30D2\u30F3\u30C81");
-		btnNewButton_1.setBounds(317, 20, 89, 21);
-		contentPane.add(btnNewButton_1);
+		answerButton.setBounds(317, 202, 89, 21);
+		contentPane.add(answerButton);
 
 		textField = new JTextField();
+		textField.addKeyListener(this);
 		textField.setBounds(317, 173, 96, 19);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
-		JButton btnNewButton_2 = new JButton("\u30D2\u30F3\u30C82");
-		btnNewButton_2.setBounds(317, 51, 89, 21);
-		contentPane.add(btnNewButton_2);
-
-		JLabel lblNewLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
-		lblNewLabel.setBounds(317, 82, 89, 70);
-		contentPane.add(lblNewLabel);
+		JLabel txtLabel = new JLabel("");
+		txtLabel.setBounds(317, 82, 89, 70);
+		contentPane.add(txtLabel);
 
 		/* 結果カード */
 		card1 = new JPanel();
@@ -259,12 +187,15 @@ public class TextPazzsample extends JFrame {
 		card1.add(ButtonPanel);
 
 		MenuButton = new JButton("メニューに戻る");
+		MenuButton.addKeyListener(this);
 		ButtonPanel.add(MenuButton);
 
 		NextdifficultyButton = new JButton("次の難易度へ");
+		NextdifficultyButton.addKeyListener(this);
 		ButtonPanel.add(NextdifficultyButton);
 
 		ExitButton = new JButton("終了");
+		ExitButton.addKeyListener(this);
 		ExitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -394,6 +325,135 @@ public class TextPazzsample extends JFrame {
 		} catch (IOException | URISyntaxException e) {
 			System.out.println(e);
 		}
+	}
+	
+	public void answer() {
+		/* 解答の判定 */
+		String ans = textField.getText();
+		if (ans.equals(C)) {
+			anscnt++;
+			correct++;
+			miss = 0;
+			HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
+			String[] buttons = { "閉じる", "次の問題へ", "メニューへ戻る", };
+			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
+					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
+			if (anscnt == 5) {
+				ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+				layout.show(cardPanel, "result");
+				setTitle("Result");
+				anscnt = 0;
+			}
+			if (button == 0) {
+
+			} else if (button == 1) /* 次の問題ボタン */ {
+
+				/* ここから問題を再描画 */
+				Questions(fiveans[anscnt]); // 問題の再設定
+				CenterLabel.setText(C);
+				LeftLabel.setText(L);
+				UpLabel.setText(U);
+				RightLabel.setText(R);
+				DownLabel.setText(D);
+			} else if (button == 2) {
+				System.exit(0);
+			}
+
+		} else {
+			miss++;
+			if (miss == 3) {
+				HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
+			}
+			String[] buttons = { "閉じる", "メニューへ戻る" };
+			int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果", JOptionPane.YES_NO_OPTION,
+					JOptionPane.ERROR_MESSAGE, null, buttons, buttons[0]);
+
+			if (button == 0) {
+
+				if (miss == 3 && anscnt == 4) {
+					anscnt++;
+					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+					layout.show(cardPanel, "result");
+					setTitle("Result");
+					anscnt = 0;
+					miss = 0;
+				}
+				if (miss == 3 && anscnt < 4) {
+					anscnt++;
+					miss = 0;
+					// System.out.println("miss3回");
+					Questions(fiveans[anscnt]); // 問題の再設定
+					CenterLabel.setText(C);
+					LeftLabel.setText(L);
+					UpLabel.setText(U);
+					RightLabel.setText(R);
+					DownLabel.setText(D);
+				}
+
+			} else if (button == 1) {
+				System.exit(0);
+			}
+		}
+		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
+	}
+	
+	// 十字キーとエンターキーをボタンとテキストフィールドで使う
+	public void keyPressed(KeyEvent e) {
+		if(!(e.getSource() instanceof JButton) && !(e.getSource() instanceof JTextField)) {return;} // ボタンとテキストフィールド以外は何もせず返す 
+		// イベント発生もと取得
+		Component event = e.getComponent();
+		
+		switch(e.getKeyCode()) {
+		// ↓→はタブ
+		case KeyEvent.VK_RIGHT:
+		case KeyEvent.VK_KP_RIGHT:
+		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_KP_DOWN:
+			// タブに設定してイベント発生
+			e.setKeyCode(KeyEvent.VK_TAB);
+			event.dispatchEvent(e);
+			break;
+		// ↑←はシフトタブ
+		case KeyEvent.VK_LEFT:
+		case KeyEvent.VK_KP_LEFT:
+		case KeyEvent.VK_UP:
+		case KeyEvent.VK_KP_UP:
+			// タブに設定
+			e.setKeyCode(KeyEvent.VK_TAB);
+			
+			// シフトのイベントを作成、イベントを発生させる
+			KeyEvent fKey = new KeyEvent(
+				e.getComponent(),
+				e.getID(),
+				e.getWhen(),
+				InputEvent.SHIFT_DOWN_MASK,
+				e.getKeyCode(),
+				e.getKeyChar());
+			event.dispatchEvent(fKey);
+			break;
+		// enter
+		case KeyEvent.VK_ENTER:
+			// 解答ボタン上でエンター
+			if(answerButton.equals(event)) {
+				answer();
+			}
+			// テキストフィールド上でエンター
+			if(textField.equals(event)) {
+				e.setKeyCode(KeyEvent.VK_TAB);
+				System.out.println("touch");
+				textField.dispatchEvent(e);
+			}
+			// 終了ボタン上でエンター
+			if(ExitButton.equals(event)) {
+				System.exit(0);
+			}	
+		}
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {	
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {		
 	}
 
 }
