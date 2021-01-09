@@ -71,7 +71,8 @@ public class TextPazzsample extends JFrame {
 	private JButton MenuButton;
 	private JButton NextdifficultyButton;
 	private JButton ExitButton;
-	private JLabel lblNewLabel_1;
+	private JLabel ResultLabel;
+	private JLabel ScoreLabel;
 
 	/**
 	 * Launch the application.
@@ -171,7 +172,7 @@ public class TextPazzsample extends JFrame {
 					int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 							JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 					if (anscnt == 5) {
-						lblNewLabel_1.setText(anscnt + "問中" + correct + "問正解");
+						ResultLabel.setText(anscnt + "問中" + correct + "問正解");
 						layout.show(cardPanel, "result");
 						setTitle("Result");
 						anscnt = 0;
@@ -204,7 +205,7 @@ public class TextPazzsample extends JFrame {
 
 						if (miss == 3 && anscnt == 4) {
 							anscnt++;
-							lblNewLabel_1.setText(anscnt + "問中" + correct + "問正解");
+							ResultLabel.setText(anscnt + "問中" + correct + "問正解");
 							layout.show(cardPanel, "result");
 							setTitle("Result");
 							anscnt = 0;
@@ -251,11 +252,11 @@ public class TextPazzsample extends JFrame {
 
 		/* 結果カード */
 		card1 = new JPanel();
-
-		card1.setLayout(new BorderLayout(0, 0));
+		card1.setLayout(null);
 
 		ButtonPanel = new JPanel();
-		card1.add(ButtonPanel, BorderLayout.SOUTH);
+		ButtonPanel.setBounds(0, 232, 436, 31);
+		card1.add(ButtonPanel);
 
 		MenuButton = new JButton("メニューに戻る");
 		ButtonPanel.add(MenuButton);
@@ -270,10 +271,11 @@ public class TextPazzsample extends JFrame {
 			}
 		});
 		ButtonPanel.add(ExitButton);
-		lblNewLabel_1 = new JLabel("5問中〇問正解");
-		lblNewLabel_1.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(lblNewLabel_1, BorderLayout.CENTER);
+		ResultLabel = new JLabel("5問中〇問正解");
+		ResultLabel.setBounds(0, 0, 440, 90);
+		ResultLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
+		ResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		card1.add(ResultLabel);
 
 		/* 親（cardPanel自身）の定義 */
 		cardPanel = new JPanel();
@@ -282,7 +284,13 @@ public class TextPazzsample extends JFrame {
 
 		cardPanel.add(contentPane, "TextPazzle");
 		cardPanel.add(card1, "result");
-		revalidate();
+		
+		ScoreLabel = new JLabel("スコア：");
+		ScoreLabel.setBounds(0, 100, 430, 133);
+		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
+		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		card1.add(ScoreLabel);
+		//revalidate();
 
 		getContentPane().add(cardPanel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
 
