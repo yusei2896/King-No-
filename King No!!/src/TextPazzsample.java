@@ -276,6 +276,12 @@ public class TextPazzsample extends JFrame {
 		ResultLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
 		ResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		card1.add(ResultLabel);
+		
+		ScoreLabel = new JLabel("スコア：");
+		ScoreLabel.setBounds(0, 100, 430, 133);
+		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
+		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		card1.add(ScoreLabel);
 
 		/* 親（cardPanel自身）の定義 */
 		cardPanel = new JPanel();
@@ -285,13 +291,6 @@ public class TextPazzsample extends JFrame {
 		cardPanel.add(contentPane, "TextPazzle");
 		cardPanel.add(card1, "result");
 		
-		ScoreLabel = new JLabel("スコア：");
-		ScoreLabel.setBounds(0, 100, 430, 133);
-		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
-		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ScoreLabel);
-		//revalidate();
-
 		getContentPane().add(cardPanel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
 
 	}
