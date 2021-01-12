@@ -26,6 +26,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 
 /**
  * @author King no !!
@@ -86,8 +87,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				try {
 					TextPazzsample frame = new TextPazzsample();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					//frame.setBounds(640, 360, 480, 360);
-					frame.setBounds(0, 0, 640, 480);
+					frame.setBounds(0,0,960,540);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -127,31 +127,31 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 		LeftLabel = new JLabel(L);
 		LeftLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		LeftLabel.setFont(new Font("MS 明朝", Font.BOLD, 80));
+		LeftLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		LeftLabel.setBounds(75, 170, 160, 160);
 		contentPane.add(LeftLabel);
 
 		UpLabel = new JLabel(U);
-		UpLabel.setFont(new Font("MS 明朝", Font.BOLD, 80));
+		UpLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		UpLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		UpLabel.setBounds(248, 0, 160, 160);
 		contentPane.add(UpLabel);
 
 		CenterLabel = new JLabel(C);
 		CenterLabel.setForeground(Color.BLACK);
-		CenterLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
+		CenterLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		CenterLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		CenterLabel.setBounds(248, 170, 160, 160);
 		contentPane.add(CenterLabel);
 
 		DownLabel = new JLabel(D);
-		DownLabel.setFont(new Font("MS 明朝", Font.BOLD, 80));
+		DownLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		DownLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		DownLabel.setBounds(248, 343, 160, 160);
 		contentPane.add(DownLabel);
 
 		RightLabel = new JLabel(R);
-		RightLabel.setFont(new Font("MS 明朝", Font.BOLD, 80));
+		RightLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		RightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		RightLabel.setBounds(420, 170, 160, 160);
 		contentPane.add(RightLabel);
@@ -163,6 +163,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 
 		answerButton = new JButton("\u89E3\u7B54");
+		answerButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		answerButton.addKeyListener(this);
 		answerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -185,21 +186,24 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 		/* 結果カード */
 		card1 = new JPanel();
-		card1.setLayout(null);
+		card1.setLayout(new BorderLayout(0, 0));
 
 		ButtonPanel = new JPanel();
-		ButtonPanel.setBounds(0, 232, 436, 31);
-		card1.add(ButtonPanel);
+		card1.add(ButtonPanel, BorderLayout.SOUTH);
 
 		MenuButton = new JButton("メニューに戻る");
+		MenuButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		MenuButton.addKeyListener(this);
+		ButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		ButtonPanel.add(MenuButton);
 
 		NextdifficultyButton = new JButton("次の難易度へ");
+		NextdifficultyButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		NextdifficultyButton.addKeyListener(this);
 		ButtonPanel.add(NextdifficultyButton);
 
 		ExitButton = new JButton("終了");
+		ExitButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		ExitButton.addKeyListener(this);
 		ExitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -208,16 +212,14 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		});
 		ButtonPanel.add(ExitButton);
 		ResultLabel = new JLabel("5問中〇問正解");
-		ResultLabel.setBounds(0, 0, 440, 90);
 		ResultLabel.setFont(new Font("MS UI Gothic", Font.BOLD| Font.ITALIC, 80));
 		ResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ResultLabel);
+		card1.add(ResultLabel, BorderLayout.NORTH);
 		
 		ScoreLabel = new JLabel("スコア：");
-		ScoreLabel.setBounds(0, 100, 430, 133);
 		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD| Font.ITALIC, 80));
 		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ScoreLabel);
+		card1.add(ScoreLabel, BorderLayout.CENTER);
 
 		/* 親（cardPanel自身）の定義 */
 		cardPanel = new JPanel();
@@ -457,7 +459,9 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	public void keyTyped(KeyEvent e) {	
 	}
 	@Override
-	public void keyReleased(KeyEvent e) {		
+	public void keyReleased(KeyEvent e) {
+
+		
 	}
 
 }
