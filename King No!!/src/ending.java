@@ -19,6 +19,10 @@ import java.awt.event.ActionEvent;
 
 public class ending extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel nanidopanel;
 	private JButton EasyButton;

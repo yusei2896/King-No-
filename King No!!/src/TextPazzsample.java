@@ -36,8 +36,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JPanel card1;
+	private JPanel contentPane,card1,card2;
 	private JTextField textField;
 	private JLabel LeftLabel;
 	private JLabel UpLabel;
@@ -77,6 +76,14 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	private JLabel ResultLabel;
 	private JLabel ScoreLabel;
 	public JButton answerButton;
+	private JPanel nanidopanel;
+	private JButton EasyButton;
+	private JButton NormalButton;
+	private JButton HardButton;
+	private JPanel EndPanel;
+	private JButton EndButton;
+	private JPanel panel;
+	private JLabel DispLabel;
 
 	/**
 	 * Launch the application.
@@ -119,6 +126,72 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			setTitle("Textvirsion:hard");
 		}
 
+		/*メニューカード*/
+		card2 = new JPanel();
+		card2.setBorder(new EmptyBorder(5, 5, 5, 5));
+		card2.setLayout(new BorderLayout(20, 20));
+		
+		nanidopanel = new JPanel();
+		FlowLayout fl_nanidopanel = (FlowLayout) nanidopanel.getLayout();
+		fl_nanidopanel.setVgap(70);
+		fl_nanidopanel.setHgap(30);
+		card2.add(nanidopanel, BorderLayout.CENTER);
+		
+		EasyButton = new JButton("\u304B\u3093\u305F\u3093");
+		EasyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				easy();
+			}
+		});
+		EasyButton.setBackground(Color.WHITE);
+		EasyButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
+		nanidopanel.add(EasyButton);
+		
+		NormalButton = new JButton("\u3075\u3064\u3046");
+		NormalButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				normal();
+			}
+		});
+		NormalButton.setBackground(Color.WHITE);
+		NormalButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
+		nanidopanel.add(NormalButton);
+		
+		HardButton = new JButton("\u3080\u305A\u304B\u3057\u3044");
+		HardButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hard();
+			}
+		});
+		HardButton.setBackground(Color.WHITE);
+		HardButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
+		HardButton.setHorizontalAlignment(SwingConstants.RIGHT);
+		nanidopanel.add(HardButton);
+		
+		EndPanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) EndPanel.getLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		card2.add(EndPanel, BorderLayout.SOUTH);
+		
+		EndButton = new JButton("\u7D42\u4E86");
+		EndButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		EndButton.setBackground(Color.BLACK);
+		EndButton.setForeground(Color.WHITE);
+		EndButton.setFont(new Font("Dialog", Font.BOLD, 20));
+		EndButton.setHorizontalAlignment(SwingConstants.LEFT);
+		EndPanel.add(EndButton);
+		
+		panel = new JPanel();
+		card2.add(panel, BorderLayout.NORTH);
+		
+		DispLabel = new JLabel("");
+		panel.add(DispLabel);
+		
+		
 		/* 問題カード */
 		contentPane = new JPanel();
 		contentPane.setBounds(new Rectangle(0, 0, 960, 540));
@@ -192,6 +265,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		card1.add(ButtonPanel, BorderLayout.SOUTH);
 
 		MenuButton = new JButton("メニューに戻る");
+		MenuButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(cardPanel, "Menu");
+			}
+		});
 		MenuButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		MenuButton.addKeyListener(this);
 		ButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -225,9 +303,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		cardPanel = new JPanel();
 		layout = new CardLayout();
 		cardPanel.setLayout(layout);
-
+		
+		cardPanel.add(card2, "Menu");
 		cardPanel.add(contentPane, "TextPazzle");
 		cardPanel.add(card1, "result");
+		
 		
 		getContentPane().add(cardPanel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
 
@@ -333,6 +413,50 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			System.out.println(e);
 		}
 	}
+	public void easy() {
+		diffculty = 0;
+		Fiveanswer();
+		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		System.out.println("");
+		Questions(fiveans[anscnt]); // 問題の再設定
+		CenterLabel.setText(C);
+		LeftLabel.setText(L);
+		UpLabel.setText(U);
+		RightLabel.setText(R);
+		DownLabel.setText(D);
+		setTitle("Textvirsion:easy");
+		layout.show(cardPanel, "TextPazzle");
+	}
+	
+	public void normal() {
+		diffculty = 1;
+		Fiveanswer();
+		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		System.out.println("");
+		Questions(fiveans[anscnt]); // 問題の再設定
+		CenterLabel.setText(C);
+		LeftLabel.setText(L);
+		UpLabel.setText(U);
+		RightLabel.setText(R);
+		DownLabel.setText(D);
+		setTitle("Textvirsion:normal");
+		layout.show(cardPanel, "TextPazzle");
+	}
+	
+	public void hard() {
+		diffculty = 2;
+		Fiveanswer();
+		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		System.out.println("");
+		Questions(fiveans[anscnt]); // 問題の再設定
+		CenterLabel.setText(C);
+		LeftLabel.setText(L);
+		UpLabel.setText(U);
+		RightLabel.setText(R);
+		DownLabel.setText(D);
+		setTitle("Textvirsion:hard");
+		layout.show(cardPanel, "TextPazzle");
+	}
 	
 	public void answer() {
 		/* 解答の判定 */
@@ -363,7 +487,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				RightLabel.setText(R);
 				DownLabel.setText(D);
 			} else if (button == 2) {
-				System.exit(0);
+				layout.show(cardPanel, "Menu");
 			}
 
 		} else {
@@ -398,7 +522,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				}
 
 			} else if (button == 1) {
-				System.exit(0);
+				layout.show(cardPanel, "Menu");
 			}
 		}
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
