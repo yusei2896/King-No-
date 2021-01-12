@@ -111,12 +111,12 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		anscnt = 0;
 		correct = 0;
 		miss = 0;
-		Fiveanswer();
+		//Fiveanswer();
 
-		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
-		System.out.println("");
+		//for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		//System.out.println("");
 
-		Questions(fiveans[anscnt]);
+		//Questions(fiveans[anscnt]);
 		// タイトルの後ろに難易度を表示
 		if (diffculty == 0) {
 			setTitle("Textvirsion:easy");
@@ -128,6 +128,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 		/*メニューカード*/
 		card2 = new JPanel();
+		setTitle("メニュー");
 		card2.setBorder(new EmptyBorder(5, 5, 5, 5));
 		card2.setLayout(new BorderLayout(20, 20));
 		
@@ -138,6 +139,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		card2.add(nanidopanel, BorderLayout.CENTER);
 		
 		EasyButton = new JButton("\u304B\u3093\u305F\u3093");
+		EasyButton.addKeyListener(this);
 		EasyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				easy();
@@ -148,6 +150,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		nanidopanel.add(EasyButton);
 		
 		NormalButton = new JButton("\u3075\u3064\u3046");
+		NormalButton.addKeyListener(this);
 		NormalButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				normal();
@@ -158,6 +161,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		nanidopanel.add(NormalButton);
 		
 		HardButton = new JButton("\u3080\u305A\u304B\u3057\u3044");
+		HardButton.addKeyListener(this);
 		HardButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hard();
@@ -174,6 +178,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		card2.add(EndPanel, BorderLayout.SOUTH);
 		
 		EndButton = new JButton("\u7D42\u4E86");
+		EndButton.addKeyListener(this);
 		EndButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -461,12 +466,15 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	public void answer() {
 		/* 解答の判定 */
 		String ans = textField.getText();
+		// テキストフィールドを空にする
+		textField.setText("");
 		if (ans.equals(C)) {
 			anscnt++;
 			correct++;
 			miss = 0;
+			
 			HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
-			String[] buttons = { "閉じる", "次の問題へ", "メニューへ戻る", };
+			String[] buttons = { "次の問題へ", "メニューへ戻る", };
 			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			if (anscnt == 5) {
@@ -475,9 +483,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				setTitle("Result");
 				anscnt = 0;
 			}
-			if (button == 0) {
-
-			} else if (button == 1) /* 次の問題ボタン */ {
+			if (button == 0) /* 次の問題ボタン */ {
 
 				/* ここから問題を再描画 */
 				Questions(fiveans[anscnt]); // 問題の再設定
@@ -522,7 +528,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				}
 
 			} else if (button == 1) {
+				anscnt = 0;
+				miss = 0;
 				layout.show(cardPanel, "Menu");
+				setTitle("メニュー");
 			}
 		}
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
@@ -564,9 +573,24 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			break;
 		// enter
 		case KeyEvent.VK_ENTER:
+			// easy
+			if(EasyButton.equals(event)) {
+				easy();
+			}
+			// normal
+			if(NormalButton.equals(event)) {
+				normal();
+			}
+			// hard
+			if(HardButton.equals(event)) {
+				hard();
+			}
 			// 解答ボタン上でエンター
 			if(answerButton.equals(event)) {
 				answer();
+				// タブに設定してイベント発生
+				e.setKeyCode(KeyEvent.VK_TAB);
+				event.dispatchEvent(e);
 			}
 			// テキストフィールド上でエンター
 			if(textField.equals(event)) {
@@ -574,7 +598,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				textField.dispatchEvent(e);
 			}
 			// 終了ボタン上でエンター
-			if(ExitButton.equals(event)) {
+			if(ExitButton.equals(event) || EndButton.equals(event)) {
 				System.exit(0);
 			}	
 		}
@@ -584,8 +608,6 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-
-		
 	}
 
 }
