@@ -125,12 +125,12 @@ public class TextPazzsample extends JFrame {
 
 		LeftLabel = new JLabel(L);
 		LeftLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		LeftLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
+		LeftLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		LeftLabel.setBounds(75, 170, 160, 160);
 		contentPane.add(LeftLabel);
 
 		UpLabel = new JLabel(U);
-		UpLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
+		UpLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		UpLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		UpLabel.setBounds(248, 0, 160, 160);
 		contentPane.add(UpLabel);
@@ -143,13 +143,13 @@ public class TextPazzsample extends JFrame {
 		contentPane.add(CenterLabel);
 
 		DownLabel = new JLabel(D);
-		DownLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
+		DownLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		DownLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		DownLabel.setBounds(248, 343, 160, 160);
 		contentPane.add(DownLabel);
 
 		RightLabel = new JLabel(R);
-		RightLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
+		RightLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		RightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		RightLabel.setBounds(420, 170, 160, 160);
 		contentPane.add(RightLabel);
