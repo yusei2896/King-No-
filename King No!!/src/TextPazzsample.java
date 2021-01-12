@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Rectangle;
 
 /**
  * @author King no !!
@@ -82,7 +83,7 @@ public class TextPazzsample extends JFrame {
 				try {
 					TextPazzsample frame = new TextPazzsample();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setBounds(640, 360, 480, 360);
+					//frame.setBounds(0, 0, 640, 480);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -95,6 +96,7 @@ public class TextPazzsample extends JFrame {
 	 * Create the frame.
 	 */
 	public TextPazzsample() {
+		setBounds(new Rectangle(0, 0, 960, 540));
 		anscnt = 0;
 		correct = 0;
 		miss = 0;
@@ -117,47 +119,49 @@ public class TextPazzsample extends JFrame {
 
 		/* 問題カード */
 		contentPane = new JPanel();
+		contentPane.setBounds(new Rectangle(0, 0, 960, 540));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 
 		LeftLabel = new JLabel(L);
 		LeftLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		LeftLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
-		LeftLabel.setBounds(10, 100, 80, 80);
+		LeftLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
+		LeftLabel.setBounds(75, 170, 160, 160);
 		contentPane.add(LeftLabel);
 
 		UpLabel = new JLabel(U);
-		UpLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+		UpLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
 		UpLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		UpLabel.setBounds(100, 10, 80, 80);
+		UpLabel.setBounds(248, 0, 160, 160);
 		contentPane.add(UpLabel);
 
 		CenterLabel = new JLabel(C);
 		CenterLabel.setForeground(Color.BLACK);
-		CenterLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+		CenterLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
 		CenterLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		CenterLabel.setBounds(100, 100, 80, 80);
+		CenterLabel.setBounds(248, 170, 160, 160);
 		contentPane.add(CenterLabel);
 
 		DownLabel = new JLabel(D);
-		DownLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+		DownLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
 		DownLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		DownLabel.setBounds(100, 190, 80, 80);
+		DownLabel.setBounds(248, 343, 160, 160);
 		contentPane.add(DownLabel);
 
 		RightLabel = new JLabel(R);
-		RightLabel.setFont(new Font("MS 明朝", Font.PLAIN, 50));
+		RightLabel.setFont(new Font("Dialog", Font.PLAIN, 80));
 		RightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		RightLabel.setBounds(190, 100, 80, 80);
+		RightLabel.setBounds(420, 170, 160, 160);
 		contentPane.add(RightLabel);
 
 		/* 黒い画像 */
 		HideLabel = new JLabel(Hide);
-		HideLabel.setBounds(100, 100, 80, 80);
+		HideLabel.setBounds(248, 170, 160, 160);
 		contentPane.add(HideLabel);
 		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 
 		JButton btnNewButton = new JButton("\u89E3\u7B54");
+		btnNewButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/* 解答の判定 */
@@ -196,7 +200,7 @@ public class TextPazzsample extends JFrame {
 					if (miss == 3) {
 						HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
 					}
-					String[] buttons = { "閉じる", "メニューへ戻る" };
+					String[] buttons = { "解答しなおす", "メニューへ戻る" };
 					int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, buttons, buttons[0]);
 
@@ -229,24 +233,25 @@ public class TextPazzsample extends JFrame {
 				HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
 			}
 		});
-		btnNewButton.setBounds(317, 202, 89, 21);
+		btnNewButton.setBounds(752, 429, 130, 45);
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("\u30D2\u30F3\u30C81");
-		btnNewButton_1.setBounds(317, 20, 89, 21);
+		btnNewButton_1.setBounds(752, 10, 127, 38);
 		contentPane.add(btnNewButton_1);
 
 		textField = new JTextField();
-		textField.setBounds(317, 173, 96, 19);
+		textField.setFont(new Font("MS UI Gothic", Font.BOLD, 25));
+		textField.setBounds(750, 325, 130, 45);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		JButton btnNewButton_2 = new JButton("\u30D2\u30F3\u30C82");
-		btnNewButton_2.setBounds(317, 51, 89, 21);
+		btnNewButton_2.setBounds(752, 91, 127, 36);
 		contentPane.add(btnNewButton_2);
 
 		JLabel lblNewLabel = new JLabel("\u30D2\u30F3\u30C8\u306E\u5185\u5BB9");
-		lblNewLabel.setBounds(317, 82, 89, 70);
+		lblNewLabel.setBounds(752, 153, 127, 88);
 		contentPane.add(lblNewLabel);
 
 		/* 結果カード */
@@ -258,12 +263,15 @@ public class TextPazzsample extends JFrame {
 		ButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		MenuButton = new JButton("メニューに戻る");
+		MenuButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		ButtonPanel.add(MenuButton);
 
 		NextdifficultyButton = new JButton("次の難易度へ");
+		NextdifficultyButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		ButtonPanel.add(NextdifficultyButton);
 
 		ExitButton = new JButton("終了");
+		ExitButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		ExitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -272,12 +280,12 @@ public class TextPazzsample extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		ButtonPanel.add(ExitButton);
 		ResultLabel = new JLabel("5問中〇問正解");
-		ResultLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
+		ResultLabel.setFont(new Font("MS UI Gothic", Font.BOLD | Font.ITALIC, 80));
 		ResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		card1.add(ResultLabel, BorderLayout.NORTH);
 		
 		ScoreLabel = new JLabel("スコア：");
-		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
+		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD | Font.ITALIC, 80));
 		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		card1.add(ScoreLabel, BorderLayout.CENTER);
 
