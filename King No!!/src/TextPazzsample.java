@@ -440,7 +440,6 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			// テキストフィールド上でエンター
 			if(textField.equals(event)) {
 				e.setKeyCode(KeyEvent.VK_TAB);
-				System.out.println("touch");
 				textField.dispatchEvent(e);
 			}
 			// 終了ボタン上でエンター
