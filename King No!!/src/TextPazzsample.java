@@ -3,8 +3,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.omg.PortableServer.ServantRetentionPolicyValue;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -24,6 +22,7 @@ import java.util.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 
 /**
  * @author King no !!
@@ -252,11 +251,11 @@ public class TextPazzsample extends JFrame {
 
 		/* 結果カード */
 		card1 = new JPanel();
-		card1.setLayout(null);
+		card1.setLayout(new BorderLayout(0, 0));
 
 		ButtonPanel = new JPanel();
-		ButtonPanel.setBounds(0, 232, 436, 31);
-		card1.add(ButtonPanel);
+		card1.add(ButtonPanel, BorderLayout.SOUTH);
+		ButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		MenuButton = new JButton("メニューに戻る");
 		ButtonPanel.add(MenuButton);
@@ -270,18 +269,17 @@ public class TextPazzsample extends JFrame {
 				System.exit(0);
 			}
 		});
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		ButtonPanel.add(ExitButton);
 		ResultLabel = new JLabel("5問中〇問正解");
-		ResultLabel.setBounds(0, 0, 440, 90);
 		ResultLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
 		ResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ResultLabel);
+		card1.add(ResultLabel, BorderLayout.NORTH);
 		
 		ScoreLabel = new JLabel("スコア：");
-		ScoreLabel.setBounds(0, 100, 430, 133);
 		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD, 30));
 		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ScoreLabel);
+		card1.add(ScoreLabel, BorderLayout.CENTER);
 
 		/* 親（cardPanel自身）の定義 */
 		cardPanel = new JPanel();
@@ -291,7 +289,7 @@ public class TextPazzsample extends JFrame {
 		cardPanel.add(contentPane, "TextPazzle");
 		cardPanel.add(card1, "result");
 		
-		getContentPane().add(cardPanel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
+		getContentPane().add(cardPanel); // 最初に表示させるカードの指定（今回なら問題カード）
 
 	}
 
