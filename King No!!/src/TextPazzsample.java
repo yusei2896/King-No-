@@ -547,17 +547,22 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			if (anscnt == 5) {
-				ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-				if(difficulty == 0) {
-					DifficultyLabel.setText("難易度：かんたん");
-				}else if (difficulty == 1) {
-					DifficultyLabel.setText("難易度：ふつう");
-				}else if (difficulty == 2) {
-					DifficultyLabel.setText("難易度：むずかしい");
+				String[] resultbuttons = { "結果へ" };
+				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null, resultbuttons, resultbuttons[0]);
+				if(resultbutton == 0) {
+					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+					if(difficulty == 0) {
+						DifficultyLabel.setText("難易度：かんたん");
+					}else if (difficulty == 1) {
+						DifficultyLabel.setText("難易度：ふつう");
+					}else if (difficulty == 2) {
+						DifficultyLabel.setText("難易度：むずかしい");
+					}
+					layout.show(cardPanel, "result");
+					setTitle("Result");
+					anscnt = 0;
 				}
-				layout.show(cardPanel, "result");
-				setTitle("Result");
-				anscnt = 0;
 			}
 			if (button == 0) /* 次の問題ボタン */ {
 
@@ -584,30 +589,40 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			if (button == 0) {
 
 				if (miss == 3 && anscnt == 4) {
-					anscnt++;
-					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-					if(difficulty == 0) {
-						DifficultyLabel.setText("難易度：かんたん");
-					}else if (difficulty == 1) {
-						DifficultyLabel.setText("難易度：ふつう");
-					}else if (difficulty == 2) {
-						DifficultyLabel.setText("難易度：むずかしい");
+					String[] missresultbuttons = { "結果へ" };
+					int missresultbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, missresultbuttons, missresultbuttons[0]);
+					if(missresultbutton == 0) {
+						anscnt++;
+							ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+						if(difficulty == 0) {
+							DifficultyLabel.setText("難易度：かんたん");
+						}else if (difficulty == 1) {
+							DifficultyLabel.setText("難易度：ふつう");
+						}else if (difficulty == 2) {
+							DifficultyLabel.setText("難易度：むずかしい");
+						}
+						layout.show(cardPanel, "result");
+						setTitle("Result");
+						anscnt = 0;
+						miss = 0;
 					}
-					layout.show(cardPanel, "result");
-					setTitle("Result");
-					anscnt = 0;
-					miss = 0;
 				}
 				if (miss == 3 && anscnt < 4) {
-					anscnt++;
-					miss = 0;
-					// System.out.println("miss3回");
-					Questions(fiveans[anscnt]); // 問題の再設定
-					CenterLabel.setText(C);
-					LeftLabel.setText(L);
-					UpLabel.setText(U);
-					RightLabel.setText(R);
-					DownLabel.setText(D);
+					String[] missbuttons = { "閉じる" };
+					int missbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, missbuttons, missbuttons[0]);
+					if(missbutton == 0) {
+						anscnt++;
+						miss = 0;
+						// System.out.println("miss3回");
+						Questions(fiveans[anscnt]); // 問題の再設定
+						CenterLabel.setText(C);
+						LeftLabel.setText(L);
+						UpLabel.setText(U);
+						RightLabel.setText(R);
+						DownLabel.setText(D);
+					}
 				}
 
 			} else if (button == 1) {
