@@ -285,6 +285,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		ButtonPanel.add(MenuButton);
 
 		NextdifficultyButton = new JButton("次の難易度へ");
+		NextdifficultyButton.addKeyListener(this);
 		NextdifficultyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nextdifficulty();
@@ -682,6 +683,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			// Title画面とResult画面でメニューボタン上でエンター
 			if(MenuButton.equals(event) || GoButton.equals(event)) {
 				layout.show(cardPanel, "Menu");
+			}
+			// Result画面の次の難易度ボタン上でエンター
+			if(NextdifficultyButton.equals(event)) {
+				nextdifficulty();
 			}
 			// 終了ボタン上でエンター
 			if(ExitButton.equals(event) || EndButton.equals(event)) {
