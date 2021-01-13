@@ -30,7 +30,7 @@ import java.awt.FlowLayout;
 
 /**
  * @author King no !!
- *
+ * JAR用
  */
 public class NewTextPazzle extends JFrame implements KeyListener {
 	JPanel cardPanel;
