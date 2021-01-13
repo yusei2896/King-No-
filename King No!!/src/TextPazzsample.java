@@ -52,7 +52,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	URL hardTxturl = this.getClass().getResource("resources/J-hard.txt");
 	URL[] difflist = { easyTxturl, normalTxturl, hardTxturl };
 
-	int diffculty = 0; // 難易度選択0:easy 1:normal 2:hard
+	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
 	String[] fiveans = new String[5]; // 5つの解を入れる配列
 
@@ -99,11 +99,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 		//Questions(fiveans[anscnt]);
 		// タイトルの後ろに難易度を表示
-		if (diffculty == 0) {
+		if (difficulty == 0) {
 			setTitle("Textvirsion:easy");
-		} else if (diffculty == 1) {
+		} else if (difficulty == 1) {
 			setTitle("Textvirsion:normal");
-		} else if (diffculty == 2) {
+		} else if (difficulty == 2) {
 			setTitle("Textvirsion:hard");
 		}
 		/*タイトルカード*/
@@ -114,6 +114,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		GoButton = new JButton("click to start");
 		GoButton.setFont(new Font("MS UI Gothic", Font.PLAIN, 24));
 		GoButton.setBounds(371, 368, 207, 57);
+		GoButton.addKeyListener(this);
 		GoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				layout.show(cardPanel,"Menu" );
@@ -336,7 +337,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		try {
 			Random rnd = new Random();
 			String answork;
-			File ansfile = new File(ansurllist[diffculty].toURI()); // 出題用解答文字ファイル
+			File ansfile = new File(ansurllist[difficulty].toURI()); // 出題用解答文字ファイル
 			FileReader ansfilereader = new FileReader(ansfile);
 			BufferedReader ansbr = new BufferedReader(ansfilereader);
 			ArrayList<String> anslist = new ArrayList<String>();// 可変配列
@@ -372,7 +373,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		// System.out.print(anscnt+1+"問目");
 		// ファイル操作
 		try {
-			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
+			File jfile = new File(difflist[difficulty].toURI()); // 出題用熟語ファイル
 			FileReader jfilereader = new FileReader(jfile);
 			BufferedReader jbr = new BufferedReader(jfilereader);
 			Random rnd = new Random();
@@ -433,7 +434,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		}
 	}
 	public void easy() {	//かんたん
-		diffculty = 0;
+		difficulty = 0;
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
@@ -450,7 +451,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	}
 	
 	public void normal() {	//ふつう
-		diffculty = 1;
+		difficulty = 1;
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
@@ -467,7 +468,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	}
 	
 	public void hard() {	//むずかしい
-		diffculty = 2;
+		difficulty = 2;
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
@@ -499,11 +500,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			if (anscnt == 5) {
 				ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-				if(diffculty == 0) {
+				if(difficulty == 0) {
 					DifficultyLabel.setText("難易度：かんたん");
-				}else if (diffculty == 1) {
+				}else if (difficulty == 1) {
 					DifficultyLabel.setText("難易度：ふつう");
-				}else if (diffculty == 2) {
+				}else if (difficulty == 2) {
 					DifficultyLabel.setText("難易度：むずかしい");
 				}
 				layout.show(cardPanel, "result");
@@ -537,11 +538,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				if (miss == 3 && anscnt == 4) {
 					anscnt++;
 					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-					if(diffculty == 0) {
+					if(difficulty == 0) {
 						DifficultyLabel.setText("難易度：かんたん");
-					}else if (diffculty == 1) {
+					}else if (difficulty == 1) {
 						DifficultyLabel.setText("難易度：ふつう");
-					}else if (diffculty == 2) {
+					}else if (difficulty == 2) {
 						DifficultyLabel.setText("難易度：むずかしい");
 					}
 					layout.show(cardPanel, "result");
@@ -631,8 +632,8 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				e.setKeyCode(KeyEvent.VK_TAB);
 				textField.dispatchEvent(e);
 			}
-			// Result画面でメニューボタン上でエンター
-			if(MenuButton.equals(event)) {
+			// Title画面とResult画面でメニューボタン上でエンター
+			if(MenuButton.equals(event) || GoButton.equals(event)) {
 				layout.show(cardPanel, "Menu");
 			}
 			// 終了ボタン上でエンター
