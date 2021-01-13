@@ -38,7 +38,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane,card1,card2,card3,ButtonPanel,nanidopanel,EndPanel,panel;
 	private JTextField textField;
-	private JLabel LeftLabel,UpLabel,CenterLabel,DownLabel,RightLabel,HideLabel,ResultLabel,ScoreLabel,DispLabel,DifficultyLabel;
+	private JLabel LeftLabel,UpLabel,CenterLabel,DownLabel,RightLabel,HideLabel,ResultLabel,ScoreLabel,DispLabel,DifficultyLabel,txtLabel;
 	public JButton MenuButton,NextdifficultyButton,ExitButton,answerButton,EasyButton,NormalButton,HardButton,EndButton,GoButton;
 
 	// 解のテキストURL
@@ -262,8 +262,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		contentPane.add(textField);
 		textField.setColumns(10);
 
-		JLabel txtLabel = new JLabel("");
-		txtLabel.setBounds(752, 153, 127, 88);
+		txtLabel = new JLabel(anscnt+1+"/5");
+		txtLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		txtLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		txtLabel.setBounds(661, 21, 275, 196);
 		contentPane.add(txtLabel);
 
 		/* 結果カード */
@@ -442,6 +444,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");
 		Questions(fiveans[anscnt]); // 問題の再設定
+		txtLabel.setText(anscnt+1+"/5");
 		CenterLabel.setText(C);
 		LeftLabel.setText(L);
 		UpLabel.setText(U);
@@ -459,6 +462,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");
 		Questions(fiveans[anscnt]); // 問題の再設定
+		txtLabel.setText(anscnt+1+"/5");
 		CenterLabel.setText(C);
 		LeftLabel.setText(L);
 		UpLabel.setText(U);
@@ -476,6 +480,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");
 		Questions(fiveans[anscnt]); // 問題の再設定
+		txtLabel.setText(anscnt+1+"/5");
 		CenterLabel.setText(C);
 		LeftLabel.setText(L);
 		UpLabel.setText(U);
@@ -506,6 +511,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 			System.out.println("");
 			Questions(fiveans[anscnt]); // 問題の再設定
+			txtLabel.setText(anscnt+1+"/5");
 			CenterLabel.setText(C);
 			LeftLabel.setText(L);
 			UpLabel.setText(U);
@@ -520,6 +526,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 			System.out.println("");
 			Questions(fiveans[anscnt]); // 問題の再設定
+			txtLabel.setText(anscnt+1+"/5");
 			CenterLabel.setText(C);
 			LeftLabel.setText(L);
 			UpLabel.setText(U);
@@ -567,12 +574,14 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			if (button == 0 || button == -1) /* 次の問題ボタン */ {
 
 				/* ここから問題を再描画 */
+				txtLabel.setText(anscnt+1+"/5");
 				Questions(fiveans[anscnt]); // 問題の再設定
 				CenterLabel.setText(C);
 				LeftLabel.setText(L);
 				UpLabel.setText(U);
 				RightLabel.setText(R);
 				DownLabel.setText(D);
+				
 			} else if (button == 1) {
 				layout.show(cardPanel, "Menu");
 			}
@@ -622,6 +631,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 						UpLabel.setText(U);
 						RightLabel.setText(R);
 						DownLabel.setText(D);
+						txtLabel.setText(anscnt+1+"/5");
 					}
 				}
 
