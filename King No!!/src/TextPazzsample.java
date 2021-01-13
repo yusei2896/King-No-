@@ -52,7 +52,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	URL hardTxturl = this.getClass().getResource("resources/J-hard.txt");
 	URL[] difflist = { easyTxturl, normalTxturl, hardTxturl };
 
-	int diffculty = 0; // 難易度選択0:easy 1:normal 2:hard
+	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
 	String[] fiveans = new String[5]; // 5つの解を入れる配列
 
@@ -99,11 +99,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 		//Questions(fiveans[anscnt]);
 		// タイトルの後ろに難易度を表示
-		if (diffculty == 0) {
+		if (difficulty == 0) {
 			setTitle("Textvirsion:easy");
-		} else if (diffculty == 1) {
+		} else if (difficulty == 1) {
 			setTitle("Textvirsion:normal");
-		} else if (diffculty == 2) {
+		} else if (difficulty == 2) {
 			setTitle("Textvirsion:hard");
 		}
 		/*タイトルカード*/
@@ -286,7 +286,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		NextdifficultyButton = new JButton("次の難易度へ");
 		NextdifficultyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				nextdifficulty();
 			}
 		});
 		NextdifficultyButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
@@ -336,7 +336,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		try {
 			Random rnd = new Random();
 			String answork;
-			File ansfile = new File(ansurllist[diffculty].toURI()); // 出題用解答文字ファイル
+			File ansfile = new File(ansurllist[difficulty].toURI()); // 出題用解答文字ファイル
 			FileReader ansfilereader = new FileReader(ansfile);
 			BufferedReader ansbr = new BufferedReader(ansfilereader);
 			ArrayList<String> anslist = new ArrayList<String>();// 可変配列
@@ -372,7 +372,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		// System.out.print(anscnt+1+"問目");
 		// ファイル操作
 		try {
-			File jfile = new File(difflist[diffculty].toURI()); // 出題用熟語ファイル
+			File jfile = new File(difflist[difficulty].toURI()); // 出題用熟語ファイル
 			FileReader jfilereader = new FileReader(jfile);
 			BufferedReader jbr = new BufferedReader(jfilereader);
 			Random rnd = new Random();
@@ -433,7 +433,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		}
 	}
 	public void easy() {	//かんたん
-		diffculty = 0;
+		difficulty = 0;
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
@@ -450,7 +450,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	}
 	
 	public void normal() {	//ふつう
-		diffculty = 1;
+		difficulty = 1;
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
@@ -467,7 +467,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	}
 	
 	public void hard() {	//むずかしい
-		diffculty = 2;
+		difficulty = 2;
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
@@ -482,6 +482,52 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		setTitle("Textvirsion:hard");
 		layout.show(cardPanel, "TextPazzle");
 	}
+	
+	public void nextdifficulty() {
+		difficulty++;
+		if(difficulty == 3) {
+			String[] buttons = { "タイトルへ戻る", "メニューへ戻る", };
+			int button = JOptionPane.showOptionDialog(null, "あなたは最高難易度をクリアしました", "おめでとうございます！！！", JOptionPane.YES_NO_OPTION,
+					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
+			
+			if(button == 0) {
+				layout.show(cardPanel, "Title");
+				
+			}else if (button == 1) {
+				layout.show(cardPanel, "Menu");
+			}	
+		}else if(difficulty == 1){
+			anscnt = 0;
+			correct = 0;
+			Fiveanswer();
+			for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+			System.out.println("");
+			Questions(fiveans[anscnt]); // 問題の再設定
+			CenterLabel.setText(C);
+			LeftLabel.setText(L);
+			UpLabel.setText(U);
+			RightLabel.setText(R);
+			DownLabel.setText(D);
+			setTitle("Textvirsion:normal");
+			layout.show(cardPanel, "TextPazzle");
+		}else if(difficulty == 2) {
+			anscnt = 0;
+			correct = 0;
+			Fiveanswer();
+			for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+			System.out.println("");
+			Questions(fiveans[anscnt]); // 問題の再設定
+			CenterLabel.setText(C);
+			LeftLabel.setText(L);
+			UpLabel.setText(U);
+			RightLabel.setText(R);
+			DownLabel.setText(D);
+			setTitle("Textvirsion:hard");
+			layout.show(cardPanel, "TextPazzle");
+		}
+				
+	}
+	
 	
 	public void answer() {
 		/* 解答の判定 */
@@ -499,11 +545,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			if (anscnt == 5) {
 				ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-				if(diffculty == 0) {
+				if(difficulty == 0) {
 					DifficultyLabel.setText("難易度：かんたん");
-				}else if (diffculty == 1) {
+				}else if (difficulty == 1) {
 					DifficultyLabel.setText("難易度：ふつう");
-				}else if (diffculty == 2) {
+				}else if (difficulty == 2) {
 					DifficultyLabel.setText("難易度：むずかしい");
 				}
 				layout.show(cardPanel, "result");
@@ -537,11 +583,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				if (miss == 3 && anscnt == 4) {
 					anscnt++;
 					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
-					if(diffculty == 0) {
+					if(difficulty == 0) {
 						DifficultyLabel.setText("難易度：かんたん");
-					}else if (diffculty == 1) {
+					}else if (difficulty == 1) {
 						DifficultyLabel.setText("難易度：ふつう");
-					}else if (diffculty == 2) {
+					}else if (difficulty == 2) {
 						DifficultyLabel.setText("難易度：むずかしい");
 					}
 					layout.show(cardPanel, "result");
