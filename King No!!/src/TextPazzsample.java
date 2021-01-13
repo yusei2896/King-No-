@@ -485,6 +485,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	}
 	
 	public void nextdifficulty() {
+		/*次の難易度への処理*/
 		difficulty++;
 		if(difficulty == 3) {
 			String[] buttons = { "タイトルへ戻る", "メニューへ戻る", };
