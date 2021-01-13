@@ -84,6 +84,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	private JButton EndButton;
 	private JPanel panel;
 	private JLabel DispLabel;
+	private JLabel DifficultyLabel;
 
 	/**
 	 * Launch the application.
@@ -295,14 +296,19 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		});
 		ButtonPanel.add(ExitButton);
 		ResultLabel = new JLabel("5問中〇問正解");
-		ResultLabel.setFont(new Font("MS UI Gothic", Font.BOLD| Font.ITALIC, 80));
+		ResultLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 80));
 		ResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		card1.add(ResultLabel, BorderLayout.NORTH);
 		
 		ScoreLabel = new JLabel("スコア：");
-		ScoreLabel.setFont(new Font("MS UI Gothic", Font.BOLD| Font.ITALIC, 80));
+		ScoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
 		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ScoreLabel, BorderLayout.CENTER);
+		card1.add(ScoreLabel, BorderLayout.EAST);
+		
+		DifficultyLabel = new JLabel("難易度：");
+		DifficultyLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
+		DifficultyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		card1.add(DifficultyLabel, BorderLayout.WEST);
 
 		/* 親（cardPanel自身）の定義 */
 		cardPanel = new JPanel();
@@ -485,6 +491,13 @@ public class TextPazzsample extends JFrame implements KeyListener {
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			if (anscnt == 5) {
 				ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+				if(diffculty == 0) {
+					DifficultyLabel.setText("難易度：かんたん");
+				}else if (diffculty == 1) {
+					DifficultyLabel.setText("難易度：ふつう");
+				}else if (diffculty == 2) {
+					DifficultyLabel.setText("難易度：むずかしい");
+				}
 				layout.show(cardPanel, "result");
 				setTitle("Result");
 				anscnt = 0;
