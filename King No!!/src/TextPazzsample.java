@@ -36,7 +36,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane,card1,card2;
+	private JPanel contentPane,card1,card2,card3;
 	private JTextField textField;
 	private JLabel LeftLabel;
 	private JLabel UpLabel;
@@ -85,7 +85,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	private JPanel panel;
 	private JLabel DispLabel;
 	private JLabel DifficultyLabel;
-
+	private JButton GoButton;
 	/**
 	 * Launch the application.
 	 */
@@ -126,7 +126,29 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		} else if (diffculty == 2) {
 			setTitle("Textvirsion:hard");
 		}
-
+		/*タイトルカード*/
+		card3 = new JPanel();
+		setTitle("タイトル");
+		card3.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		GoButton = new JButton("click to start");
+		GoButton.setFont(new Font("MS UI Gothic", Font.PLAIN, 24));
+		GoButton.setBounds(371, 368, 207, 57);
+		GoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(cardPanel,"Menu" );
+			}
+		});
+		card3.setLayout(null);
+		card3.add(GoButton);
+		
+		JLabel TitleLabel = new JLabel("虫食い!!漢字クロス");
+		TitleLabel.setBounds(267, 87, 437, 94);
+		TitleLabel.setFont(new Font("MS UI Gothic", Font.PLAIN, 42));
+		TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		card3.add(TitleLabel);
+		
+		
 		/*メニューカード*/
 		card2 = new JPanel();
 		setTitle("メニュー");
@@ -315,6 +337,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		layout = new CardLayout();
 		cardPanel.setLayout(layout);
 		
+		cardPanel.add(card3,"Title");
 		cardPanel.add(card2, "Menu");
 		cardPanel.add(contentPane, "TextPazzle");
 		cardPanel.add(card1, "result");
