@@ -2,12 +2,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Rectangle;
-import java.net.URISyntaxException;
 import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -17,10 +17,9 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.BorderLayout;
@@ -33,7 +32,7 @@ import java.awt.FlowLayout;
  * @author King no !!
  *
  */
-public class TextPazzsample extends JFrame implements KeyListener {
+public class NewTextPazzle extends JFrame implements KeyListener {
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
@@ -41,17 +40,6 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	private JTextField textField;
 	private JLabel LeftLabel,UpLabel,CenterLabel,DownLabel,RightLabel,HideLabel,ResultLabel,ScoreLabel,DispLabel,DifficultyLabel,txtLabel;
 	public JButton MenuButton,NextdifficultyButton,ExitButton,answerButton,EasyButton,NormalButton,HardButton,EndButton,GoButton;
-
-	// 解のテキストURL
-	URL easyansurl = this.getClass().getResource("resources/easy.txt");
-	URL normalansurl = this.getClass().getResource("resources/normal.txt");
-	URL hardansurl = this.getClass().getResource("resources/hard.txt");
-	URL[] ansurllist = { easyansurl, normalansurl, hardansurl };
-	// 熟語のテキストURL
-	URL easyTxturl = this.getClass().getResource("resources/J-easy.txt");
-	URL normalTxturl = this.getClass().getResource("resources/J-normal.txt");
-	URL hardTxturl = this.getClass().getResource("resources/J-hard.txt");
-	URL[] difflist = { easyTxturl, normalTxturl, hardTxturl };
 
 	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
@@ -74,7 +62,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TextPazzsample frame = new TextPazzsample();
+					NewTextPazzle frame = new NewTextPazzle();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setBounds(0,0,960,540);
 					frame.setVisible(true);
@@ -88,7 +76,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	/**
 	 * Create the frame.
 	 */
-	public TextPazzsample() {
+	public NewTextPazzle() {
 		setBounds(new Rectangle(0,0,960,540));
 		anscnt = 0;
 		correct = 0;
@@ -337,15 +325,18 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 	}
 
-	public void Fiveanswer() {
+	public void Fiveanswer()  {
+		
 		try {
+			InputStream easyansurl = this.getClass().getClassLoader().getResourceAsStream("resources/easy.txt");
+			InputStream normalansurl = this.getClass().getClassLoader().getResourceAsStream("resources/normal.txt");
+			InputStream hardansurl = this.getClass().getClassLoader().getResourceAsStream("resources/hard.txt");
+			InputStream[] ansurllist = { easyansurl, normalansurl, hardansurl };
 			Random rnd = new Random();
-			String answork;
-			File ansfile = new File(ansurllist[difficulty].toURI()); // 出題用解答文字ファイル
-			FileReader ansfilereader = new FileReader(ansfile);
-			BufferedReader ansbr = new BufferedReader(ansfilereader);
+			String answork; 
+			InputStreamReader ansisr = new InputStreamReader(ansurllist[difficulty],"UTF-8");
+			BufferedReader ansbr = new BufferedReader(ansisr);
 			ArrayList<String> anslist = new ArrayList<String>();// 可変配列
-
 			// 答えが入ってるの中身を全部配列に入れる
 			String s = ansbr.readLine();
 			while (s != null) {
@@ -367,9 +358,12 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				}
 				fiveans[i] = answork;
 			}
-		} catch (IOException | URISyntaxException e) {
+			
+		} catch (IOException e) {
 			System.out.println(e);
+
 		}
+		
 	}
 
 	public void Questions(String answer) {
@@ -377,9 +371,12 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		// System.out.print(anscnt+1+"問目");
 		// ファイル操作
 		try {
-			File jfile = new File(difflist[difficulty].toURI()); // 出題用熟語ファイル
-			FileReader jfilereader = new FileReader(jfile);
-			BufferedReader jbr = new BufferedReader(jfilereader);
+			InputStream easyTxturl = this.getClass().getResourceAsStream("resources/J-easy.txt");
+			InputStream normalTxturl = this.getClass().getResourceAsStream("resources/J-normal.txt");
+			InputStream hardTxturl = this.getClass().getResourceAsStream("resources/J-hard.txt");
+			InputStream[] difflist = { easyTxturl, normalTxturl, hardTxturl };
+			InputStreamReader jisr = new InputStreamReader(difflist[difficulty],"UTF-8");
+			BufferedReader jbr = new BufferedReader(jisr);
 			Random rnd = new Random();
 			ArrayList<String> wordlist = new ArrayList<String>();// 可変配列
 			String work1, work2;
@@ -390,8 +387,8 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				wordlist.add(str);
 				str = jbr.readLine();
 			}
-			jbr.close(); // ファイルを閉じる
-
+			jbr.close();
+			
 			ArrayList<String> firstlist = new ArrayList<String>(); // 1文字目が解と同じ単語の配列
 			ArrayList<String> secondlist = new ArrayList<String>(); // 2文字目が解と同じ単語の配列
 			for (String word : wordlist) {
@@ -431,8 +428,8 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			U = Up.substring(0, 1);
 			D = Down.substring(1, 2);
 			R = Right.substring(1, 2);
-
-		} catch (IOException | URISyntaxException e) {
+			
+		} catch (IOException e) {
 			System.out.println(e);
 		}
 	}
@@ -537,7 +534,6 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		}
 				
 	}
-	
 	
 	public void answer() {
 		/* 解答の判定 */
