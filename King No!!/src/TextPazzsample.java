@@ -639,6 +639,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				e.setKeyCode(KeyEvent.VK_TAB);
 				textField.dispatchEvent(e);
 			}
+			// Result画面でメニューボタン上でエンター
+			if(MenuButton.equals(event)) {
+				layout.show(cardPanel, "Menu");
+			}
 			// 終了ボタン上でエンター
 			if(ExitButton.equals(event) || EndButton.equals(event)) {
 				System.exit(0);
