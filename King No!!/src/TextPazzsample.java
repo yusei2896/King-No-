@@ -654,6 +654,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				e.getKeyChar());
 			event.dispatchEvent(fKey);
 			break;
+		//デバッグ
+		case KeyEvent.VK_F1:
+			HideLabel.setVisible(false);
+			break;
 		// enter
 		case KeyEvent.VK_ENTER:
 			// easy
@@ -699,6 +703,12 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
+		switch(e.getKeyCode()) {
+			//デバッグ
+			case KeyEvent.VK_F1:
+				HideLabel.setVisible(true);
+				break;
+		}
 	}
 
 }
