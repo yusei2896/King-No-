@@ -568,7 +568,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				UpLabel.setText(U);
 				RightLabel.setText(R);
 				DownLabel.setText(D);
-			} else if (button == 2) {
+			} else if (button == 1) {
 				layout.show(cardPanel, "Menu");
 			}
 
