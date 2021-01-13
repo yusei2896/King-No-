@@ -550,7 +550,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				String[] resultbuttons = { "結果へ" };
 				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE, null, resultbuttons, resultbuttons[0]);
-				if(resultbutton == 0) {
+				if(resultbutton == 0 || resultbutton == -1) {
 					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
 					if(difficulty == 0) {
 						DifficultyLabel.setText("難易度：かんたん");
@@ -564,7 +564,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 					anscnt = 0;
 				}
 			}
-			if (button == 0) /* 次の問題ボタン */ {
+			if (button == 0 || button == -1) /* 次の問題ボタン */ {
 
 				/* ここから問題を再描画 */
 				Questions(fiveans[anscnt]); // 問題の再設定
@@ -586,13 +586,13 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.ERROR_MESSAGE, null, buttons, buttons[0]);
 
-			if (button == 0) {
+			if (button == 0 || button == -1) {
 
 				if (miss == 3 && anscnt == 4) {
 					String[] missresultbuttons = { "結果へ" };
 					int missresultbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, missresultbuttons, missresultbuttons[0]);
-					if(missresultbutton == 0) {
+					if(missresultbutton == 0 || missresultbutton == -1) {
 						anscnt++;
 							ResultLabel.setText(anscnt + "問中" + correct + "問正解");
 						if(difficulty == 0) {
@@ -612,7 +612,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 					String[] missbuttons = { "閉じる" };
 					int missbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, missbuttons, missbuttons[0]);
-					if(missbutton == 0) {
+					if(missbutton == 0 || missbutton == -1) {
 						anscnt++;
 						miss = 0;
 						// System.out.println("miss3回");
