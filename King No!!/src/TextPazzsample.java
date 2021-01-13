@@ -413,8 +413,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			System.out.println(e);
 		}
 	}
-	public void easy() {
+	public void easy() {	//かんたん
 		diffculty = 0;
+		anscnt = 0;
+		correct = 0;
 		Fiveanswer();
 		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");
@@ -428,8 +430,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		layout.show(cardPanel, "TextPazzle");
 	}
 	
-	public void normal() {
+	public void normal() {	//ふつう
 		diffculty = 1;
+		anscnt = 0;
+		correct = 0;
 		Fiveanswer();
 		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");
@@ -443,8 +447,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		layout.show(cardPanel, "TextPazzle");
 	}
 	
-	public void hard() {
+	public void hard() {	//むずかしい
 		diffculty = 2;
+		anscnt = 0;
+		correct = 0;
 		Fiveanswer();
 		for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");
