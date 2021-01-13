@@ -284,6 +284,11 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		ButtonPanel.add(MenuButton);
 
 		NextdifficultyButton = new JButton("次の難易度へ");
+		NextdifficultyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		NextdifficultyButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
 		NextdifficultyButton.addKeyListener(this);
 		ButtonPanel.add(NextdifficultyButton);
@@ -532,6 +537,13 @@ public class TextPazzsample extends JFrame implements KeyListener {
 				if (miss == 3 && anscnt == 4) {
 					anscnt++;
 					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+					if(diffculty == 0) {
+						DifficultyLabel.setText("難易度：かんたん");
+					}else if (diffculty == 1) {
+						DifficultyLabel.setText("難易度：ふつう");
+					}else if (diffculty == 2) {
+						DifficultyLabel.setText("難易度：むずかしい");
+					}
 					layout.show(cardPanel, "result");
 					setTitle("Result");
 					anscnt = 0;
