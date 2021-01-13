@@ -36,14 +36,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane,card1,card2,card3;
+	private JPanel contentPane,card1,card2,card3,ButtonPanel,nanidopanel,EndPanel,panel;
 	private JTextField textField;
-	private JLabel LeftLabel;
-	private JLabel UpLabel;
-	private JLabel CenterLabel;
-	private JLabel DownLabel;
-	private JLabel RightLabel;
-	private JLabel HideLabel;
+	private JLabel LeftLabel,UpLabel,CenterLabel,DownLabel,RightLabel,HideLabel,ResultLabel,ScoreLabel,DispLabel,DifficultyLabel;
+	public JButton MenuButton,NextdifficultyButton,ExitButton,answerButton,EasyButton,NormalButton,HardButton,EndButton,GoButton;
 
 	// 解のテキストURL
 	URL easyansurl = this.getClass().getResource("resources/easy.txt");
@@ -69,23 +65,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 	URL HideimageURL = this.getClass().getResource("resources/84089164_480x480.png");
 	private ImageIcon Hide = new ImageIcon(HideimageURL); // 問題を隠している画像
-	private JPanel ButtonPanel;
-	public JButton MenuButton;
-	public JButton NextdifficultyButton;
-	public JButton ExitButton;
-	private JLabel ResultLabel;
-	private JLabel ScoreLabel;
-	public JButton answerButton;
-	private JPanel nanidopanel;
-	private JButton EasyButton;
-	private JButton NormalButton;
-	private JButton HardButton;
-	private JPanel EndPanel;
-	private JButton EndButton;
-	private JPanel panel;
-	private JLabel DispLabel;
-	private JLabel DifficultyLabel;
-	private JButton GoButton;
+
 	/**
 	 * Launch the application.
 	 */
