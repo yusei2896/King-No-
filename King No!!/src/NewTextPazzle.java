@@ -94,18 +94,21 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		setTitle("タイトル");
 		title_card.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
+		// スタートボタン
 		go_button = new JButton("click to start");
 		go_button.setFont(new Font("MS UI Gothic", Font.PLAIN, 24));
 		go_button.setBounds(371, 368, 207, 57);
 		go_button.addKeyListener(this);
 		go_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// メニュー画面へ移る
 				layout.show(card_panel,"Menu" );
 			}
 		});
 		title_card.setLayout(null);
 		title_card.add(go_button);
 		
+		//　タイトル
 		JLabel TitleLabel = new JLabel("虫食い!!漢字クロス");
 		TitleLabel.setBounds(267, 87, 437, 94);
 		TitleLabel.setFont(new Font("MS UI Gothic", Font.PLAIN, 42));
@@ -355,11 +358,10 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			
 		} catch (IOException e) {
 			System.out.println(e);
-
 		}
-		
 	}
-
+	
+	// 出題する熟語を取り出す
 	public void questions(String answer) {
 		center = answer;
 		// System.out.print(ans_cnt+1+"問目");
@@ -371,11 +373,11 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			InputStream[] diff_list = { easy_txturl, normal_txturl, hard_txturl };
 			InputStreamReader jisr = new InputStreamReader(diff_list[difficulty],"UTF-8");
 			BufferedReader jbr = new BufferedReader(jisr);
-			Random rnd = new Random();
+			Random rnd = new Random();	// ランダム変数
 			ArrayList<String> word_list = new ArrayList<String>();// 可変配列
 			String work1, work2;
 
-			// テキストファイルの中身を全部配列に入れる
+			// 熟語が入っているテキストファイルの中身を全部配列に入れる
 			String str = jbr.readLine();
 			while (str != null) {
 				word_list.add(str);
@@ -398,23 +400,23 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			j_left = second_list.get(rnd.nextInt(second_list.size())); // 配列の要素からランダムに取ってくる
 			while (true) {
 				j_up = second_list.get(rnd.nextInt(second_list.size()));// 配列の要素からランダムに取ってくる
-				if (!(j_left.substring(0, 1).equals(j_up.substring(0, 1)))) { // 被ってなかったらループを抜ける
-					break;
+				if (!(j_left.substring(0, 1).equals(j_up.substring(0, 1)))) { 	// 左の字と被ってないか
+					break;														// 被ってなかったらループを抜ける
 				}
 			}
 			while (true) {
 				j_down = first_list.get(rnd.nextInt(first_list.size())); // 配列の要素からランダムに取ってくる
-				if (!(j_left.substring(0, 1).equals(j_down.substring(1, 2)))
-						&& !(j_up.substring(0, 1).equals(j_down.substring(1, 2)))) {
-					break;
+				if (!(j_left.substring(0, 1).equals(j_down.substring(1, 2))) 		// 左の字と被ってないか
+						&& !(j_up.substring(0, 1).equals(j_down.substring(1, 2)))) {// 上の字と被ってないか
+					break;															// 被ってなかったらループを抜ける
 				}
 			}
 			while (true) {
 				j_right = first_list.get(rnd.nextInt(first_list.size())); // 配列の要素からランダムに取ってくる
-				if (!(j_down.substring(1, 2).equals(j_right.substring(1, 2)))
-						&& !(j_left.substring(0, 1).equals(j_right.substring(1, 2)))
-						&& !(j_up.substring(0, 1).equals(j_right.substring(1, 2)))) { // 被ってなかったらループを抜ける
-					break;
+				if (!(j_down.substring(1, 2).equals(j_right.substring(1, 2)))			// 下の字と被ってないか
+						&& !(j_left.substring(0, 1).equals(j_right.substring(1, 2)))	// 左の字と被ってないか
+						&& !(j_up.substring(0, 1).equals(j_right.substring(1, 2)))) { 	// 上の字と被ってないか
+					break;																// 被ってなかったらループを抜ける
 				}
 			}
 			// ラベルに表示する変数に文字を入れる
@@ -427,7 +429,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			System.out.println(e);
 		}
 	}
-	public void easy() {	//かんたん
+	public void easy() {	//　かんたん
 		difficulty = 0;
 		ans_cnt = 0;
 		correct = 0;
@@ -445,7 +447,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		layout.show(card_panel, "TextPazzle");
 	}
 	
-	public void normal() {	//ふつう
+	public void normal() {	//　ふつう
 		difficulty = 1;
 		ans_cnt = 0;
 		correct = 0;
@@ -463,7 +465,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		layout.show(card_panel, "TextPazzle");
 	}
 	
-	public void hard() {	//むずかしい
+	public void hard() {	//　むずかしい
 		difficulty = 2;
 		ans_cnt = 0;
 		correct = 0;
