@@ -434,7 +434,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		difficulty = 0;
 		ans_cnt = 0;
 		correct = 0;
-		int score = 10000;
+		score = 10000;
 		Fiveanswer();
 		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
@@ -453,7 +453,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		difficulty = 1;
 		ans_cnt = 0;
 		correct = 0;
-		int score = 10000;
+		score = 10000;
 		Fiveanswer();
 		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
@@ -472,7 +472,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		difficulty = 2;
 		ans_cnt = 0;
 		correct = 0;
-		int score = 10000;
+		score = 10000;
 		Fiveanswer();
 		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
@@ -562,9 +562,9 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 					}else if (difficulty == 2) {
 						difficulty_label.setText("難易度：むずかしい");
 					}
+					score_label.setText("スコア：" + score);
 					layout.show(card_panel, "result");
 					setTitle("Result");
-					System.out.println(score);
 					ans_cnt = 0;
 				}
 			}
@@ -613,9 +613,9 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 						}else if (difficulty == 2) {
 							difficulty_label.setText("難易度：むずかしい");
 						}
+						score_label.setText("スコア：" + score);
 						layout.show(card_panel, "result");
 						setTitle("Result");
-						System.out.println(score);
 						ans_cnt = 0;
 						miss = 0;
 					}
