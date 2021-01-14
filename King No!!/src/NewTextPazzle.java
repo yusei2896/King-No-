@@ -64,7 +64,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 				try {
 					NewTextPazzle frame = new NewTextPazzle();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setBounds(0,0,960,540);
+					frame.setBounds(200,200,960,540);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
