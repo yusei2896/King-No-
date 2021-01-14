@@ -2,7 +2,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -33,27 +32,27 @@ import java.awt.FlowLayout;
  * JAR用
  */
 public class NewTextPazzle extends JFrame implements KeyListener {
-	JPanel cardPanel;
+	JPanel card_panel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane,card1,card2,card3,ButtonPanel,nanidopanel,EndPanel,panel;
-	private JTextField textField;
-	private JLabel LeftLabel,UpLabel,CenterLabel,DownLabel,RightLabel,HideLabel,ResultLabel,ScoreLabel,DispLabel,DifficultyLabel,txtLabel;
-	public JButton MenuButton,NextdifficultyButton,ExitButton,answerButton,EasyButton,NormalButton,HardButton,EndButton,GoButton;
+	private JPanel content_pane,result_card,menu_card,title_card,button_panel,nanido_panel,end_panel,panel;
+	private JTextField text_field;
+	private JLabel left_label,up_label,center_label,down_label,right_label,hide_label,result_label,score_label,disp_label,difficulty_label,txt_Label;
+	public JButton menu_button,next_difficulty_button,exit_button,answer_button,easy_button,normal_button,hard_button,end_button,go_button;
 
 	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
-	JLabel[] Labels = { CenterLabel, LeftLabel, UpLabel, DownLabel, RightLabel };
-	String[] fiveans = new String[5]; // 5つの解を入れる配列
+	JLabel[] labels = { center_label, left_label, up_label, down_label, right_label };
+	String[] five_answers = new String[5]; // 5つの解を入れる配列
 
-	int anscnt = 0;
+	int ans_cnt = 0;
 	int correct = 0;
 	int miss = 0;
 
-	String C, L = "左", U = "上", D = "下", R = "右";
-	String Left, Up, Down, Right;
+	String center, left = "左", up = "上", down = "下", right = "右";
+	String j_left, j_up, j_down, j_right;
 
-	URL HideimageURL = this.getClass().getResource("resources/84089164_480x480.png");
-	private ImageIcon Hide = new ImageIcon(HideimageURL); // 問題を隠している画像
+	URL hide_imageURL = this.getClass().getResource("resources/84089164_480x480.png");
+	private ImageIcon Hide = new ImageIcon(hide_imageURL); // 問題を隠している画像
 
 	/**
 	 * Launch the application.
@@ -78,15 +77,10 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 	 */
 	public NewTextPazzle() {
 		setBounds(new Rectangle(0,0,960,540));
-		anscnt = 0;
+		ans_cnt = 0;
 		correct = 0;
 		miss = 0;
-		//Fiveanswer();
-
-		//for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
-		//System.out.println("");
-
-		//Questions(fiveans[anscnt]);
+		
 		// タイトルの後ろに難易度を表示
 		if (difficulty == 0) {
 			setTitle("Textvirsion:easy");
@@ -96,232 +90,232 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			setTitle("Textvirsion:hard");
 		}
 		/*タイトルカード*/
-		card3 = new JPanel();
+		title_card = new JPanel();
 		setTitle("タイトル");
-		card3.setBorder(new EmptyBorder(5, 5, 5, 5));
+		title_card.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		GoButton = new JButton("click to start");
-		GoButton.setFont(new Font("MS UI Gothic", Font.PLAIN, 24));
-		GoButton.setBounds(371, 368, 207, 57);
-		GoButton.addKeyListener(this);
-		GoButton.addActionListener(new ActionListener() {
+		go_button = new JButton("click to start");
+		go_button.setFont(new Font("MS UI Gothic", Font.PLAIN, 24));
+		go_button.setBounds(371, 368, 207, 57);
+		go_button.addKeyListener(this);
+		go_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				layout.show(cardPanel,"Menu" );
+				layout.show(card_panel,"Menu" );
 			}
 		});
-		card3.setLayout(null);
-		card3.add(GoButton);
+		title_card.setLayout(null);
+		title_card.add(go_button);
 		
 		JLabel TitleLabel = new JLabel("虫食い!!漢字クロス");
 		TitleLabel.setBounds(267, 87, 437, 94);
 		TitleLabel.setFont(new Font("MS UI Gothic", Font.PLAIN, 42));
 		TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card3.add(TitleLabel);
+		title_card.add(TitleLabel);
 		
 		
 		/*メニューカード*/
-		card2 = new JPanel();
+		menu_card = new JPanel();
 		setTitle("メニュー");
-		card2.setBorder(new EmptyBorder(5, 5, 5, 5));
-		card2.setLayout(new BorderLayout(20, 20));
+		menu_card.setBorder(new EmptyBorder(5, 5, 5, 5));
+		menu_card.setLayout(new BorderLayout(20, 20));
 		
-		nanidopanel = new JPanel();
-		FlowLayout fl_nanidopanel = (FlowLayout) nanidopanel.getLayout();
+		nanido_panel = new JPanel();
+		FlowLayout fl_nanidopanel = (FlowLayout) nanido_panel.getLayout();
 		fl_nanidopanel.setVgap(70);
 		fl_nanidopanel.setHgap(30);
-		card2.add(nanidopanel, BorderLayout.CENTER);
+		menu_card.add(nanido_panel, BorderLayout.CENTER);
 		
-		EasyButton = new JButton("\u304B\u3093\u305F\u3093");
-		EasyButton.addKeyListener(this);
-		EasyButton.addActionListener(new ActionListener() {
+		easy_button = new JButton("\u304B\u3093\u305F\u3093");
+		easy_button.addKeyListener(this);
+		easy_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				easy();
 			}
 		});
-		EasyButton.setBackground(Color.WHITE);
-		EasyButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
-		nanidopanel.add(EasyButton);
+		easy_button.setBackground(Color.WHITE);
+		easy_button.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
+		nanido_panel.add(easy_button);
 		
-		NormalButton = new JButton("\u3075\u3064\u3046");
-		NormalButton.addKeyListener(this);
-		NormalButton.addActionListener(new ActionListener() {
+		normal_button = new JButton("\u3075\u3064\u3046");
+		normal_button.addKeyListener(this);
+		normal_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				normal();
 			}
 		});
-		NormalButton.setBackground(Color.WHITE);
-		NormalButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
-		nanidopanel.add(NormalButton);
+		normal_button.setBackground(Color.WHITE);
+		normal_button.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
+		nanido_panel.add(normal_button);
 		
-		HardButton = new JButton("\u3080\u305A\u304B\u3057\u3044");
-		HardButton.addKeyListener(this);
-		HardButton.addActionListener(new ActionListener() {
+		hard_button = new JButton("\u3080\u305A\u304B\u3057\u3044");
+		hard_button.addKeyListener(this);
+		hard_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hard();
 			}
 		});
-		HardButton.setBackground(Color.WHITE);
-		HardButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
-		HardButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		nanidopanel.add(HardButton);
+		hard_button.setBackground(Color.WHITE);
+		hard_button.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
+		hard_button.setHorizontalAlignment(SwingConstants.RIGHT);
+		nanido_panel.add(hard_button);
 		
-		EndPanel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) EndPanel.getLayout();
+		end_panel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) end_panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
-		card2.add(EndPanel, BorderLayout.SOUTH);
+		menu_card.add(end_panel, BorderLayout.SOUTH);
 		
-		EndButton = new JButton("\u7D42\u4E86");
-		EndButton.addKeyListener(this);
-		EndButton.addActionListener(new ActionListener() {
+		end_button = new JButton("\u7D42\u4E86");
+		end_button.addKeyListener(this);
+		end_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		EndButton.setBackground(Color.BLACK);
-		EndButton.setForeground(Color.WHITE);
-		EndButton.setFont(new Font("Dialog", Font.BOLD, 20));
-		EndButton.setHorizontalAlignment(SwingConstants.LEFT);
-		EndPanel.add(EndButton);
+		end_button.setBackground(Color.BLACK);
+		end_button.setForeground(Color.WHITE);
+		end_button.setFont(new Font("Dialog", Font.BOLD, 20));
+		end_button.setHorizontalAlignment(SwingConstants.LEFT);
+		end_panel.add(end_button);
 		
 		panel = new JPanel();
-		card2.add(panel, BorderLayout.NORTH);
+		menu_card.add(panel, BorderLayout.NORTH);
 		
-		DispLabel = new JLabel("");
-		panel.add(DispLabel);
+		disp_label = new JLabel("");
+		panel.add(disp_label);
 		
 		
 		/* 問題カード */
-		contentPane = new JPanel();
-		contentPane.setBounds(new Rectangle(0, 0, 960, 540));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
+		content_pane = new JPanel();
+		content_pane.setBounds(new Rectangle(0, 0, 960, 540));
+		content_pane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		content_pane.setLayout(null);
 
-		LeftLabel = new JLabel(L);
-		LeftLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		LeftLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
-		LeftLabel.setBounds(75, 170, 160, 160);
-		contentPane.add(LeftLabel);
+		left_label = new JLabel(left);
+		left_label.setHorizontalAlignment(SwingConstants.CENTER);
+		left_label.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		left_label.setBounds(75, 170, 160, 160);
+		content_pane.add(left_label);
 
-		UpLabel = new JLabel(U);
-		UpLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
-		UpLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		UpLabel.setBounds(248, 0, 160, 160);
-		contentPane.add(UpLabel);
+		up_label = new JLabel(up);
+		up_label.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		up_label.setHorizontalAlignment(SwingConstants.CENTER);
+		up_label.setBounds(248, 0, 160, 160);
+		content_pane.add(up_label);
 
-		CenterLabel = new JLabel(C);
-		CenterLabel.setForeground(Color.BLACK);
-		CenterLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
-		CenterLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		CenterLabel.setBounds(248, 170, 160, 160);
-		contentPane.add(CenterLabel);
+		center_label = new JLabel(center);
+		center_label.setForeground(Color.BLACK);
+		center_label.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		center_label.setHorizontalAlignment(SwingConstants.CENTER);
+		center_label.setBounds(248, 170, 160, 160);
+		content_pane.add(center_label);
 
-		DownLabel = new JLabel(D);
-		DownLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
-		DownLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		DownLabel.setBounds(248, 343, 160, 160);
-		contentPane.add(DownLabel);
+		down_label = new JLabel(down);
+		down_label.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		down_label.setHorizontalAlignment(SwingConstants.CENTER);
+		down_label.setBounds(248, 343, 160, 160);
+		content_pane.add(down_label);
 
-		RightLabel = new JLabel(R);
-		RightLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
-		RightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		RightLabel.setBounds(420, 170, 160, 160);
-		contentPane.add(RightLabel);
+		right_label = new JLabel(right);
+		right_label.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		right_label.setHorizontalAlignment(SwingConstants.CENTER);
+		right_label.setBounds(420, 170, 160, 160);
+		content_pane.add(right_label);
 
 		/* 黒い画像 */
-		HideLabel = new JLabel(Hide);
-		HideLabel.setBounds(248, 170, 160, 160);
-		contentPane.add(HideLabel);
-		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
+		hide_label = new JLabel(Hide);
+		hide_label.setBounds(248, 170, 160, 160);
+		content_pane.add(hide_label);
+		hide_label.setVisible(true); // これで画像が見える（答えが見えなくなる）
 
-		answerButton = new JButton("\u89E3\u7B54");
-		answerButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-		answerButton.addKeyListener(this);
-		answerButton.addActionListener(new ActionListener() {
+		answer_button = new JButton("\u89E3\u7B54");
+		answer_button.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
+		answer_button.addKeyListener(this);
+		answer_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				answer();
 			}
 		});
-		answerButton.setBounds(752, 429, 130, 45);
-		contentPane.add(answerButton);
+		answer_button.setBounds(752, 429, 130, 45);
+		content_pane.add(answer_button);
 
-		textField = new JTextField();
-		textField.addKeyListener(this);
-		textField.setFont(new Font("MS UI Gothic", Font.BOLD, 25));
-		textField.setBounds(750, 325, 130, 45);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		text_field = new JTextField();
+		text_field.addKeyListener(this);
+		text_field.setFont(new Font("MS UI Gothic", Font.BOLD, 25));
+		text_field.setBounds(750, 325, 130, 45);
+		content_pane.add(text_field);
+		text_field.setColumns(10);
 
-		txtLabel = new JLabel(anscnt+1+"/5");
-		txtLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		txtLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
-		txtLabel.setBounds(661, 21, 275, 196);
-		contentPane.add(txtLabel);
+		txt_Label = new JLabel(ans_cnt+1+"/5");
+		txt_Label.setHorizontalAlignment(SwingConstants.CENTER);
+		txt_Label.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		txt_Label.setBounds(661, 21, 275, 196);
+		content_pane.add(txt_Label);
 
 		/* 結果カード */
-		card1 = new JPanel();
-		card1.setLayout(new BorderLayout(0, 0));
+		result_card = new JPanel();
+		result_card.setLayout(new BorderLayout(0, 0));
 
-		ButtonPanel = new JPanel();
-		card1.add(ButtonPanel, BorderLayout.SOUTH);
+		button_panel = new JPanel();
+		result_card.add(button_panel, BorderLayout.SOUTH);
 
-		MenuButton = new JButton("メニューに戻る");
-		MenuButton.addActionListener(new ActionListener() {
+		menu_button = new JButton("メニューに戻る");
+		menu_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				layout.show(cardPanel, "Menu");
+				layout.show(card_panel, "Menu");
 			}
 		});
-		MenuButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-		MenuButton.addKeyListener(this);
-		ButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		ButtonPanel.add(MenuButton);
+		menu_button.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
+		menu_button.addKeyListener(this);
+		button_panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		button_panel.add(menu_button);
 
-		NextdifficultyButton = new JButton("次の難易度へ");
-		NextdifficultyButton.addKeyListener(this);
-		NextdifficultyButton.addActionListener(new ActionListener() {
+		next_difficulty_button = new JButton("次の難易度へ");
+		next_difficulty_button.addKeyListener(this);
+		next_difficulty_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nextdifficulty();
+				next_difficulty();
 			}
 		});
-		NextdifficultyButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-		NextdifficultyButton.addKeyListener(this);
-		ButtonPanel.add(NextdifficultyButton);
+		next_difficulty_button.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
+		next_difficulty_button.addKeyListener(this);
+		button_panel.add(next_difficulty_button);
 
-		ExitButton = new JButton("終了");
-		ExitButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-		ExitButton.addKeyListener(this);
-		ExitButton.addActionListener(new ActionListener() {
+		exit_button = new JButton("終了");
+		exit_button.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
+		exit_button.addKeyListener(this);
+		exit_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		ButtonPanel.add(ExitButton);
-		ResultLabel = new JLabel("5問中〇問正解");
-		ResultLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 80));
-		ResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ResultLabel, BorderLayout.NORTH);
+		button_panel.add(exit_button);
+		result_label = new JLabel("5問中〇問正解");
+		result_label.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 80));
+		result_label.setHorizontalAlignment(SwingConstants.CENTER);
+		result_card.add(result_label, BorderLayout.NORTH);
 		
-		ScoreLabel = new JLabel("スコア：");
-		ScoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
-		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(ScoreLabel, BorderLayout.EAST);
+		score_label = new JLabel("スコア：");
+		score_label.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
+		score_label.setHorizontalAlignment(SwingConstants.CENTER);
+		result_card.add(score_label, BorderLayout.EAST);
 		
-		DifficultyLabel = new JLabel("難易度：");
-		DifficultyLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
-		DifficultyLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		card1.add(DifficultyLabel, BorderLayout.WEST);
+		difficulty_label = new JLabel("難易度：");
+		difficulty_label.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
+		difficulty_label.setHorizontalAlignment(SwingConstants.CENTER);
+		result_card.add(difficulty_label, BorderLayout.WEST);
 
 		/* 親（cardPanel自身）の定義 */
-		cardPanel = new JPanel();
+		card_panel = new JPanel();
 		layout = new CardLayout();
-		cardPanel.setLayout(layout);
+		card_panel.setLayout(layout);
 		
-		cardPanel.add(card3,"Title");
-		cardPanel.add(card2, "Menu");
-		cardPanel.add(contentPane, "TextPazzle");
-		cardPanel.add(card1, "result");
+		card_panel.add(title_card,"Title");
+		card_panel.add(menu_card, "Menu");
+		card_panel.add(content_pane, "TextPazzle");
+		card_panel.add(result_card, "result");
 		
 		
-		getContentPane().add(cardPanel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
+		getContentPane().add(card_panel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
 
 	}
 
@@ -346,17 +340,17 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			ansbr.close();
 			// 5つ解を選択
 			answork = anslist.get(rnd.nextInt(anslist.size())); // 解をランダム抽選
-			fiveans[0] = answork;
+			five_answers[0] = answork;
 			for (int i = 1; i < 5; i++) {
 				answork = anslist.get(rnd.nextInt(anslist.size()));
 				for (int j = 0; j < i; j++) {
-					if (!(fiveans[j].equals(answork))) { // 被ってなかったらループを抜ける
+					if (!(five_answers[j].equals(answork))) { // 被ってなかったらループを抜ける
 					} else {
 						answork = anslist.get(rnd.nextInt(anslist.size()));
 						continue;
 					}
 				}
-				fiveans[i] = answork;
+				five_answers[i] = answork;
 			}
 			
 		} catch (IOException e) {
@@ -366,68 +360,68 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		
 	}
 
-	public void Questions(String answer) {
-		C = answer;
-		// System.out.print(anscnt+1+"問目");
+	public void questions(String answer) {
+		center = answer;
+		// System.out.print(ans_cnt+1+"問目");
 		// ファイル操作
 		try {
-			InputStream easyTxturl = this.getClass().getResourceAsStream("resources/J-easy.txt");
-			InputStream normalTxturl = this.getClass().getResourceAsStream("resources/J-normal.txt");
-			InputStream hardTxturl = this.getClass().getResourceAsStream("resources/J-hard.txt");
-			InputStream[] difflist = { easyTxturl, normalTxturl, hardTxturl };
-			InputStreamReader jisr = new InputStreamReader(difflist[difficulty],"UTF-8");
+			InputStream easy_txturl = this.getClass().getResourceAsStream("resources/J-easy.txt");
+			InputStream normal_txturl = this.getClass().getResourceAsStream("resources/J-normal.txt");
+			InputStream hard_txturl = this.getClass().getResourceAsStream("resources/J-hard.txt");
+			InputStream[] diff_list = { easy_txturl, normal_txturl, hard_txturl };
+			InputStreamReader jisr = new InputStreamReader(diff_list[difficulty],"UTF-8");
 			BufferedReader jbr = new BufferedReader(jisr);
 			Random rnd = new Random();
-			ArrayList<String> wordlist = new ArrayList<String>();// 可変配列
+			ArrayList<String> word_list = new ArrayList<String>();// 可変配列
 			String work1, work2;
 
 			// テキストファイルの中身を全部配列に入れる
 			String str = jbr.readLine();
 			while (str != null) {
-				wordlist.add(str);
+				word_list.add(str);
 				str = jbr.readLine();
 			}
 			jbr.close();
 			
-			ArrayList<String> firstlist = new ArrayList<String>(); // 1文字目が解と同じ単語の配列
-			ArrayList<String> secondlist = new ArrayList<String>(); // 2文字目が解と同じ単語の配列
-			for (String word : wordlist) {
+			ArrayList<String> first_list = new ArrayList<String>(); // 1文字目が解と同じ単語の配列
+			ArrayList<String> second_list = new ArrayList<String>(); // 2文字目が解と同じ単語の配列
+			for (String word : word_list) {
 				work1 = word.substring(0, 1); // 1文字目を取り出す
 				work2 = word.substring(1, 2); // 2文字目を取り出す
-				if (C.equals(work1)) { // 1文字目と解が同じなら
-					firstlist.add(word); // 配列の要素を足す
-				} else if (C.equals(work2)) { // 2文字目と解が同じなら
-					secondlist.add(word); // 配列の要素を足す
+				if (center.equals(work1)) { // 1文字目と解が同じなら
+					first_list.add(word); // 配列の要素を足す
+				} else if (center.equals(work2)) { // 2文字目と解が同じなら
+					second_list.add(word); // 配列の要素を足す
 				}
 			}
 			// 保存した配列からランダムに文字を取ってくる操作
-			Left = secondlist.get(rnd.nextInt(secondlist.size())); // 配列の要素からランダムに取ってくる
+			j_left = second_list.get(rnd.nextInt(second_list.size())); // 配列の要素からランダムに取ってくる
 			while (true) {
-				Up = secondlist.get(rnd.nextInt(secondlist.size()));// 配列の要素からランダムに取ってくる
-				if (!(Left.substring(0, 1).equals(Up.substring(0, 1)))) { // 被ってなかったらループを抜ける
+				j_up = second_list.get(rnd.nextInt(second_list.size()));// 配列の要素からランダムに取ってくる
+				if (!(j_left.substring(0, 1).equals(j_up.substring(0, 1)))) { // 被ってなかったらループを抜ける
 					break;
 				}
 			}
 			while (true) {
-				Down = firstlist.get(rnd.nextInt(firstlist.size())); // 配列の要素からランダムに取ってくる
-				if (!(Left.substring(0, 1).equals(Down.substring(1, 2)))
-						&& !(Up.substring(0, 1).equals(Down.substring(1, 2)))) {
+				j_down = first_list.get(rnd.nextInt(first_list.size())); // 配列の要素からランダムに取ってくる
+				if (!(j_left.substring(0, 1).equals(j_down.substring(1, 2)))
+						&& !(j_up.substring(0, 1).equals(j_down.substring(1, 2)))) {
 					break;
 				}
 			}
 			while (true) {
-				Right = firstlist.get(rnd.nextInt(firstlist.size())); // 配列の要素からランダムに取ってくる
-				if (!(Down.substring(1, 2).equals(Right.substring(1, 2)))
-						&& !(Left.substring(0, 1).equals(Right.substring(1, 2)))
-						&& !(Up.substring(0, 1).equals(Right.substring(1, 2)))) { // 被ってなかったらループを抜ける
+				j_right = first_list.get(rnd.nextInt(first_list.size())); // 配列の要素からランダムに取ってくる
+				if (!(j_down.substring(1, 2).equals(j_right.substring(1, 2)))
+						&& !(j_left.substring(0, 1).equals(j_right.substring(1, 2)))
+						&& !(j_up.substring(0, 1).equals(j_right.substring(1, 2)))) { // 被ってなかったらループを抜ける
 					break;
 				}
 			}
 			// ラベルに表示する変数に文字を入れる
-			L = Left.substring(0, 1);
-			U = Up.substring(0, 1);
-			D = Down.substring(1, 2);
-			R = Right.substring(1, 2);
+			left = j_left.substring(0, 1);
+			up = j_up.substring(0, 1);
+			down = j_down.substring(1, 2);
+			right = j_right.substring(1, 2);
 			
 		} catch (IOException e) {
 			System.out.println(e);
@@ -435,59 +429,59 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 	}
 	public void easy() {	//かんたん
 		difficulty = 0;
-		anscnt = 0;
+		ans_cnt = 0;
 		correct = 0;
 		Fiveanswer();
-		/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
-		Questions(fiveans[anscnt]); // 問題の再設定
-		txtLabel.setText(anscnt+1+"/5");
-		CenterLabel.setText(C);
-		LeftLabel.setText(L);
-		UpLabel.setText(U);
-		RightLabel.setText(R);
-		DownLabel.setText(D);
+		questions(five_answers[ans_cnt]); // 問題の再設定
+		txt_Label.setText(ans_cnt+1+"/5");
+		center_label.setText(center);
+		left_label.setText(left);
+		up_label.setText(up);
+		right_label.setText(right);
+		down_label.setText(down);
 		setTitle("Textvirsion:easy");
-		layout.show(cardPanel, "TextPazzle");
+		layout.show(card_panel, "TextPazzle");
 	}
 	
 	public void normal() {	//ふつう
 		difficulty = 1;
-		anscnt = 0;
+		ans_cnt = 0;
 		correct = 0;
 		Fiveanswer();
-		/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
-		Questions(fiveans[anscnt]); // 問題の再設定
-		txtLabel.setText(anscnt+1+"/5");
-		CenterLabel.setText(C);
-		LeftLabel.setText(L);
-		UpLabel.setText(U);
-		RightLabel.setText(R);
-		DownLabel.setText(D);
+		questions(five_answers[ans_cnt]); // 問題の再設定
+		txt_Label.setText(ans_cnt+1+"/5");
+		center_label.setText(center);
+		left_label.setText(left);
+		up_label.setText(up);
+		right_label.setText(right);
+		down_label.setText(down);
 		setTitle("Textvirsion:normal");
-		layout.show(cardPanel, "TextPazzle");
+		layout.show(card_panel, "TextPazzle");
 	}
 	
 	public void hard() {	//むずかしい
 		difficulty = 2;
-		anscnt = 0;
+		ans_cnt = 0;
 		correct = 0;
 		Fiveanswer();
-		/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
-		Questions(fiveans[anscnt]); // 問題の再設定
-		txtLabel.setText(anscnt+1+"/5");
-		CenterLabel.setText(C);
-		LeftLabel.setText(L);
-		UpLabel.setText(U);
-		RightLabel.setText(R);
-		DownLabel.setText(D);
+		questions(five_answers[ans_cnt]); // 問題の再設定
+		txt_Label.setText(ans_cnt+1+"/5");
+		center_label.setText(center);
+		left_label.setText(left);
+		up_label.setText(up);
+		right_label.setText(right);
+		down_label.setText(down);
 		setTitle("Textvirsion:hard");
-		layout.show(cardPanel, "TextPazzle");
+		layout.show(card_panel, "TextPazzle");
 	}
 	
-	public void nextdifficulty() {
+	public void next_difficulty() {
 		/*次の難易度への処理*/
 		difficulty++;
 		if(difficulty == 3) {
@@ -496,96 +490,96 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			
 			if(button == 0) {
-				layout.show(cardPanel, "Title");
+				layout.show(card_panel, "Title");
 				
 			}else if (button == 1) {
-				layout.show(cardPanel, "Menu");
+				layout.show(card_panel, "Menu");
 			}	
 		}else if(difficulty == 1){
-			anscnt = 0;
+			ans_cnt = 0;
 			correct = 0;
 			Fiveanswer();
-			/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+			/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 			System.out.println("");*/
-			Questions(fiveans[anscnt]); // 問題の再設定
-			txtLabel.setText(anscnt+1+"/5");
-			CenterLabel.setText(C);
-			LeftLabel.setText(L);
-			UpLabel.setText(U);
-			RightLabel.setText(R);
-			DownLabel.setText(D);
+			questions(five_answers[ans_cnt]); // 問題の再設定
+			txt_Label.setText(ans_cnt+1+"/5");
+			center_label.setText(center);
+			left_label.setText(left);
+			up_label.setText(up);
+			right_label.setText(right);
+			down_label.setText(down);
 			setTitle("Textvirsion:normal");
-			layout.show(cardPanel, "TextPazzle");
+			layout.show(card_panel, "TextPazzle");
 		}else if(difficulty == 2) {
-			anscnt = 0;
+			ans_cnt = 0;
 			correct = 0;
 			Fiveanswer();
-			/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+			/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 			System.out.println("");*/
-			Questions(fiveans[anscnt]); // 問題の再設定
-			txtLabel.setText(anscnt+1+"/5");
-			CenterLabel.setText(C);
-			LeftLabel.setText(L);
-			UpLabel.setText(U);
-			RightLabel.setText(R);
-			DownLabel.setText(D);
+			questions(five_answers[ans_cnt]); // 問題の再設定
+			txt_Label.setText(ans_cnt+1+"/5");
+			center_label.setText(center);
+			left_label.setText(left);
+			up_label.setText(up);
+			right_label.setText(right);
+			down_label.setText(down);
 			setTitle("Textvirsion:hard");
-			layout.show(cardPanel, "TextPazzle");
+			layout.show(card_panel, "TextPazzle");
 		}
 				
 	}
 	
 	public void answer() {
 		/* 解答の判定 */
-		String ans = textField.getText();
+		String ans = text_field.getText();
 		// テキストフィールドを空にする
-		textField.setText("");
-		if (ans.equals(C)) {
-			anscnt++;
+		text_field.setText("");
+		if (ans.equals(center)) {
+			ans_cnt++;
 			correct++;
 			miss = 0;
 			
-			HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
+			hide_label.setVisible(false); // これで画像が見えなくなる（答えが見える）
 			String[] buttons = { "次の問題へ", "メニューへ戻る", };
 			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
-			if (anscnt == 5) {
+			if (ans_cnt == 5) {
 				String[] resultbuttons = { "結果へ" };
 				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE, null, resultbuttons, resultbuttons[0]);
 				if(resultbutton == 0 || resultbutton == -1) {
-					ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+					result_label.setText(ans_cnt + "問中" + correct + "問正解");
 					if(difficulty == 0) {
-						DifficultyLabel.setText("難易度：かんたん");
+						difficulty_label.setText("難易度：かんたん");
 					}else if (difficulty == 1) {
-						DifficultyLabel.setText("難易度：ふつう");
+						difficulty_label.setText("難易度：ふつう");
 					}else if (difficulty == 2) {
-						DifficultyLabel.setText("難易度：むずかしい");
+						difficulty_label.setText("難易度：むずかしい");
 					}
-					layout.show(cardPanel, "result");
+					layout.show(card_panel, "result");
 					setTitle("Result");
-					anscnt = 0;
+					ans_cnt = 0;
 				}
 			}
 			if (button == 0 || button == -1) /* 次の問題ボタン */ {
 
 				/* ここから問題を再描画 */
-				txtLabel.setText(anscnt+1+"/5");
-				Questions(fiveans[anscnt]); // 問題の再設定
-				CenterLabel.setText(C);
-				LeftLabel.setText(L);
-				UpLabel.setText(U);
-				RightLabel.setText(R);
-				DownLabel.setText(D);
+				txt_Label.setText(ans_cnt+1+"/5");
+				questions(five_answers[ans_cnt]); // 問題の再設定
+				center_label.setText(center);
+				left_label.setText(left);
+				up_label.setText(up);
+				right_label.setText(right);
+				down_label.setText(down);
 				
 			} else if (button == 1) {
-				layout.show(cardPanel, "Menu");
+				layout.show(card_panel, "Menu");
 			}
 
 		} else {
 			miss++;
 			if (miss == 3) {
-				HideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
+				hide_label.setVisible(false); // これで画像が見えなくなる（答えが見える）
 			}
 			String[] buttons = { "解答しなおす", "メニューへ戻る" };
 			int button = JOptionPane.showOptionDialog(null, "不正解です ", "判定結果", JOptionPane.YES_NO_OPTION,
@@ -593,52 +587,52 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 
 			if (button == 0 || button == -1) {
 
-				if (miss == 3 && anscnt == 4) {
+				if (miss == 3 && ans_cnt == 4) {
 					String[] missresultbuttons = { "結果へ" };
 					int missresultbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, missresultbuttons, missresultbuttons[0]);
 					if(missresultbutton == 0 || missresultbutton == -1) {
-						anscnt++;
-							ResultLabel.setText(anscnt + "問中" + correct + "問正解");
+						ans_cnt++;
+							result_label.setText(ans_cnt + "問中" + correct + "問正解");
 						if(difficulty == 0) {
-							DifficultyLabel.setText("難易度：かんたん");
+							difficulty_label.setText("難易度：かんたん");
 						}else if (difficulty == 1) {
-							DifficultyLabel.setText("難易度：ふつう");
+							difficulty_label.setText("難易度：ふつう");
 						}else if (difficulty == 2) {
-							DifficultyLabel.setText("難易度：むずかしい");
+							difficulty_label.setText("難易度：むずかしい");
 						}
-						layout.show(cardPanel, "result");
+						layout.show(card_panel, "result");
 						setTitle("Result");
-						anscnt = 0;
+						ans_cnt = 0;
 						miss = 0;
 					}
 				}
-				if (miss == 3 && anscnt < 4) {
+				if (miss == 3 && ans_cnt < 4) {
 					String[] missbuttons = { "閉じる" };
 					int missbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, missbuttons, missbuttons[0]);
 					if(missbutton == 0 || missbutton == -1) {
-						anscnt++;
+						ans_cnt++;
 						miss = 0;
 						// System.out.println("miss3回");
-						Questions(fiveans[anscnt]); // 問題の再設定
-						CenterLabel.setText(C);
-						LeftLabel.setText(L);
-						UpLabel.setText(U);
-						RightLabel.setText(R);
-						DownLabel.setText(D);
-						txtLabel.setText(anscnt+1+"/5");
+						questions(five_answers[ans_cnt]); // 問題の再設定
+						center_label.setText(center);
+						left_label.setText(left);
+						up_label.setText(up);
+						right_label.setText(right);
+						down_label.setText(down);
+						txt_Label.setText(ans_cnt+1+"/5");
 					}
 				}
 
 			} else if (button == 1) {
-				anscnt = 0;
+				ans_cnt = 0;
 				miss = 0;
-				layout.show(cardPanel, "Menu");
+				layout.show(card_panel, "Menu");
 				setTitle("メニュー");
 			}
 		}
-		HideLabel.setVisible(true); // これで画像が見える（答えが見えなくなる）
+		hide_label.setVisible(true); // これで画像が見える（答えが見えなくなる）
 	}
 	
 	// 十字キーとエンターキーをボタンとテキストフィールドで使う
@@ -666,55 +660,55 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			e.setKeyCode(KeyEvent.VK_TAB);
 			
 			// シフトのイベントを作成、イベントを発生させる
-			KeyEvent fKey = new KeyEvent(
+			KeyEvent s_event = new KeyEvent(
 				e.getComponent(),
 				e.getID(),
 				e.getWhen(),
 				InputEvent.SHIFT_DOWN_MASK,
 				e.getKeyCode(),
 				e.getKeyChar());
-			event.dispatchEvent(fKey);
+			event.dispatchEvent(s_event);
 			break;
 		//デバッグ
 		case KeyEvent.VK_F1:
-			HideLabel.setVisible(false);
+			hide_label.setVisible(false);
 			break;
 		// enter
 		case KeyEvent.VK_ENTER:
 			// easy
-			if(EasyButton.equals(event)) {
+			if(easy_button.equals(event)) {
 				easy();
 			}
 			// normal
-			if(NormalButton.equals(event)) {
+			if(normal_button.equals(event)) {
 				normal();
 			}
 			// hard
-			if(HardButton.equals(event)) {
+			if(hard_button.equals(event)) {
 				hard();
 			}
 			// 解答ボタン上でエンター
-			if(answerButton.equals(event)) {
+			if(answer_button.equals(event)) {
 				answer();
 				// タブに設定してイベント発生
 				e.setKeyCode(KeyEvent.VK_TAB);
 				event.dispatchEvent(e);
 			}
 			// テキストフィールド上でエンター
-			if(textField.equals(event)) {
+			if(text_field.equals(event)) {
 				e.setKeyCode(KeyEvent.VK_TAB);
-				textField.dispatchEvent(e);
+				text_field.dispatchEvent(e);
 			}
 			// Title画面とResult画面でメニューボタン上でエンター
-			if(MenuButton.equals(event) || GoButton.equals(event)) {
-				layout.show(cardPanel, "Menu");
+			if(menu_button.equals(event) || go_button.equals(event)) {
+				layout.show(card_panel, "Menu");
 			}
 			// Result画面の次の難易度ボタン上でエンター
-			if(NextdifficultyButton.equals(event)) {
-				nextdifficulty();
+			if(next_difficulty_button.equals(event)) {
+				next_difficulty();
 			}
 			// 終了ボタン上でエンター
-			if(ExitButton.equals(event) || EndButton.equals(event)) {
+			if(exit_button.equals(event) || end_button.equals(event)) {
 				System.exit(0);
 			}	
 		}
@@ -727,7 +721,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		switch(e.getKeyCode()) {
 			//デバッグ
 			case KeyEvent.VK_F1:
-				HideLabel.setVisible(true);
+				hide_label.setVisible(true);
 				break;
 		}
 	}
