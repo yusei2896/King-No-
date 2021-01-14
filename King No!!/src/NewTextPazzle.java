@@ -489,6 +489,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 	
 	public void next_difficulty() {
 		/*次の難易度への処理*/
+		score = 10000;
 		difficulty++;
 		if(difficulty == 3) {
 			String[] buttons = { "タイトルへ戻る", "メニューへ戻る", };
