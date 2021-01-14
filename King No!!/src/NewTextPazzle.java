@@ -434,6 +434,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		difficulty = 0;
 		ans_cnt = 0;
 		correct = 0;
+		int score = 10000;
 		Fiveanswer();
 		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
@@ -452,6 +453,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		difficulty = 1;
 		ans_cnt = 0;
 		correct = 0;
+		int score = 10000;
 		Fiveanswer();
 		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
@@ -470,6 +472,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		difficulty = 2;
 		ans_cnt = 0;
 		correct = 0;
+		int score = 10000;
 		Fiveanswer();
 		/*for (String a : five_answers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
@@ -541,7 +544,6 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			ans_cnt++;
 			correct++;
 			miss = 0;
-			score = 10000;
 			
 			hide_label.setVisible(false); // これで画像が見えなくなる（答えが見える）
 			String[] buttons = { "次の問題へ", "メニューへ戻る", };
@@ -562,6 +564,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 					}
 					layout.show(card_panel, "result");
 					setTitle("Result");
+					System.out.println(score);
 					ans_cnt = 0;
 				}
 			}
@@ -612,6 +615,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 						}
 						layout.show(card_panel, "result");
 						setTitle("Result");
+						System.out.println(score);
 						ans_cnt = 0;
 						miss = 0;
 					}
