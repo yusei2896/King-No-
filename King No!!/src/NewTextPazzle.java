@@ -47,6 +47,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 	int ans_cnt = 0;
 	int correct = 0;
 	int miss = 0;
+	int score = 10000;
 
 	String center, left = "左", up = "上", down = "下", right = "右";
 	String j_left, j_up, j_down, j_right;
@@ -540,6 +541,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			ans_cnt++;
 			correct++;
 			miss = 0;
+			score = 10000;
 			
 			hide_label.setVisible(false); // これで画像が見えなくなる（答えが見える）
 			String[] buttons = { "次の問題へ", "メニューへ戻る", };
@@ -580,7 +582,12 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 
 		} else {
 			miss++;
-			if (miss == 3) {
+			if (miss == 1) {
+				score -= 250;
+			} else if (miss == 2) {
+				score -= 750;
+			} else if (miss == 3) {
+				score -= 1000;
 				hide_label.setVisible(false); // これで画像が見えなくなる（答えが見える）
 			}
 			String[] buttons = { "解答しなおす", "メニューへ戻る" };
