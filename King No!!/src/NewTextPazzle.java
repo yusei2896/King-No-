@@ -4,9 +4,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -55,6 +64,15 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 	URL hide_imageURL = this.getClass().getResource("resources/84089164_480x480.png");
 	private ImageIcon Hide = new ImageIcon(hide_imageURL); // 問題を隠している画像
 
+	URL TitleBGM = this.getClass().getResource("resources/MusMus-STLP-006.wav");
+	URL MenuBGM = this.getClass().getResource("resources/MusMus-BGM-004.wav");
+	URL QBGM = this.getClass().getResource("resources/MusMus-BGM-003.wav");
+	URL ResultBGM = this.getClass().getResource("resources/MusMus-STLP-008.wav");
+	Clip Menuclip = null;
+	Clip Qclip = null;
+	static Clip Titleclip = null;
+	Clip Resultclip = null;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -66,11 +84,41 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setBounds(50,50,960,540);
 					frame.setVisible(true);
+					TiBGMStart();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public static Clip createClip(URL bGM2) {
+		//指定されたURLのオーディオ入力ストリームを取得
+		try (AudioInputStream ais = AudioSystem.getAudioInputStream(bGM2)){
+			
+			//ファイルの形式取得
+			AudioFormat af = ais.getFormat();
+			
+			//単一のオーディオ形式を含む指定した情報からデータラインの情報オブジェクトを構築
+			DataLine.Info dataLine = new DataLine.Info(Clip.class,af);
+			
+			//指定された Line.Info オブジェクトの記述に一致するラインを取得
+			Clip c = (Clip)AudioSystem.getLine(dataLine);
+			
+			//再生準備完了
+			c.open(ais);
+			
+			return c;
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -78,6 +126,27 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 	 */
 	public NewTextPazzle() {
 		setBounds(new Rectangle(0,0,960,540));
+		
+		/*タイトルBGM*/
+		Titleclip = createClip(TitleBGM);
+		FloatControl Titlectrl = (FloatControl)Titleclip.getControl(FloatControl.Type.MASTER_GAIN);
+		Titlectrl.setValue((float)Math.log10((float)40/100)*20);
+		
+		/*メニューBGM*/
+		Menuclip = createClip(MenuBGM);
+		FloatControl Menuctrl = (FloatControl)Menuclip.getControl(FloatControl.Type.MASTER_GAIN);
+		Menuctrl.setValue((float)Math.log10((float)40/100)*20);
+		
+		/*問題画面BGM*/
+		Qclip = createClip(QBGM);
+		FloatControl Qctrl = (FloatControl)Qclip.getControl(FloatControl.Type.MASTER_GAIN);
+		Qctrl.setValue((float)Math.log10((float)40/100)*20);
+		
+		/*結果画面BGM*/
+		Resultclip = createClip(ResultBGM);
+		FloatControl Resultctrl = (FloatControl)Resultclip.getControl(FloatControl.Type.MASTER_GAIN);
+		Resultctrl.setValue((float)Math.log10((float)40/100)*20);
+		
 		ans_cnt = 0;
 		correct = 0;
 		miss = 0;
@@ -103,6 +172,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		go_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// メニュー画面へ移る
+				TiBGMStop();
+				MeBGMStart();
 				layout.show(card_panel,"Menu" );
 			}
 		});
@@ -133,6 +204,9 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		easy_button.addKeyListener(this);
 		easy_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//難易度かんたんへ
+				MeBGMStop();
+				QBGMStart();
 				easy();
 			}
 		});
@@ -144,6 +218,9 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		normal_button.addKeyListener(this);
 		normal_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//難易度ふつうへ
+				MeBGMStop();
+				QBGMStart();
 				normal();
 			}
 		});
@@ -155,6 +232,9 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		hard_button.addKeyListener(this);
 		hard_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//難易度むずかしいへ
+				MeBGMStop();
+				QBGMStart();
 				hard();
 			}
 		});
@@ -265,6 +345,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		menu_button = new JButton("メニューに戻る");
 		menu_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ReBGMStop();
+				MeBGMStart();
 				layout.show(card_panel, "Menu");
 			}
 		});
@@ -277,6 +359,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		next_difficulty_button.addKeyListener(this);
 		next_difficulty_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ReBGMStop();
+				QBGMStart();
 				next_difficulty();
 			}
 		});
@@ -299,9 +383,9 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		result_card.add(result_label, BorderLayout.NORTH);
 		
 		score_label = new JLabel("スコア：");
-		score_label.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
 		score_label.setHorizontalAlignment(SwingConstants.CENTER);
-		result_card.add(score_label, BorderLayout.EAST);
+		score_label.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
+		result_card.add(score_label, BorderLayout.CENTER);
 		
 		difficulty_label = new JLabel("難易度：");
 		difficulty_label.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
@@ -320,7 +404,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		
 		
 		getContentPane().add(card_panel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
-
+		
 	}
 
 	public void Fiveanswer()  {
@@ -497,9 +581,13 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			
 			if(button == 0) {
+				ReBGMStop();
+				TiBGMStart();
 				layout.show(card_panel, "Title");
 				
 			}else if (button == 1) {
+				ReBGMStop();
+				MeBGMStart();
 				layout.show(card_panel, "Menu");
 			}	
 		}else if(difficulty == 1){
@@ -563,6 +651,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 					}else if (difficulty == 2) {
 						difficulty_label.setText("難易度：むずかしい");
 					}
+					QBGMStop();
+					ReBGMStart();
 					score_label.setText("スコア：" + score);
 					layout.show(card_panel, "result");
 					setTitle("Result");
@@ -581,6 +671,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 				down_label.setText(down);
 				
 			} else if (button == 1) {
+				QBGMStop();
+				MeBGMStart();
 				layout.show(card_panel, "Menu");
 			}
 
@@ -614,6 +706,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 						}else if (difficulty == 2) {
 							difficulty_label.setText("難易度：むずかしい");
 						}
+						QBGMStop();
+						ReBGMStart();
 						score_label.setText("スコア：" + score);
 						layout.show(card_panel, "result");
 						setTitle("Result");
@@ -642,11 +736,64 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			} else if (button == 1) {
 				ans_cnt = 0;
 				miss = 0;
+				QBGMStop();
+				MeBGMStart();
 				layout.show(card_panel, "Menu");
 				setTitle("メニュー");
 			}
 		}
 		hide_label.setVisible(true); // これで画像が見える（答えが見えなくなる）
+	}
+	/*各画面でのBGMスタート処理*/
+	/*start()でBGMのスタート。loop(繰り返し回数)で繰り返し回数再生。
+	 * Clip.LOOP_CONTINUOUSLYは無限ループ再生*/
+	public static void TiBGMStart() {				//タイトルBGMのスタート
+		Titleclip.start();
+		Titleclip.loop(Clip.LOOP_CONTINUOUSLY);
+	}
+	public void MeBGMStart() {						//メニューBGMのスタート
+		Menuclip.start();
+		Menuclip.loop(Clip.LOOP_CONTINUOUSLY);
+	}
+	
+	public void QBGMStart() {						//問題画面BGMのスタート
+		Qclip.start();
+		Qclip.loop(Clip.LOOP_CONTINUOUSLY);
+	}
+	
+	public void ReBGMStart() {						//リザルトBGMのスタート
+		Resultclip.start();
+		Resultclip.loop(Clip.LOOP_CONTINUOUSLY);
+	}
+	
+	/*各画面でのBGMストップ処理*/
+	/*stop()でBGMのストップ。flush()で音声再生の内部バッファを削除。
+	 * setFramePosition(指定秒数のミリ単位)で再生位置の指定。
+	 * setFramePosition(0)で再生位置を最初に戻す。*
+	 * flush()についてはstopメソッドの直前に既に読み込まれた内部バッファが残ってしまうと
+	 * 次回再生時にその残りを再生してしまうため、呼び出しています。*/
+	public void TiBGMStop() {						//タイトルBGMのストップ
+		Titleclip.stop();
+		Titleclip.flush();
+		Titleclip.setFramePosition(0);
+	}
+	
+	public void MeBGMStop() {						//メニューBGMのストップ
+		Menuclip.stop();
+		Menuclip.flush();
+		Menuclip.setFramePosition(0);
+	}
+	
+	public void QBGMStop() {						//問題画面BGMのストップ
+		Qclip.stop();
+		Qclip.flush();
+		Qclip.setFramePosition(0);
+	}
+	
+	public void ReBGMStop() {						//リザルトBGMのストップ
+		Resultclip.stop();
+		Resultclip.flush();
+		Resultclip.setFramePosition(0);
 	}
 	
 	// 十字キーとエンターキーをボタンとテキストフィールドで使う
