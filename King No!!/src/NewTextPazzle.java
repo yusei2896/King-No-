@@ -11,6 +11,8 @@ import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -31,15 +33,17 @@ import java.awt.FlowLayout;
  * @author King no !!
  * JAR用
  */
-public class NewTextPazzle extends JFrame implements KeyListener {
+public class NewTextPazzle extends JFrame implements KeyListener, ActionListener {
 	JPanel card_panel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
 	private JPanel content_pane,result_card,menu_card,title_card,button_panel,nanido_panel,end_panel,panel;
 	private JTextField text_field;
-	private JLabel left_label,up_label,center_label,down_label,right_label,hide_label,result_label,score_label,disp_label,difficulty_label,txt_Label;
+	private JLabel left_label,up_label,center_label,down_label,right_label,hide_label,result_label,score_label,disp_label,difficulty_label,txt_Label,heart_label,timer_label;
 	public JButton menu_button,next_difficulty_button,exit_button,answer_button,easy_button,normal_button,hard_button,end_button,go_button;
-
+	Timer timer = new Timer(1000, this);
+	int sec,min, lap; 
+	
 	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] labels = { center_label, left_label, up_label, down_label, right_label };
 	String[] five_answers = new String[5]; // 5つの解を入れる配列
@@ -143,7 +147,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		normal_button = new JButton("\u3075\u3064\u3046");
 		normal_button.addKeyListener(this);
 		normal_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {		
 				normal();
 			}
 		});
@@ -316,6 +320,17 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		card_panel.add(title_card,"Title");
 		card_panel.add(menu_card, "Menu");
 		card_panel.add(content_pane, "TextPazzle");
+		
+		heart_label = new JLabel("♥♥♥");
+		heart_label.setForeground(new Color(255, 0, 0));
+		heart_label.setFont(new Font("HGP創英角ｺﾞｼｯｸUB", Font.PLAIN, 50));
+		heart_label.setBounds(10, 21, 177, 73);
+		content_pane.add(heart_label);
+		
+		timer_label = new JLabel();
+		timer_label.setBounds(752, 21, 117, 45);
+		content_pane.add(timer_label);
+		timer_label.setText(min + ":" + sec);
 		card_panel.add(result_card, "result");
 		
 		
@@ -447,6 +462,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		down_label.setText(down);
 		setTitle("Textvirsion:easy");
 		layout.show(card_panel, "TextPazzle");
+		timer.start();
 	}
 	
 	public void normal() {	//　ふつう
@@ -466,6 +482,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		down_label.setText(down);
 		setTitle("Textvirsion:normal");
 		layout.show(card_panel, "TextPazzle");
+		timer.start();
 	}
 	
 	public void hard() {	//　むずかしい
@@ -485,10 +502,15 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		down_label.setText(down);
 		setTitle("Textvirsion:hard");
 		layout.show(card_panel, "TextPazzle");
+		timer.start();
 	}
 	
 	public void next_difficulty() {
 		/*次の難易度への処理*/
+		sec = 0;
+		min = 0;
+		timer_label.setText( sec+ ":" + min);
+		heart_label.setText("♥♥♥");
 		score = 10000;
 		difficulty++;
 		if(difficulty == 3) {
@@ -517,6 +539,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			down_label.setText(down);
 			setTitle("Textvirsion:normal");
 			layout.show(card_panel, "TextPazzle");
+			timer.start();
 		}else if(difficulty == 2) {
 			ans_cnt = 0;
 			correct = 0;
@@ -532,6 +555,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			down_label.setText(down);
 			setTitle("Textvirsion:hard");
 			layout.show(card_panel, "TextPazzle");
+			timer.start();
 		}
 				
 	}
@@ -542,6 +566,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		// テキストフィールドを空にする
 		text_field.setText("");
 		if (ans.equals(center)) {
+			timer.stop();
 			ans_cnt++;
 			correct++;
 			miss = 0;
@@ -551,10 +576,14 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
 			if (ans_cnt == 5) {
+				sec = 0;
+				min = 0;
+				timer_label.setText(min + ":" + sec);
 				String[] resultbuttons = { "結果へ" };
 				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE, null, resultbuttons, resultbuttons[0]);
 				if(resultbutton == 0 || resultbutton == -1) {
+					heart_label.setText("♥♥♥");
 					result_label.setText(ans_cnt + "問中" + correct + "問正解");
 					if(difficulty == 0) {
 						difficulty_label.setText("難易度：かんたん");
@@ -570,7 +599,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 				}
 			}
 			if (button == 0 || button == -1) /* 次の問題ボタン */ {
-
+				heart_label.setText("♥♥♥");
 				/* ここから問題を再描画 */
 				txt_Label.setText(ans_cnt+1+"/5");
 				questions(five_answers[ans_cnt]); // 問題の再設定
@@ -579,19 +608,29 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 				up_label.setText(up);
 				right_label.setText(right);
 				down_label.setText(down);
+				timer.restart();
 				
 			} else if (button == 1) {
 				layout.show(card_panel, "Menu");
+				timer.stop();
+				sec = 0;
+				min = 0;
+				timer_label.setText(min + ":" + sec);
+				heart_label.setText("♥♥♥");
 			}
 
 		} else {
 			miss++;
 			if (miss == 1) {
 				score -= 250;
+				heart_label.setText("♥♥♡");
 			} else if (miss == 2) {
 				score -= 750;
+				heart_label.setText("♥♡♡");
 			} else if (miss == 3) {
+				timer.stop();
 				score -= 1000;
+				heart_label.setText("♡♡♡");
 				hide_label.setVisible(false); // これで画像が見えなくなる（答えが見える）
 			}
 			String[] buttons = { "解答しなおす", "メニューへ戻る" };
@@ -601,12 +640,16 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			if (button == 0 || button == -1) {
 
 				if (miss == 3 && ans_cnt == 4) {
+					sec = 0;
+					min = 0;
+					timer_label.setText(min + ":" + sec);
 					String[] missresultbuttons = { "結果へ" };
 					int missresultbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, missresultbuttons, missresultbuttons[0]);
 					if(missresultbutton == 0 || missresultbutton == -1) {
 						ans_cnt++;
-							result_label.setText(ans_cnt + "問中" + correct + "問正解");
+						result_label.setText(ans_cnt + "問中" + correct + "問正解");
+						heart_label.setText("♥♥♥");
 						if(difficulty == 0) {
 							difficulty_label.setText("難易度：かんたん");
 						}else if (difficulty == 1) {
@@ -628,6 +671,7 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 					if(missbutton == 0 || missbutton == -1) {
 						ans_cnt++;
 						miss = 0;
+						heart_label.setText("♥♥♥");
 						// System.out.println("miss3回");
 						questions(five_answers[ans_cnt]); // 問題の再設定
 						center_label.setText(center);
@@ -636,17 +680,27 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 						right_label.setText(right);
 						down_label.setText(down);
 						txt_Label.setText(ans_cnt+1+"/5");
+						timer.restart();
 					}
 				}
-
 			} else if (button == 1) {
 				ans_cnt = 0;
 				miss = 0;
 				layout.show(card_panel, "Menu");
 				setTitle("メニュー");
+				timer.stop();
+				sec = 0;
+				min = 0;
+				timer_label.setText(min + ":" + sec);
+				heart_label.setText("♥♥♥");
 			}
 		}
 		hide_label.setVisible(true); // これで画像が見える（答えが見えなくなる）
+	}
+	
+	public void scorecalculation(int lap, int miss, int anscnt) {
+		
+		
 	}
 	
 	// 十字キーとエンターキーをボタンとテキストフィールドで使う
@@ -740,4 +794,17 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		}
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		timer_label.setText(min + ":" + sec);
+		if(sec==60) {
+			  min+=1;
+			  sec=0;
+		  }
+	    if (sec >= 1000){
+	      timer.stop();
+	    }else{
+	      sec++;
+	    }
+	}
 }
