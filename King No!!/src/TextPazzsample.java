@@ -94,10 +94,10 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		miss = 0;
 		//Fiveanswer();
 
-		//for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		//for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		//System.out.println("");
 
-		//Questions(fiveans[anscnt]);
+		//Questions(fiveAnswers[ansCnt]);
 		// タイトルの後ろに難易度を表示
 		if (difficulty == 0) {
 			setTitle("Textvirsion:easy");
@@ -373,7 +373,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 
 	public void Questions(String answer) {
 		C = answer;
-		// System.out.print(anscnt+1+"問目");
+		// System.out.print(ansCnt+1+"問目");
 		// ファイル操作
 		try {
 			File jfile = new File(difflist[difficulty].toURI()); // 出題用熟語ファイル
@@ -440,7 +440,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
-		/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
 		Questions(fiveans[anscnt]); // 問題の再設定
 		txtLabel.setText(anscnt+1+"/5");
@@ -458,7 +458,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
-		/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
 		Questions(fiveans[anscnt]); // 問題の再設定
 		txtLabel.setText(anscnt+1+"/5");
@@ -476,7 +476,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 		anscnt = 0;
 		correct = 0;
 		Fiveanswer();
-		/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+		/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 		System.out.println("");*/
 		Questions(fiveans[anscnt]); // 問題の再設定
 		txtLabel.setText(anscnt+1+"/5");
@@ -507,7 +507,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			anscnt = 0;
 			correct = 0;
 			Fiveanswer();
-			/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+			/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 			System.out.println("");*/
 			Questions(fiveans[anscnt]); // 問題の再設定
 			txtLabel.setText(anscnt+1+"/5");
@@ -522,7 +522,7 @@ public class TextPazzsample extends JFrame implements KeyListener {
 			anscnt = 0;
 			correct = 0;
 			Fiveanswer();
-			/*for (String a : fiveans) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
+			/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
 			System.out.println("");*/
 			Questions(fiveans[anscnt]); // 問題の再設定
 			txtLabel.setText(anscnt+1+"/5");
