@@ -359,8 +359,6 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 		next_difficulty_button.addKeyListener(this);
 		next_difficulty_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ReBGMStop();
-				QBGMStart();
 				next_difficulty();
 			}
 		});
@@ -603,6 +601,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			up_label.setText(up);
 			right_label.setText(right);
 			down_label.setText(down);
+			ReBGMStop();
+			QBGMStart();
 			setTitle("Textvirsion:normal");
 			layout.show(card_panel, "TextPazzle");
 		}else if(difficulty == 2) {
@@ -618,6 +618,8 @@ public class NewTextPazzle extends JFrame implements KeyListener {
 			up_label.setText(up);
 			right_label.setText(right);
 			down_label.setText(down);
+			ReBGMStop();
+			QBGMStart();
 			setTitle("Textvirsion:hard");
 			layout.show(card_panel, "TextPazzle");
 		}
