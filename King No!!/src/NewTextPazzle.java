@@ -17,9 +17,6 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -29,14 +26,9 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.BorderLayout;
@@ -44,7 +36,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.SystemColor;
 
 /**
  * @author King no !!
@@ -371,7 +362,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			}
 		});
 		nextDifficultyButton.setFont(new Font("MS UI Gothic", Font.BOLD, 20));
-		nextDifficultyButton.addKeyListener(this);
 		buttonPanel.add(nextDifficultyButton);
 
 		exitButton = new JButton("終了");
@@ -590,6 +580,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	}
 	
 	public void nextDifficulty() {
+		//System.out.println(difficulty);
 		/*次の難易度への処理*/
 		sec = 0;
 		min = 0;
