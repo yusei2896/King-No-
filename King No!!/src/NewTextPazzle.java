@@ -61,6 +61,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	int correct = 0;
 	int miss = 0;
 	int score = 10000;
+	int Diffch = 0;
 
 	String center, left = "左", up = "上", down = "下", right = "右";
 	String jLeft, jUp, jDown, jRight;
@@ -155,14 +156,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		correct = 0;
 		miss = 0;
 		
-		// タイトルの後ろに難易度を表示
-		/*if (difficulty == 0) {
-			setTitle("Textvirsion:easy");
-		} else if (difficulty == 1) {
-			setTitle("Textvirsion:normal");
-		} else if (difficulty == 2) {
-			setTitle("Textvirsion:hard");
-		}*/
+		
 		/*タイトルカード*/
 		titleCard = new JPanel();
 		setTitle("Title");
@@ -908,12 +902,19 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			}
 			// Result画面の次の難易度ボタン上でエンター
 			if(nextDifficultyButton.equals(event)) {
+				if( Diffch == difficulty) {
+					Diffch = 0;
+					break;
+				}
+				Diffch = difficulty + 1;
 				nextDifficulty();
+				System.out.println("a");
 			}
 			// 終了ボタン上でエンター
 			if(exitButton.equals(event) || endButton.equals(event)) {
 				System.exit(0);
-			}	
+			}
+			break;
 		}
 	}
 	@Override
