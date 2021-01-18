@@ -45,10 +45,10 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	JPanel cardPanel;
 	CardLayout layout;
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane,resultCard,menuCard,titleCard,buttonPanel,nanidoPanel,endPanel;
+	private JPanel contentPane,resultCard,menuCard,titleCard,buttonPanel,endPanel;
 	private JTextField textField;
 	private JLabel leftLabel,upLabel,centerLabel,downLabel,rightLabel,hideLabel,resultLabel,scoreLabel,difficultyLabel,numberOfQuestionsLabel,heartLabel,timerLabel;
-	public JButton menuButton,nextDifficultyButton,exitButton,answerButton,easyButton,normalButton,hardButton,endButton,goButton;
+	public JButton menuButton,nextDifficultyButton,exitButton,answerButton,endButton,goButton;
 	Timer timer = new Timer(1000, this);
 	int sec, min, secLap, minLap, easyBest, normalBest, hardBest;
 	int[] bestScore = {easyBest, normalBest, hardBest};
@@ -70,6 +70,8 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	private ImageIcon Hide = new ImageIcon(hide_imageURL); // 問題を隠している画像
 	URL Title_imageURL = this.getClass().getResource("resources/Title.jpg");
 	private ImageIcon Title = new ImageIcon(Title_imageURL);
+	URL Menu_imageURL = this.getClass().getResource("resources/Menu.png");
+	private ImageIcon Menu = new ImageIcon(Menu_imageURL);
 
 	URL TitleBGM = this.getClass().getResource("resources/MusMus-STLP-006.wav");
 	URL MenuBGM = this.getClass().getResource("resources/MusMus-BGM-004.wav");
@@ -80,6 +82,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	Clip Qclip = null;
 	Clip Resultclip = null;
 	private JLabel TitleLabel;
+	private JButton easyButton;
+	private JButton normalButton;
+	private JButton hardButton;
 	/**
 	 * Launch the application.
 	 */
@@ -190,61 +195,20 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		/*メニューカード*/
 		menuCard = new JPanel();
 		menuCard.setBorder(new EmptyBorder(5, 5, 5, 5));
-		menuCard.setLayout(new BorderLayout(20, 20));
+		menuCard.setLayout(null);
 		
-		nanidoPanel = new JPanel();
-		FlowLayout fl_nanidopanel = (FlowLayout) nanidoPanel.getLayout();
-		fl_nanidopanel.setVgap(70);
-		fl_nanidopanel.setHgap(30);
-		menuCard.add(nanidoPanel, BorderLayout.CENTER);
+		/*MenuLabel = new JLabel(Menu);
+		MenuLabel.setBounds(-10, 0, 960, 500);
+		nanidoPanel.add(MenuLabel);
+		MenuLabel.setVisible(true);*/
 		
-		easyButton = new JButton("\u304B\u3093\u305F\u3093");
-		easyButton.addKeyListener(this);
-		easyButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//難易度かんたんへ
-				MeBGMStop();
-				QBGMStart();
-				easy();
-			}
-		});
-		easyButton.setBackground(Color.WHITE);
-		easyButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
-		nanidoPanel.add(easyButton);
-		
-		normalButton = new JButton("\u3075\u3064\u3046");
-		normalButton.addKeyListener(this);
-		normalButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {		
-				//難易度ふつうへ
-				MeBGMStop();
-				QBGMStart();
-				normal();
-			}
-		});
-		normalButton.setBackground(Color.WHITE);
-		normalButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
-		nanidoPanel.add(normalButton);
-		
-		hardButton = new JButton("\u3080\u305A\u304B\u3057\u3044");
-		hardButton.addKeyListener(this);
-		hardButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//難易度むずかしいへ
-				MeBGMStop();
-				QBGMStart();
-				hard();
-			}
-		});
-		hardButton.setBackground(Color.WHITE);
-		hardButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 25));
-		hardButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		nanidoPanel.add(hardButton);
 		
 		endPanel = new JPanel();
+		endPanel.setBackground(Color.BLACK);
+		endPanel.setBounds(5, 453, 936, 45);
 		FlowLayout flowLayout = (FlowLayout) endPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
-		menuCard.add(endPanel, BorderLayout.SOUTH);
+		menuCard.add(endPanel);
 		
 		endButton = new JButton("\u7D42\u4E86");
 		endButton.addKeyListener(this);
@@ -258,6 +222,53 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		endButton.setFont(new Font("Dialog", Font.BOLD, 20));
 		endButton.setHorizontalAlignment(SwingConstants.LEFT);
 		endPanel.add(endButton);
+		
+		easyButton = new JButton("かんたん");
+		easyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MeBGMStop();
+				QBGMStart();
+				easy();
+			}
+		});
+		easyButton.setForeground(Color.WHITE);
+		easyButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 40));
+		easyButton.setBackground(Color.BLUE);
+		easyButton.setBounds(40, 65, 239, 59);
+		menuCard.add(easyButton);
+		
+		normalButton = new JButton("ふつう");
+		normalButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MeBGMStop();
+				QBGMStart();
+				normal();
+			}
+		});
+		normalButton.setForeground(Color.WHITE);
+		normalButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 40));
+		normalButton.setBackground(Color.GREEN);
+		normalButton.setBounds(375, 65, 187, 59);
+		menuCard.add(normalButton);
+		
+		hardButton = new JButton("むずかしい");
+		hardButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MeBGMStop();
+				QBGMStart();
+				hard();
+			}
+		});
+		hardButton.setForeground(Color.WHITE);
+		hardButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 40));
+		hardButton.setBackground(Color.RED);
+		hardButton.setBounds(634, 65, 291, 59);
+		menuCard.add(hardButton);
+		
+		JLabel MenuLabel = new JLabel(Menu);
+		MenuLabel.setBounds(-10, 0, 960, 500);
+		menuCard.add(MenuLabel);
+
 		
 		
 		/* 問題カード */
@@ -326,6 +337,18 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		numberOfQuestionsLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
 		numberOfQuestionsLabel.setBounds(661, 21, 275, 196);
 		contentPane.add(numberOfQuestionsLabel);
+		
+
+		heartLabel = new JLabel("♥♥♥");
+		heartLabel.setForeground(new Color(255, 0, 0));
+		heartLabel.setFont(new Font("HGP創英角ｺﾞｼｯｸUB", Font.PLAIN, 50));
+		heartLabel.setBounds(10, 21, 177, 73);
+		contentPane.add(heartLabel);
+		
+		timerLabel = new JLabel();
+		timerLabel.setBounds(752, 21, 117, 45);
+		contentPane.add(timerLabel);
+		timerLabel.setText(min + ":" + sec);
 
 		/* 結果カード */
 		resultCard = new JPanel();
@@ -391,17 +414,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		cardPanel.add(menuCard, "Menu");
 		cardPanel.add(contentPane, "TextPazzle");
 		cardPanel.add(resultCard, "result");
-		
-		heartLabel = new JLabel("♥♥♥");
-		heartLabel.setForeground(new Color(255, 0, 0));
-		heartLabel.setFont(new Font("HGP創英角ｺﾞｼｯｸUB", Font.PLAIN, 50));
-		heartLabel.setBounds(10, 21, 177, 73);
-		contentPane.add(heartLabel);
-		
-		timerLabel = new JLabel();
-		timerLabel.setBounds(752, 21, 117, 45);
-		contentPane.add(timerLabel);
-		timerLabel.setText(min + ":" + sec);
 
 		getContentPane().add(cardPanel, BorderLayout.CENTER); // 最初に表示させるカードの指定（今回なら問題カード）
 
@@ -925,13 +937,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			}
 			// Result画面の次の難易度ボタン上でエンター
 			if(nextDifficultyButton.equals(event)) {
-				if( Diffch == difficulty) {
-					Diffch = 0;
-					break;
-				}
-				Diffch = difficulty + 1;
 				nextDifficulty();
-				System.out.println("a");
 			}
 			// 終了ボタン上でエンター
 			if(exitButton.equals(event) || endButton.equals(event)) {
