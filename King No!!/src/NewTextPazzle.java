@@ -17,6 +17,9 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -26,9 +29,14 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.BorderLayout;
@@ -50,7 +58,8 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	private JLabel leftLabel,upLabel,centerLabel,downLabel,rightLabel,hideLabel,resultLabel,scoreLabel,dispLabel,difficultyLabel,numberOfQuestionsLabel,heartLabel,timerLabel;
 	public JButton menuButton,nextDifficultyButton,exitButton,answerButton,easyButton,normalButton,hardButton,endButton,goButton;
 	Timer timer = new Timer(1000, this);
-	int sec, min, secLap, minLap; 
+	int sec, min, secLap, minLap, easyBest, normalBest, hardBest;
+	int[] bestScore = {easyBest, normalBest, hardBest};
 	
 	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] labels = { centerLabel, leftLabel, upLabel, downLabel, rightLabel };
@@ -382,7 +391,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		
 		scoreLabel = new JLabel("スコア：");
 		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		scoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
+		scoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
 		resultCard.add(scoreLabel, BorderLayout.CENTER);
 		
 		difficultyLabel = new JLabel("難易度：");
@@ -667,6 +676,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 				secLap = 0;
 				minLap = 0;
 				timerLabel.setText(min + ":" + sec);
+				bestScore[difficulty] = bestScore(score,difficulty); // 選択中の難易度のベストスコアを取得
 				String[] resultbuttons = { "結果へ" };
 				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE, null, resultbuttons, resultbuttons[0]);
@@ -737,6 +747,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 					secLap = 0;
 					minLap = 0;
 					timerLabel.setText(min + ":" + sec);
+					bestScore[difficulty] = bestScore(score, difficulty);// 選択中の難易度のベストスコアを取得
 					String[] missresultbuttons = { "結果へ" };
 					int missresultbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, missresultbuttons, missresultbuttons[0]);
@@ -860,6 +871,27 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		Resultclip.stop();
 		Resultclip.flush();
 		Resultclip.setFramePosition(0);
+	}
+	
+	// 難易度ごとのベストスコアを返す
+	public int bestScore(int score,int difficult) {
+		if(difficult == 0) {
+			if(easyBest < score) {
+				easyBest = score;
+			}
+			return easyBest;
+		}else if(difficult == 1) {
+			if(normalBest < score) {
+				normalBest = score;
+			}
+			return normalBest;
+		}else if(difficult == 2) {
+			if(hardBest < score) {
+				hardBest = score;
+			}
+			return hardBest;
+		}
+		return score;
 	}
 	// 十字キーとエンターキーをボタンとテキストフィールドで使う
 	public void keyPressed(KeyEvent e) {
