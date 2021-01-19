@@ -347,8 +347,8 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 
 		heartLabel = new JLabel("♥♥♥");
 		heartLabel.setForeground(new Color(255, 0, 0));
-		heartLabel.setFont(new Font("HGP創英角ｺﾞｼｯｸUB", Font.PLAIN, 50));
-		heartLabel.setBounds(10, 21, 177, 73);
+		heartLabel.setFont(new Font("MS UI Gothic", Font.PLAIN, 80));
+		heartLabel.setBounds(10, 10, 210, 74);
 		contentPane.add(heartLabel);
 		
 		timerLabel = new JLabel();
