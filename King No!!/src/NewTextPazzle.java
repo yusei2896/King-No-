@@ -340,7 +340,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		numberOfQuestionsLabel = new JLabel("1問目/5問中");
 		numberOfQuestionsLabel.setForeground(Color.WHITE);
 		numberOfQuestionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		numberOfQuestionsLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 60));
+		numberOfQuestionsLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 55));
 		numberOfQuestionsLabel.setBounds(598, 120, 350, 91);
 		contentPane.add(numberOfQuestionsLabel);
 		
@@ -678,20 +678,14 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			score += scoreCalculation(secLap, minLap, sec, min);
 			secLap = sec;
 			minLap = min;
-			ansCnt++;
 			correct++;
 			miss = 0;
-			
+			ansCnt++;
 			hideLabel.setVisible(false); // これで画像が見えなくなる（答えが見える）
 			String[] buttons = { "次の問題へ", "メニューへ戻る", };
 			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
-			if (ansCnt == 5) {
-				sec = 0;
-				min = 0;
-				secLap = 0;
-				minLap = 0;
-				timerLabel.setText(min + "分" + sec + "秒");
+			if (ansCnt == 5 && correct >= 4) {
 				bestScore[difficulty] = bestScore(score,difficulty); // 選択中の難易度のベストスコアを取得
 				String[] resultbuttons = { "結果へ" };
 				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
@@ -712,7 +706,33 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 					BestScoreLabel.setText("ベストスコア："+bestScore[difficulty]);
 					layout.show(cardPanel, "result");
 					setTitle("Result");
+					sec = 0;
+					min = 0;
+					secLap = 0;
+					minLap = 0;
+					timerLabel.setText(min + "分" + sec + "秒");
 					ansCnt = 0;
+				}
+			}else if(ansCnt == 5 && correct < 4) {
+				String[] stageFailedButtons = {"メニューへ戻る"};
+				int stageFailedButton = JOptionPane.showOptionDialog(null, "4問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
+						JOptionPane.ERROR_MESSAGE, null, stageFailedButtons, stageFailedButtons[0]);
+				if(stageFailedButton == 0 || stageFailedButton == -1) {
+					QBGMStop();
+					MeBGMStart();
+					layout.show(cardPanel, "Menu");
+					layout.show(cardPanel, "Menu");
+					setTitle("Menu");
+					ansCnt = 0;
+					miss = 0;
+					correct = 0;
+					timer.stop();
+					sec = 0;
+					min = 0;
+					secLap = 0;
+					minLap = 0;
+					timerLabel.setText(min + "分" + sec + "秒");
+					heartLabel.setText("♥♥♥");
 				}
 			}
 			if (button == 0 || button == -1) /* 次の問題ボタン */ {
@@ -759,7 +779,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 
 			if (button == 0 || button == -1) {
 
-				if (miss == 3 && ansCnt == 4) {
+				if (miss == 3 && ansCnt == 4 && correct >= 4) {
 					sec = 0;
 					min = 0;
 					secLap = 0;
@@ -788,6 +808,27 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 						setTitle("Result");
 						ansCnt = 0;
 						miss = 0;
+					}
+				}else if(miss == 3 && ansCnt == 4 && correct < 4) {
+					String[] stageFailedButtons = {"メニューへ戻る"};
+					int stageFailedButton = JOptionPane.showOptionDialog(null, "4問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
+							JOptionPane.ERROR_MESSAGE, null, stageFailedButtons, stageFailedButtons[0]);
+					if(stageFailedButton == 0 || stageFailedButton == -1) {
+						QBGMStop();
+						MeBGMStart();
+						layout.show(cardPanel, "Menu");
+						layout.show(cardPanel, "Menu");
+						setTitle("Menu");
+						ansCnt = 0;
+						miss = 0;
+						correct = 0;
+						timer.stop();
+						sec = 0;
+						min = 0;
+						secLap = 0;
+						minLap = 0;
+						timerLabel.setText(min + "分" + sec + "秒");
+						heartLabel.setText("♥♥♥");
 					}
 				}
 				if (miss == 3 && ansCnt < 4) {
