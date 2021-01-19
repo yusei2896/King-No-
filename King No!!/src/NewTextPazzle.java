@@ -85,6 +85,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	private JButton easyButton;
 	private JButton normalButton;
 	private JButton hardButton;
+	private JLabel BestScoreLabel;
 	/**
 	 * Launch the application.
 	 */
@@ -352,10 +353,11 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 
 		/* 結果カード */
 		resultCard = new JPanel();
-		resultCard.setLayout(new BorderLayout(0, 0));
+		resultCard.setLayout(null);
 
 		buttonPanel = new JPanel();
-		resultCard.add(buttonPanel, BorderLayout.SOUTH);
+		buttonPanel.setBounds(0, 464, 946, 39);
+		resultCard.add(buttonPanel);
 
 		menuButton = new JButton("メニューに戻る");
 		menuButton.addActionListener(new ActionListener() {
@@ -391,19 +393,28 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		});
 		buttonPanel.add(exitButton);
 		resultLabel = new JLabel("5問中〇問正解");
+		resultLabel.setBounds(123, 0, 700, 81);
 		resultLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 80));
 		resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		resultCard.add(resultLabel, BorderLayout.NORTH);
+		resultCard.add(resultLabel);
 		
-		scoreLabel = new JLabel("スコア：");
-		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		scoreLabel = new JLabel("今回のスコア：");
+		scoreLabel.setBounds(0, 220, 600, 100);
+		scoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		scoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
-		resultCard.add(scoreLabel, BorderLayout.CENTER);
+		resultCard.add(scoreLabel);
 		
 		difficultyLabel = new JLabel("難易度：");
-		difficultyLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
-		difficultyLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		resultCard.add(difficultyLabel, BorderLayout.WEST);
+		difficultyLabel.setBounds(0, 100, 600, 100);
+		difficultyLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
+		difficultyLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		resultCard.add(difficultyLabel);
+		
+		BestScoreLabel = new JLabel("ベストスコア：");
+		BestScoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		BestScoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
+		BestScoreLabel.setBounds(0, 330, 600, 100);
+		resultCard.add(BestScoreLabel);
 
 		/* 親（cardPanel自身）の定義 */
 		cardPanel = new JPanel();
@@ -662,6 +673,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 					QBGMStop();
 					ReBGMStart();
 					scoreLabel.setText("スコア：" + score);
+					BestScoreLabel.setText("ベストスコア："+bestScore[difficulty]);
 					layout.show(cardPanel, "result");
 					setTitle("Result");
 					ansCnt = 0;
@@ -735,6 +747,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 						QBGMStop();
 						ReBGMStart();
 						scoreLabel.setText("スコア：" + score);
+						BestScoreLabel.setText("ベストスコア："+bestScore[difficulty]);
 						layout.show(cardPanel, "result");
 						setTitle("Result");
 						ansCnt = 0;
