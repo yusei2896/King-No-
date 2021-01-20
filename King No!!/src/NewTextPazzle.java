@@ -40,7 +40,7 @@ import java.awt.SystemColor;
 
 /**
  * @author King no !!
- * JAR用
+ * 
  */
 public class NewTextPazzle extends JFrame implements KeyListener, ActionListener {
 	JPanel cardPanel;
@@ -166,7 +166,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		correct = 0;
 		miss = 0;
 		
-		
 		/*タイトルカード*/
 		titleCard = new JPanel();
 		setTitle("Title");
@@ -174,10 +173,11 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		
 		// スタートボタン
 		goButton = new JButton("Click to Start");
+		goButton.setHorizontalAlignment(SwingConstants.LEFT);
 		goButton.setForeground(SystemColor.textHighlight);
 		goButton.setBackground(Color.WHITE);
 		goButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 31));
-		goButton.setBounds(356, 343, 221, 56);
+		goButton.setBounds(356, 343, 229, 56);
 		goButton.addKeyListener(this);
 		goButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -344,7 +344,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		numberOfQuestionsLabel.setBounds(598, 120, 350, 91);
 		contentPane.add(numberOfQuestionsLabel);
 		
-
 		heartLabel = new JLabel("♥♥♥");
 		heartLabel.setForeground(new Color(255, 0, 0));
 		heartLabel.setFont(new Font("MS UI Gothic", Font.PLAIN, 80));
@@ -578,8 +577,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		correct = 0;
 		score = 10000;
 		fiveAnswer();
-		/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
-		System.out.println("");*/
 		questions(fiveAnswers[ansCnt]); // 問題の再設定
 		numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
 		centerLabel.setText(center);
@@ -598,8 +595,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		correct = 0;
 		score = 10000;
 		fiveAnswer();
-		/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
-		System.out.println("");*/
 		questions(fiveAnswers[ansCnt]); // 問題の再設定
 		numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
 		centerLabel.setText(center);
@@ -618,8 +613,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		correct = 0;
 		score = 10000;
 		fiveAnswer();
-		/*for (String a : fiveAnswers) {System.out.print(a);} // スラッシュを消すとコンソールに解を表示
-		System.out.println("");*/
 		questions(fiveAnswers[ansCnt]); // 問題の再設定
 		numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
 		centerLabel.setText(center);
@@ -633,7 +626,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	}
 	
 	public void nextDifficulty() {
-		//System.out.println(difficulty);
 		/*次の難易度への処理*/
 		sec = 0;
 		min = 0;
@@ -841,7 +833,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 						ansCnt++;
 						miss = 0;
 						heartLabel.setText("♥♥♥");
-						// System.out.println("miss3回");
 						questions(fiveAnswers[ansCnt]); // 問題の再設定
 						centerLabel.setText(center);
 						leftLabel.setText(left);
@@ -876,7 +867,6 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		sec += (min * 60);
 		time = sec - secLap;
 		timeScore -= time * 50;	
-		//System.out.println(timeScore+"点加算");
 		
 		return timeScore;
 	}
