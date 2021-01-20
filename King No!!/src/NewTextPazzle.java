@@ -412,38 +412,38 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		});
 		buttonPanel.add(exitButton);
 		resultLabel = new JLabel("5問中〇問正解");
-		resultLabel.setForeground(Color.BLACK);
-		resultLabel.setBounds(491, 123, 380, 74);
-		resultLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
-		resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		resultLabel.setForeground(Color.GREEN);
+		resultLabel.setBounds(250, 80, 420, 75);
+		resultLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
+		resultLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		resultCard.add(resultLabel);
 		
 		scoreLabel = new JLabel("今回のスコア：");
 		scoreLabel.setForeground(Color.BLACK);
-		scoreLabel.setBounds(37, 220, 600, 100);
+		scoreLabel.setBounds(37, 265, 600, 70);
 		scoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		scoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
+		scoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
 		resultCard.add(scoreLabel);
 		
 		difficultyLabel = new JLabel("難易度：");
 		difficultyLabel.setForeground(Color.BLACK);
-		difficultyLabel.setBounds(37, 110, 600, 100);
-		difficultyLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
+		difficultyLabel.setBounds(37, 160, 600, 70);
+		difficultyLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
 		difficultyLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		resultCard.add(difficultyLabel);
 		
 		BestScoreLabel = new JLabel("ベストスコア：");
 		BestScoreLabel.setForeground(Color.BLACK);
 		BestScoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		BestScoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 50));
-		BestScoreLabel.setBounds(26, 330, 600, 100);
+		BestScoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
+		BestScoreLabel.setBounds(37, 380, 600, 70);
 		resultCard.add(BestScoreLabel);
 		
 		ResultannounceLabel = new JLabel("結果発表");
 		ResultannounceLabel.setForeground(Color.BLUE);
 		ResultannounceLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		ResultannounceLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 70));
-		ResultannounceLabel.setBounds(330, 0, 300, 100);
+		ResultannounceLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 80));
+		ResultannounceLabel.setBounds(280, 0, 350, 80);
 		resultCard.add(ResultannounceLabel);
 		
 		ResultLabel = new JLabel(Result);
