@@ -174,8 +174,8 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		
 		// スタートボタン
 		goButton = new JButton("Click to Start");
-		goButton.setForeground(Color.WHITE);
-		goButton.setBackground(SystemColor.textHighlight);
+		goButton.setForeground(SystemColor.textHighlight);
+		goButton.setBackground(Color.WHITE);
 		goButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 31));
 		goButton.setBounds(356, 343, 221, 56);
 		goButton.addKeyListener(this);
@@ -230,9 +230,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 				easy();
 			}
 		});
-		easyButton.setForeground(Color.WHITE);
+		easyButton.setForeground(Color.BLUE);
 		easyButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 40));
-		easyButton.setBackground(Color.BLUE);
+		easyButton.setBackground(Color.WHITE);
 		easyButton.setBounds(40, 65, 239, 59);
 		menuCard.add(easyButton);
 		
@@ -244,9 +244,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 				normal();
 			}
 		});
-		normalButton.setForeground(Color.WHITE);
+		normalButton.setForeground(Color.GREEN);
 		normalButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 40));
-		normalButton.setBackground(Color.GREEN);
+		normalButton.setBackground(Color.WHITE);
 		normalButton.setBounds(375, 65, 187, 59);
 		menuCard.add(normalButton);
 		
@@ -258,9 +258,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 				hard();
 			}
 		});
-		hardButton.setForeground(Color.WHITE);
+		hardButton.setForeground(Color.RED);
 		hardButton.setFont(new Font("ＭＳ 明朝", Font.BOLD, 40));
-		hardButton.setBackground(Color.RED);
+		hardButton.setBackground(Color.WHITE);
 		hardButton.setBounds(634, 65, 291, 59);
 		menuCard.add(hardButton);
 		
