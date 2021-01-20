@@ -373,7 +373,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		buttonPanel.setBounds(0, 464, 946, 39);
 		resultCard.add(buttonPanel);
 
-		menuButton = new JButton("メニューに戻る");
+		menuButton = new JButton("メニューへ戻る");
 		menuButton.setBackground(SystemColor.activeCaption);
 		menuButton.setForeground(new Color(0, 128, 0));
 		menuButton.addActionListener(new ActionListener() {
