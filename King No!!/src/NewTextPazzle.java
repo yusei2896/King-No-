@@ -420,14 +420,14 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		
 		scoreLabel = new JLabel("今回のスコア：");
 		scoreLabel.setForeground(Color.BLACK);
-		scoreLabel.setBounds(37, 265, 600, 70);
+		scoreLabel.setBounds(37, 265, 800, 70);
 		scoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		scoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
 		resultCard.add(scoreLabel);
 		
 		difficultyLabel = new JLabel("難易度：");
 		difficultyLabel.setForeground(Color.BLACK);
-		difficultyLabel.setBounds(37, 160, 600, 70);
+		difficultyLabel.setBounds(37, 160, 800, 70);
 		difficultyLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
 		difficultyLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		resultCard.add(difficultyLabel);
@@ -436,7 +436,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		BestScoreLabel.setForeground(Color.BLACK);
 		BestScoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		BestScoreLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
-		BestScoreLabel.setBounds(37, 380, 600, 70);
+		BestScoreLabel.setBounds(37, 380, 800, 70);
 		resultCard.add(BestScoreLabel);
 		
 		ResultannounceLabel = new JLabel("結果発表");
