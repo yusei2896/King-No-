@@ -57,9 +57,10 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	int sec, min, secLap, minLap, easyBest, normalBest, hardBest;
 	int[] bestScore = {easyBest, normalBest, hardBest};
 	
+	int tnoq = 10;	//問題数を入れる変数
 	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] labels = { centerLabel, leftLabel, upLabel, downLabel, rightLabel };
-	String[] fiveAnswers = new String[5]; // 5つの解を入れる配列
+	String[] tnoqAnswers = new String[tnoq]; // 5つの解を入れる配列
 
 	int ansCnt = 0;
 	int correct = 0;
@@ -337,11 +338,11 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		contentPane.add(textField);
 		textField.setColumns(10);
 
-		numberOfQuestionsLabel = new JLabel("1問目/5問中");
+		numberOfQuestionsLabel = new JLabel("1問目/"+tnoq+"問中");
 		numberOfQuestionsLabel.setForeground(Color.WHITE);
 		numberOfQuestionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		numberOfQuestionsLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 55));
-		numberOfQuestionsLabel.setBounds(598, 120, 350, 91);
+		numberOfQuestionsLabel.setBounds(548, 120, 400, 91);
 		contentPane.add(numberOfQuestionsLabel);
 		
 		heartLabel = new JLabel("♥♥♥");
@@ -411,9 +412,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			}
 		});
 		buttonPanel.add(exitButton);
-		resultLabel = new JLabel("5問中〇問正解");
+		resultLabel = new JLabel(tnoq+"問中〇問正解");
 		resultLabel.setForeground(Color.GREEN);
-		resultLabel.setBounds(250, 80, 420, 75);
+		resultLabel.setBounds(183, 80, 563, 75);
 		resultLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD | Font.ITALIC, 60));
 		resultLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		resultCard.add(resultLabel);
@@ -465,7 +466,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 
 	}
 
-	public void fiveAnswer()  {
+	public void pickAnswer()  {
 		
 		try {
 			InputStream easyAnswerURL = this.getClass().getResourceAsStream("resources/easy.txt");
@@ -484,19 +485,19 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 				s = ansbr.readLine();
 			}
 			ansbr.close();
-			// 5つ解を選択
+			// tnoq個解を選択
 			answork = anslist.get(rnd.nextInt(anslist.size())); // 解をランダム抽選
-			fiveAnswers[0] = answork;
-			for (int i = 1; i < 5; i++) {
+			tnoqAnswers[0] = answork;
+			for (int i = 1; i < tnoq; i++) {
 				answork = anslist.get(rnd.nextInt(anslist.size()));
 				for (int j = 0; j < i; j++) {
-					if (!(fiveAnswers[j].equals(answork))) { // 被ってなかったらループを抜ける
+					if (!(tnoqAnswers[j].equals(answork))) { // 被ってなかったらループを抜ける
 					} else {
 						answork = anslist.get(rnd.nextInt(anslist.size()));
 						continue;
 					}
 				}
-				fiveAnswers[i] = answork;
+				tnoqAnswers[i] = answork;
 			}
 			
 		} catch (IOException e) {
@@ -576,9 +577,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		ansCnt = 0;
 		correct = 0;
 		score = 10000;
-		fiveAnswer();
-		questions(fiveAnswers[ansCnt]); // 問題の再設定
-		numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
+		pickAnswer();
+		questions(tnoqAnswers[ansCnt]); // 問題の再設定
+		numberOfQuestionsLabel.setText(ansCnt+1+"問目/"+tnoq+"問中");
 		centerLabel.setText(center);
 		leftLabel.setText(left);
 		upLabel.setText(up);
@@ -594,9 +595,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		ansCnt = 0;
 		correct = 0;
 		score = 10000;
-		fiveAnswer();
-		questions(fiveAnswers[ansCnt]); // 問題の再設定
-		numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
+		pickAnswer();
+		questions(tnoqAnswers[ansCnt]); // 問題の再設定
+		numberOfQuestionsLabel.setText(ansCnt+1+"問目/"+tnoq+"問中");
 		centerLabel.setText(center);
 		leftLabel.setText(left);
 		upLabel.setText(up);
@@ -612,9 +613,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		ansCnt = 0;
 		correct = 0;
 		score = 10000;
-		fiveAnswer();
-		questions(fiveAnswers[ansCnt]); // 問題の再設定
-		numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
+		pickAnswer();
+		questions(tnoqAnswers[ansCnt]); // 問題の再設定
+		numberOfQuestionsLabel.setText(ansCnt+1+"問目/"+tnoq+"問中");
 		centerLabel.setText(center);
 		leftLabel.setText(left);
 		upLabel.setText(up);
@@ -677,7 +678,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			String[] buttons = { "次の問題へ", "メニューへ戻る", };
 			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
-			if (ansCnt == 5 && correct >= 4) {
+			if (ansCnt == tnoq && correct >= Math.floor(tnoq/2)+1) {
 				bestScore[difficulty] = bestScore(score,difficulty); // 選択中の難易度のベストスコアを取得
 				String[] resultbuttons = { "結果へ" };
 				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
@@ -705,9 +706,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 					timerLabel.setText(min + "分" + sec + "秒");
 					ansCnt = 0;
 				}
-			}else if(ansCnt == 5 && correct < 4) {
+			}else if(ansCnt == tnoq && correct < Math.floor(tnoq/2)+1) {
 				String[] stageFailedButtons = {"メニューへ戻る"};
-				int stageFailedButton = JOptionPane.showOptionDialog(null, "4問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
+				int stageFailedButton = JOptionPane.showOptionDialog(null, (int)Math.floor(tnoq/2)+1+"問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
 						JOptionPane.ERROR_MESSAGE, null, stageFailedButtons, stageFailedButtons[0]);
 				if(stageFailedButton == 0 || stageFailedButton == -1) {
 					QBGMStop();
@@ -730,8 +731,8 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			if (button == 0 || button == -1) /* 次の問題ボタン */ {
 				heartLabel.setText("♥♥♥");
 				/* ここから問題を再描画 */
-				numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
-				questions(fiveAnswers[ansCnt]); // 問題の再設定
+				numberOfQuestionsLabel.setText(ansCnt+1+"問目/"+tnoq+"問中");
+				questions(tnoqAnswers[ansCnt]); // 問題の再設定
 				centerLabel.setText(center);
 				leftLabel.setText(left);
 				upLabel.setText(up);
@@ -771,7 +772,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 
 			if (button == 0 || button == -1) {
 
-				if (miss == 3 && ansCnt == 4 && correct >= 4) {
+				if (miss == 3 && ansCnt == tnoq-1 && correct >= Math.floor(tnoq/2)+1) {
 					sec = 0;
 					min = 0;
 					secLap = 0;
@@ -801,9 +802,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 						ansCnt = 0;
 						miss = 0;
 					}
-				}else if(miss == 3 && ansCnt == 4 && correct < 4) {
+				}else if(miss == 3 && ansCnt == tnoq-1 && correct < Math.floor(tnoq/2)+1) {
 					String[] stageFailedButtons = {"メニューへ戻る"};
-					int stageFailedButton = JOptionPane.showOptionDialog(null, "4問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
+					int stageFailedButton = JOptionPane.showOptionDialog(null, (int)Math.floor(tnoq/2)+1+"問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, stageFailedButtons, stageFailedButtons[0]);
 					if(stageFailedButton == 0 || stageFailedButton == -1) {
 						QBGMStop();
@@ -823,7 +824,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 						heartLabel.setText("♥♥♥");
 					}
 				}
-				if (miss == 3 && ansCnt < 4) {
+				if (miss == 3 && ansCnt < tnoq-1) {
 					String[] missbuttons = { "閉じる" };
 					int missbutton = JOptionPane.showOptionDialog(null, "3回間違えました", "警告", JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, missbuttons, missbuttons[0]);
@@ -833,13 +834,13 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 						ansCnt++;
 						miss = 0;
 						heartLabel.setText("♥♥♥");
-						questions(fiveAnswers[ansCnt]); // 問題の再設定
+						questions(tnoqAnswers[ansCnt]); // 問題の再設定
 						centerLabel.setText(center);
 						leftLabel.setText(left);
 						upLabel.setText(up);
 						rightLabel.setText(right);
 						downLabel.setText(down);
-						numberOfQuestionsLabel.setText(ansCnt+1+"問目/5問中");
+						numberOfQuestionsLabel.setText(ansCnt+1+"問目/"+tnoq+"問中");
 						timer.restart();
 					}
 				}
