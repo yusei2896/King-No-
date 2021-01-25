@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"<Unnamed>","l":"NewTextPazzle"},{"p":"<Unnamed>","l":"TextPazzsample"},{"p":"<Unnamed>","l":"TimerTest1"},{"l":"すべてのクラス","url":"allclasses-index.html"}]

@@ -12,6 +12,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -37,6 +38,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.SystemColor;
+import javax.swing.JComboBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 /**
  * @author King no !!
@@ -56,17 +60,20 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	Timer timer = new Timer(1000, this);
 	int sec, min, secLap, minLap, easyBest, normalBest, hardBest;
 	int[] bestScore = {easyBest, normalBest, hardBest};
-	
-	int tnoq = 10;	//問題数を入れる変数
+	private String[] numitems = {"5","10","15","20"};
+	DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<String>(numitems);
+	int tnoq = 5;	//問題数を入れる変数
 	int difficulty = 0; // 難易度選択0:easy 1:normal 2:hard
 	JLabel[] labels = { centerLabel, leftLabel, upLabel, downLabel, rightLabel };
 	String[] tnoqAnswers = new String[tnoq]; // 5つの解を入れる配列
-
+	
 	int ansCnt = 0;
 	int correct = 0;
 	int miss = 0;
 	int score = 10000;
 	int Diffch = 0;
+	
+	double quota = 0.6;
 
 	String center, left = "左", up = "上", down = "下", right = "右";
 	String jLeft, jUp, jDown, jRight;
@@ -90,6 +97,8 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 	Clip Menuclip = null;
 	Clip Qclip = null;
 	Clip Resultclip = null;
+	private JComboBox<String> QnumComboBox;
+	private JLabel QnumLabel;
 	
 	/**
 	 * Launch the application.
@@ -202,6 +211,27 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 		menuCard = new JPanel();
 		menuCard.setBorder(new EmptyBorder(5, 5, 5, 5));
 		menuCard.setLayout(null);
+		
+		QnumLabel = new JLabel("問題数");
+		QnumLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		QnumLabel.setFont(new Font("ＭＳ 明朝", Font.BOLD, 30));
+		QnumLabel.setBounds(343, 377, 93, 68);
+		menuCard.add(QnumLabel);
+		
+		QnumComboBox = new JComboBox<String>(comboModel);
+		QnumComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				int NumNo = QnumComboBox.getSelectedIndex();
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					tnoq = Integer.parseInt(numitems[NumNo]);
+					tnoqAnswers = new String[tnoq]; // 選択した問題数分の解を入れる配列
+				}
+				
+			}
+		});
+		QnumComboBox.setFont(new Font("ＭＳ 明朝", Font.BOLD, 30));
+		QnumComboBox.setBounds(459, 393, 107, 37);
+		menuCard.add(QnumComboBox);
 		
 		endPanel = new JPanel();
 		endPanel.setBackground(Color.BLACK);
@@ -678,7 +708,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 			String[] buttons = { "次の問題へ", "メニューへ戻る", };
 			int button = JOptionPane.showOptionDialog(null, "正解です", "判定結果", JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, buttons, buttons[0]);
-			if (ansCnt == tnoq && correct >= Math.floor(tnoq/2)+1) {
+			if (ansCnt == tnoq && correct >= Math.floor(tnoq*quota)+1) {
 				bestScore[difficulty] = bestScore(score,difficulty); // 選択中の難易度のベストスコアを取得
 				String[] resultbuttons = { "結果へ" };
 				int resultbutton = JOptionPane.showOptionDialog(null, "全問解き終わりました", "結果画面へ", JOptionPane.YES_NO_OPTION,
@@ -706,9 +736,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 					timerLabel.setText(min + "分" + sec + "秒");
 					ansCnt = 0;
 				}
-			}else if(ansCnt == tnoq && correct < Math.floor(tnoq/2)+1) {
+			}else if(ansCnt == tnoq && correct < Math.floor(tnoq*quota)+1) {
 				String[] stageFailedButtons = {"メニューへ戻る"};
-				int stageFailedButton = JOptionPane.showOptionDialog(null, (int)Math.floor(tnoq/2)+1+"問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
+				int stageFailedButton = JOptionPane.showOptionDialog(null, (int)Math.floor(tnoq*quota)+1+"問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
 						JOptionPane.ERROR_MESSAGE, null, stageFailedButtons, stageFailedButtons[0]);
 				if(stageFailedButton == 0 || stageFailedButton == -1) {
 					QBGMStop();
@@ -772,7 +802,7 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 
 			if (button == 0 || button == -1) {
 
-				if (miss == 3 && ansCnt == tnoq-1 && correct >= Math.floor(tnoq/2)+1) {
+				if (miss == 3 && ansCnt == tnoq-1 && correct >= Math.floor(tnoq*quota)+1) {
 					sec = 0;
 					min = 0;
 					secLap = 0;
@@ -802,9 +832,9 @@ public class NewTextPazzle extends JFrame implements KeyListener, ActionListener
 						ansCnt = 0;
 						miss = 0;
 					}
-				}else if(miss == 3 && ansCnt == tnoq-1 && correct < Math.floor(tnoq/2)+1) {
+				}else if(miss == 3 && ansCnt == tnoq-1 && correct < Math.floor(tnoq*quota)+1) {
 					String[] stageFailedButtons = {"メニューへ戻る"};
-					int stageFailedButton = JOptionPane.showOptionDialog(null, (int)Math.floor(tnoq/2)+1+"問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
+					int stageFailedButton = JOptionPane.showOptionDialog(null, (int)Math.floor(tnoq*quota)+1+"問以上正解しよう！","クリア失敗",JOptionPane.YES_NO_OPTION,
 							JOptionPane.ERROR_MESSAGE, null, stageFailedButtons, stageFailedButtons[0]);
 					if(stageFailedButton == 0 || stageFailedButton == -1) {
 						QBGMStop();
